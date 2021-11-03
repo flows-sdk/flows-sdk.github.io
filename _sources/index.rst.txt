@@ -8,7 +8,7 @@ Welcome to flows_sdk's documentation!
 
 .. toctree::
    :hidden:
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents:
 
    intro.md
@@ -17,6 +17,7 @@ Welcome to flows_sdk's documentation!
    blocks.rst
    flows.rst
    examples/examples
+   block-library.md
 
 
 Indices and tables
