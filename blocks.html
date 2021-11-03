@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<meta content="Docutils 0.17.1: http://docutils.sourceforge.net/" name="generator"/>
+<title>
+      blocks.py | flows_sdk 0.1.0 documentation
+    </title>
+<link href="_static/pygments.css" rel="stylesheet"/>
+<link href="_static/theme.50d6c7fb3b84884dbac7.css" rel="stylesheet"/>
+<link href="_static/css/custom.css" rel="stylesheet"/>
+<link href="search.html" rel="search" title="Search"/>
+<link href="genindex.html" rel="index" title="Index"/>
+<link href="flows.html" rel="next" title="flows.py"/>
+<link href="faq.html" rel="prev" title="Frequently Asked Questions"/>
+</head><body class="antialiased text-sm sm:text-base text-gray">
+<div class="h-screen xl:grid xl:grid-layout" data-action="keydown@window-&gt;search#focus" data-controller="sidebar search" id="page">
+<a class="block text-xl bg-white py-4 z-20 absolute top-0 h-18 inset-x-0 text-center transform -translate-y-full focus:translate-y-0 focus:outline-none transition-transform duration-75" href="#blocks-py" title="Skip navigation links">Skip to content</a>
+<header class="grid-area-header z-10 h-14 sm:h-18">
+<div class="bg-gray-dark shadow-md flex items-center h-full xl:px-2 relative"><div class="flex items-center">
+<button class="xl:hidden h-14 w-14 sm:h-18 sm:w-18 leading-14 sm:leading-18 text-gray-100 hover:bg-gray-700 hover:text-brand focus:outline-none focus:bg-gray-700 focus:text-brand" data-action="sidebar#open" data-sidebar-target="hamburger">
+<svg aria-hidden="true" class="fill-current h-8 w-8" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+</button><a aria-label="Back to homepage" class="hover:bg-gray-700 focus:bg-gray-700 focus:outline-none tooltipped tooltipped-sw" href="index.html"><span class="hidden lg:inline-block flex-shrink-0 font-medium text-gray-100 mx-5 leading-14 sm:leading-18 tracking-wider">flows_sdk 0.1.0 documentation</span>
+</a></div><div class="flex justify-end items-center flex-1">
+<form action="search.html" class="flex print:hidden justify-between items-center leading-14 sm:leading-18 md:ml-4 bg-gray-dark text-gray-300 focus-within:bg-gray-50 focus-within:text-gray-800 focus-within:absolute focus-within:inset-x-0 focus-within:top-0 md:focus-within:w-full md:focus-within:static" data-action="click-&gt;search#focusSearchInput" id="searchbox" method="get">
+<button aria-label="Get search results" class="text-inherit h-14 w-14 sm:h-18 sm:w-18" tabindex="-1">
+<svg aria-hidden="true" class="fill-current stroke-current h-8 w-8" stroke-width="0.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+</button>
+<input aria-label="Search the docs" class="pr-2 bg-transparent text-inherit focus:outline-none w-0 md:w-auto focus:w-full transition-all duration-100" data-search-target="searchInput" id="search-input" name="q" placeholder="Search the docs" type="search"/>
+</form></div>
+</div>
+</header>
+<aside class="grid-area-sidebar h-full fixed xl:relative inset-y-0 left-0 z-20 xl:z-0 print:hidden overflow-y-auto transition-all transform transform-gpu -translate-x-full opacity-0 duration-300 xl:translate-x-0 xl:opacity-100" data-sidebar-target="sidebar">
+<nav class="h-full overflow-y-auto bg-white text-gray-600 pt-8 flex flex-col" role="navigation">
+<div class="nav-toc flex-1 pl-6"><p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><div class="nav-link"><svg class="expand" data-action="click-&gt;sidebar#expand keydown-&gt;sidebar#expandKeyPressed" tabindex="0" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" data-action="click-&gt;sidebar#close" href="intro.html">Introduciton to Flows SDK</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><svg class="expand" data-action="click-&gt;sidebar#expand keydown-&gt;sidebar#expandKeyPressed" tabindex="0" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" data-action="click-&gt;sidebar#close" href="intro.html#this-is-a-heading-2">This is a heading 2</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" data-action="click-&gt;sidebar#close" href="intro.html#this-is-a-heading-3">This is a heading 3</a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" data-action="click-&gt;sidebar#close" href="quickstart.html">Quickstart</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" data-action="click-&gt;sidebar#close" href="faq.html">Frequently Asked Questions</a></div></li>
+<li class="toctree-l1 current expanded"><div class="nav-link"><a class="current reference internal" data-action="click-&gt;sidebar#close" href="#">blocks.py</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" data-action="click-&gt;sidebar#close" href="flows.html">flows.py</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><svg class="expand" data-action="click-&gt;sidebar#expand keydown-&gt;sidebar#expandKeyPressed" tabindex="0" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" data-action="click-&gt;sidebar#close" href="examples/examples.html">Examples</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" data-action="click-&gt;sidebar#close" href="examples/examples.html#hello-flow">Hello Flow</a></div></li>
+</ul>
+</li>
+</ul>
+</div>
+<button aria-label="Close menu" class="text-4xl text-gray-800 p-4 bottom-0 hover:text-brand xl:hidden focus:text-brand self-center" data-action="sidebar#close" title="Close menu">
+<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</aside>
+<main class="px-10 xl:ml-fluid grid-area-main overflow-y-auto flex flex-col h-full mx-0 md:mx-auto xl:mr-0" data-action="scroll-&gt;scroll#showButton" data-controller="scroll"><nav aria-label="breadcrumbs" class="print:hidden mt-12 text-sm text-gray-light" role="navigation">
+<a class="text-gray-light text-sm hover:text-gray-dark font-medium focus:text-gray-dark" href="index.html">flows_sdk 0.1.0 documentation</a>
+<span class="mr-1">/</span><span aria-current="page">blocks.py</span>
+</nav>
+<article class="flex-1" role="main">
+<section id="blocks-py">
+<h1>blocks.py<a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#blocks-py">¶</a></h1>
+<p>So here would be some more info about the blocks module</p>
+<span class="target" id="module-flows_sdk.blocks"></span><dl class="py class code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Block">
+<em class="property">class </em><code class="sig-prename descclassname">flows_sdk.blocks.</code><code class="sig-name descname">Block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">reference_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">identifier</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">input</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">description</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Block">¶</a></dt>
+<dd>
+<p>Base structure representing an executable within a Hyperscience deployment.
+Available blocks can be found in the Blocks section. Available blocks depend on the version of
+the underlying Hyperscience platform, but additional blocks may have also been manually installed.</p>
+<dl class="py method code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Block.output">
+<code class="sig-name descname">output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint">str</span></span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Block.output">¶</a></dt>
+<dd>
+<p>Used to referencethe output of a block that has already been executed.
+For example, if we have a Flow with two blocks, the second can reference
+the output of the first as part of its inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – When not provided, the entire output of the referenced block will be passed along.
+When provided, will pass a concrete key from the output (e.g. for an output like
+<cite>{“a”: 42}</cite>, calling <cite>output()</cite> will pass it as a dictionary, while calling
+<cite>output(“a”)</cite> will pass <cite>42</cite>.
+)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a string-formatted reference that will be unpacked to a concrete value during runtime.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p>For example:</p>
+<div class="highlight" data-controller="code">
+<div class="code-header">
+<span class="code-lang">python</span></div>
+<pre><code><span class="n">a</span> <span class="o">=</span> <span class="n">Block</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Block</span><span class="p">(</span>
+    <span class="o">...</span><span class="p">,</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'foo'</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">'bar'</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</code></pre></div>
+</dd></dl>
+<dl class="py method code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Block.render">
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint">List<span class="p">[</span>Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span><span class="p">]</span></span></span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Block.render">¶</a></dt>
+<dd>
+<p>Dictionary representation of the Block as a single element within a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List with a single element - the instance as a serializable dictionary.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[Dict[str, Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Block.render_self">
+<code class="sig-name descname">render_self</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint">Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span></span></span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Block.render_self">¶</a></dt>
+<dd>
+<p>Dictionary representation of the Block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the instance as a serializable dictionary.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.CodeBlock">
+<em class="property">class </em><code class="sig-prename descclassname">flows_sdk.blocks.</code><code class="sig-name descname">CodeBlock</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">reference_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">code</span><span class="p">:</span> <span class="n">Callable</span></em>, <em class="sig-param"><span class="n">code_input</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">input</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">description</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.CodeBlock">¶</a></dt>
+<dd>
+<p>Code blocks are a special type of block that can run custom python code on the Hyperscience platform.
+The code will be serialized, then, as part of a Flow run, executed on an isolated environment and will not have access
+to dependencies outside of basic ones like the standard python library.</p>
+<p>TODO(vik): such implementation detials should probably be ommited..
+Lambda functions are executed in the context of the execution engine itself (less overhead, but cannot be scaled)
+Code functions are executed in a dedicated container (more overhead, can scale horizontally)</p>
+<dl class="py method code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.CodeBlock.format_code">
+<code class="sig-name descname">format_code</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">code</span><span class="p">:</span> <span class="n">Callable</span></em>, <em class="sig-param"><span class="n">inputs</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span><span class="p">]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint">str</span></span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.CodeBlock.format_code">¶</a></dt>
+<dd>
+</dd></dl>
+<dl class="py method code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.CodeBlock.generate_code_from_template">
+<em class="property">static </em><code class="sig-name descname">generate_code_from_template</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span></em>, <em class="sig-param"><span class="n">params</span><span class="p">:</span> <span class="n">Set<span class="p">[</span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">additional_imports</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint">str</span></span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.CodeBlock.generate_code_from_template">¶</a></dt>
+<dd>
+</dd></dl>
+<dl class="py method code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.CodeBlock.get_short_lambda_source">
+<em class="property">static </em><code class="sig-name descname">get_short_lambda_source</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lambda_func</span><span class="p">:</span> <span class="n">Callable</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint">str</span></span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.CodeBlock.get_short_lambda_source">¶</a></dt>
+<dd>
+<p>Return the source of a (short) lambda function.
+If it’s impossible to obtain, returns None.
+Slightly refactored from: <a class="reference external" href="http://disq.us/p/1vq0bes" rel="nofollow noopener">http://disq.us/p/1vq0bes<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p>
+</dd></dl>
+<dl class="py method code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.CodeBlock.output">
+<code class="sig-name descname">output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint">str</span></span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.CodeBlock.output">¶</a></dt>
+<dd>
+<p>Used to referencethe output of a block that has already been executed.
+For example, if we have a Flow with two blocks, the second can reference
+the output of the first as part of its inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – When not provided, the entire output of the referenced block will be passed along.
+When provided, will pass a concrete key from the output (e.g. for an output like
+<cite>{“a”: 42}</cite>, calling <cite>output()</cite> will pass it as a dictionary, while calling
+<cite>output(“a”)</cite> will pass <cite>42</cite>.
+)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a string-formatted reference that will be unpacked to a concrete value during runtime.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p>For example:</p>
+<div class="highlight" data-controller="code">
+<div class="code-header">
+<span class="code-lang">python</span></div>
+<pre><code><span class="n">a</span> <span class="o">=</span> <span class="n">Block</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Block</span><span class="p">(</span>
+    <span class="o">...</span><span class="p">,</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'foo'</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">'bar'</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</code></pre></div>
+</dd></dl>
+<dl class="py method code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.CodeBlock.parse_source">
+<em class="property">classmethod </em><code class="sig-name descname">parse_source</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">code</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint">asttokens.asttokens.ASTTokens</span></span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.CodeBlock.parse_source">¶</a></dt>
+<dd>
+</dd></dl>
+</dd></dl>
+<dl class="py class code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Fork">
+<em class="property">class </em><code class="sig-prename descclassname">flows_sdk.blocks.</code><code class="sig-name descname">Fork</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">reference_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">branches</span><span class="p">:</span> <span class="n">Sequence<span class="p">[</span><a class="reference internal" href="#flows_sdk.blocks.Fork.Branch" title="flows_sdk.blocks.Fork.Branch">flows_sdk.blocks.Fork.Branch</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">description</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Fork">¶</a></dt>
+<dd>
+<p>Fork is a system block that is used to schedule other
+blocks for parallel execution.</p>
+<p>While all branches of a Fork will be scheudled for parallel execution,
+the tasks within a branch itself will be executed serially.</p>
+<dl class="py class code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Fork.Branch">
+<em class="property">class </em><code class="sig-name descname">Branch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">blocks</span><span class="p">:</span> <span class="n">Sequence<span class="p">[</span><a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block">flows_sdk.blocks.Block</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">label</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">output</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Fork.Branch">¶</a></dt>
+<dd>
+<p>A collection of Blocks that will be serially scheduled for execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>blocks</strong> (<em>Sequence</em><em>[</em><a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><em>Block</em></a><em>]</em>) – A sequence of Blocks that will be executed as part of that Fork.Branch. Should contain at least one.</p></li>
+<li><p><strong>label</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Unuque label on a per-Fork basis.</p></li>
+<li><p><strong>output</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Reference name of the Block which will be used as the output of the entire branch.
+When not provided, the output of the last block of the branch will be treated as the branch output.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Fork.render_self">
+<code class="sig-name descname">render_self</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint">Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span></span></span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Fork.render_self">¶</a></dt>
+<dd>
+<p>Dictionary representation of the Block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the instance as a serializable dictionary.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.IOBlock">
+<em class="property">class </em><code class="sig-prename descclassname">flows_sdk.blocks.</code><code class="sig-name descname">IOBlock</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">reference_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">identifier</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">enabled</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">input</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">description</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.IOBlock">¶</a></dt>
+<dd>
+<dl class="py method code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.IOBlock.render_self">
+<code class="sig-name descname">render_self</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint">Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span></span></span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.IOBlock.render_self">¶</a></dt>
+<dd>
+<p>Dictionary representation of the Block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the instance as a serializable dictionary.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Output">
+<em class="property">class </em><code class="sig-prename descclassname">flows_sdk.blocks.</code><code class="sig-name descname">Output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">reference_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">role_filter</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">input_template</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">blocks</span><span class="p">:</span> <span class="n">Sequence<span class="p">[</span><a class="reference internal" href="#flows_sdk.blocks.IOBlock" title="flows_sdk.blocks.IOBlock">flows_sdk.blocks.IOBlock</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">description</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Output">¶</a></dt>
+<dd>
+<dl class="py method code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Output.render_self">
+<code class="sig-name descname">render_self</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint">Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span></span></span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Output.render_self">¶</a></dt>
+<dd>
+<p>Dictionary representation of the Block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the instance as a serializable dictionary.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Routing">
+<em class="property">class </em><code class="sig-prename descclassname">flows_sdk.blocks.</code><code class="sig-name descname">Routing</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">reference_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">decision</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">branches</span><span class="p">:</span> <span class="n">Sequence<span class="p">[</span><a class="reference internal" href="#flows_sdk.blocks.Routing.Branch" title="flows_sdk.blocks.Routing.Branch">flows_sdk.blocks.Routing.Branch</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">default_branch</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference internal" href="#flows_sdk.blocks.Routing.DefaultBranch" title="flows_sdk.blocks.Routing.DefaultBranch">flows_sdk.blocks.Routing.DefaultBranch</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">description</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Routing">¶</a></dt>
+<dd>
+<p>Routing is a system Block that</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Block</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>[description]</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>[type]</p>
+</dd>
+</dl>
+<dl class="py class code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Routing.Branch">
+<em class="property">class </em><code class="sig-name descname">Branch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">case</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">blocks</span><span class="p">:</span> <span class="n">Sequence<span class="p">[</span><a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block">flows_sdk.blocks.Block</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">label</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">output</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Routing.Branch">¶</a></dt>
+<dd>
+<dl class="py method code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Routing.Branch.render">
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint">Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span></span></span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Routing.Branch.render">¶</a></dt>
+<dd>
+</dd></dl>
+</dd></dl>
+<dl class="py class code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Routing.DefaultBranch">
+<em class="property">class </em><code class="sig-name descname">DefaultBranch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">blocks</span><span class="p">:</span> <span class="n">Sequence<span class="p">[</span><a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block">flows_sdk.blocks.Block</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">label</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">output</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Routing.DefaultBranch">¶</a></dt>
+<dd>
+</dd></dl>
+<dl class="py method code-definition">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Routing.render_self">
+<code class="sig-name descname">render_self</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint">Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span></span></span><a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#flows_sdk.blocks.Routing.render_self">¶</a></dt>
+<dd>
+<p>Dictionary representation of the Block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the instance as a serializable dictionary.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+</section>
+</article>
+<footer>
+<div class="mt-20 mb-4 text-sm text-gray-700">© 2021, Hyperscience Made with <a href="https://www.sphinx-doc.org">Sphinx 4.2.0</a></div>
+</footer></main>
+<button class="fixed bottom-0 right-0 z-20 opacity-0 p-4 m-4 tracking-wide bg-gray-900 text-gray-100 transition transform transform-gpu duration-500 translate-y-full" data-action="search#hideSnackbar" data-search-target="snackbar">
+  Clear highlights
+</button><div class="fixed hidden inset-0 bg-black bg-opacity-50" data-action="click-&gt;sidebar#close" data-sidebar-target="screen">
+</div>
+</div>
+<script data-url_root="./" id="documentation_options" src="_static/documentation_options.js">
+</script>
+<script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+<script src="_static/jquery.js"></script>
+<script src="_static/underscore.js"></script>
+<script src="_static/doctools.js"></script>
+<script defer="" src="_static/theme.475efb7789b10b76b8d3.js"></script>
+</body>
+</html>
