@@ -1,6 +1,8 @@
 # Block Library
 
 A library of Blocks that are part of the Hyperscience platform.
+The blocks below are part of `r32`.
+Blocks from `r30` and `r31` will be included down the line as well.
 
 
 ## MQ_LISTENER
@@ -30,6 +32,7 @@ Inputs:
 | MQ_EXCHANGE | string | "" | Exchange | N/A|
 | MQ_ROUTING_KEY | string | null | Routing key | N/A|
 | api_params | object | {} | API Parameters | N/A|
+
 
 
 ## FOLDER_TRIGGER
@@ -139,35 +142,6 @@ Inputs:
 | post_process_action | string | "move" | Post process action | What to do with the email after it is processed|
 | post_process_move_folder | string | "" | Post process archive folder | Folder to move emails to once they are processed|
 | api_params | object | {} | API Parameters | N/A|
-
-
-
-## HTTP_REST
-
-name: HTTP API Request
-
-uuid: 91c4d870-8594-46eb-a0f0-fa4e16dcb428
-
-Inputs:
-
-| name | type | default value | title | description |
-| ---  | ---  | ---           | ---   | ---         |
-| $alias_name | string | "CUSTOM_CODE" | Aliased Block | Aliased Block|
-| $partial_input_parameters | object | {'code': "from typing import Any, Dict, List, Optional, Union\nfrom urllib.parse import urljoin\n\nfrom oauthlib.oauth2 import BackendApplicationClient, MissingTokenError\nfrom pydantic import Field\nfrom requests import Response, Session\nfrom requests_oauthlib import OAuth2Session\n\nfrom blocks.base_python_block import Block, WFEngineTask, WFEngineTaskResult\nfrom blocks.types import BlockInputs\nfrom blocks.utils import response_content\n\n\nclass HTTPError(Exception):\n    def __init__(self, code: int, msg: str, *args: object) -> None:\n        super().__init__(*args)\n        self.code = code\n        self.msg = msg\n\n    def __str__(self) -> str:\n        return 'HTTP Error %s: %s' % (self.code, self.msg)\n\n    def __repr__(self) -> str:\n        return '<HTTPError %s: %r>' % (self.code, self.msg)\n\n\nclass CustomCodeBlockProxyInputs(BlockInputs):\n    method: str\n    headers: Dict[str, str] = Field(default_factory=dict)\n    params: Dict[str, Any] = Field(default_factory=dict)\n    payload: Dict[str, str] = Field(default_factory=dict)\n    json_content: Dict[str, Any] = Field(default_factory=dict, alias='json')\n    sdm_app_endpoint: str = ''\n    endpoint: str = ''\n    authorization_header: Optional[str] = None\n    authorization_type: Optional[str] = None\n    auth_url: Optional[str] = None\n    client_id: Optional[str] = None\n    client_secret: Optional[str] = None\n    audience: Optional[str] = None\n    handled_error_codes: Optional[List[Union[int, str]]] = None\n\n\nclass AuthenticatedSession(OAuth2Session):\n    def __init__(\n        self, client: str, token_url: str, client_secret: str, audience: str, **kwargs: Any\n    ) -> None:\n        self._token_url = token_url\n        self._client_secret = client_secret\n        self._audience = audience\n        self._fetching_token = False\n        super().__init__(client=client, **kwargs)\n        try:\n            self.fetch_token(\n                token_url=self._token_url,\n                client_secret=self._client_secret,\n                audience=self._audience,\n            )\n            print('Token fetched', flush=True)\n        except MissingTokenError as ex:\n            raise HTTPError(code=404, msg=f'{self._token_url} was not found') from ex\n\n    def request(self, method: str, url: str, **kwargs: Any) -> Response:\n        return super().request(method, url, **kwargs)\n\n\ndef _get_session(block_input: CustomCodeBlockProxyInputs) -> Session:\n    if not block_input.authorization_type or block_input.authorization_type == 'none':\n        session = Session()\n    elif block_input.authorization_type == 'http_header':\n        session = Session()\n        if block_input.authorization_header:\n            session.headers.update({'Authorization': block_input.authorization_header})\n    else:\n        assert block_input.authorization_type == 'oauth_2_client_credentials'\n        assert block_input.auth_url\n        assert block_input.client_secret\n        assert block_input.audience\n\n        session = AuthenticatedSession(\n            client=BackendApplicationClient(client_id=block_input.client_id),\n            token_url=block_input.auth_url,\n            client_secret=block_input.client_secret,\n            audience=block_input.audience,\n        )\n\n    return session\n\n\ndef is_code_handled(\n    status_code: int, handled_error_codes: Optional[List[Union[int, str]]] = None\n) -> bool:\n    if not handled_error_codes:\n        return False\n\n    status_code_str = str(status_code)\n    for code in handled_error_codes:\n        pattern_code_str = str(code)\n        if len(status_code_str) == len(pattern_code_str) and all(\n            p.lower() == 'x' or s == p for s, p in zip(status_code_str, pattern_code_str)\n        ):\n            return True\n    return False\n\n\ndef process_task(\n    proxy: Block, task: WFEngineTask[CustomCodeBlockProxyInputs]\n) -> WFEngineTaskResult:\n    method = task.inputData.method\n    headers = task.inputData.headers\n    params = task.inputData.params\n    data = task.inputData.payload\n    json_content = task.inputData.json_content\n    url = task.inputData.endpoint\n    handled_error_codes = task.inputData.handled_error_codes\n\n    if not url:\n        url = urljoin(proxy.sdm_app_url, task.inputData.sdm_app_endpoint)\n        headers['Authorization'] = 'Token {}'.format(proxy.sdm_app_auth_token)\n\n    proxy.log('Received input: method={} endpoint={}', method, url)\n\n    kwargs: Any = {'headers': headers, 'params': params}\n    if data:\n        kwargs['data'] = data\n    if json_content:\n        kwargs['json'] = json_content\n\n    with _get_session(task.inputData) as session:\n        response = session.request(method, url, **kwargs)\n\n    if not is_code_handled(response.status_code, handled_error_codes):\n        response.raise_for_status()\n\n    return {\n        'data': response_content(response),\n        'status': response.status_code,\n        'headers': dict(response.headers),\n    }\n"} | Partial Input Parameters | Pass these partial input parameters to the aliased block|
-| endpoint | string | null | Endpoint URL | Absolute URL including schema to HTTP endpoint for this request. Mutually exclusive with sdm_app_endpoint.|
-| method | string | "" | Method | HTTP Method|
-| headers | object | {} | HTTP Headers | HTTP Headers|
-| authorization_type | string | "none" | Authorization type | Type of authorization|
-| authorization_header | Password | N/A | Authorization header | Authorization header to be set in the notification request|
-| auth_url | string | null | OAuth2 authorization URL | The endpoint for the authorization server|
-| client_id | string | null | Client ID | The client identifier issued to the client during the application registration process|
-| client_secret | Password | N/A | Client Secret | The client secret issued to the client during the application registration process|
-| audience | string | null | Audience | Resource service URL where token will be valid|
-| sdm_app_endpoint | string | null | HTTP SDM relative URL | Relative URL to a URL served by SDM. Mutually exclusive with endpoint.|
-| params | object | null | HTTP Query Params | Key-value pair used as query parameters in the request|
-| payload | object | null | HTTP Post urlencoded data | Key-value pair to be used as x-www-form-urlencoded data. Mutually exclusive with json.|
-| json | object | null | HTTP Post json-encoded data | Key-value pair to be used as json data. Mutually exclusive with payload.|
-| handled_error_codes | array | [] | Handled HTTP error codes | These HTTP error codes will not fail the task. An array with integer and string codes, allowing for wildcards with the `x` char. Example: [400, "5xx"]|
 
 
 
@@ -646,5 +620,3 @@ Inputs:
 | submission | Submission | N/A | Submission Object | Submission object|
 | cases | array | N/A | Cases information | This parameter accepts an array of JSON objects that contain information on how Cases should be created. There are two ways to collate a case: by the filenames specified in the current Submission, or by the ids of the Documents or Pages submitted in previous submissions.|
 | dedupe_files | boolean | False | Replace case data from duplicate file names | Enabling this setting will replace case data from repeated file names within the same case. Cases will retain data from the most recently submitted version of a particular file. Note that this setting does not delete the old data, it just removes it from the case|
-
-

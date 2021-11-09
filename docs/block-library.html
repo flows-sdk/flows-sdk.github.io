@@ -20,6 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Frequently Asked Questions" href="faq.html" />
     <link rel="prev" title="Examples" href="examples/examples.html" /> 
 </head>
 
@@ -43,7 +44,6 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Flows SDK</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro.html#basic-concepts">Basic Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/examples.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Block Library</a><ul>
@@ -53,7 +53,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#export-email">EXPORT_EMAIL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#db-access">DB_ACCESS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#imap-trigger">IMAP_TRIGGER</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#http-rest">HTTP_REST</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#s3-downloader">S3_DOWNLOADER</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#box-folder-trigger">BOX_FOLDER_TRIGGER</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#soap-req">SOAP_REQ</a></li>
@@ -77,6 +76,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#machine-collation-2">MACHINE_COLLATION_2</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
 </ul>
 
         </div>
@@ -105,7 +105,9 @@
              
   <section class="tex2jax_ignore mathjax_ignore" id="block-library">
 <h1>Block Library<a class="headerlink" href="#block-library" title="Permalink to this headline"></a></h1>
-<p>A library of Blocks that are part of the Hyperscience platform.</p>
+<p>A library of Blocks that are part of the Hyperscience platform.
+The blocks below are part of <code class="docutils literal notranslate"><span class="pre">r32</span></code>.
+Blocks from <code class="docutils literal notranslate"><span class="pre">r30</span></code> and <code class="docutils literal notranslate"><span class="pre">r31</span></code> will be included down the line as well.</p>
 <section id="mq-listener">
 <h2>MQ_LISTENER<a class="headerlink" href="#mq-listener" title="Permalink to this headline"></a></h2>
 <p>name: Message Queue Listener</p>
@@ -582,120 +584,6 @@
 <td><p>{}</p></td>
 <td><p>API Parameters</p></td>
 <td><p>N/A</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="http-rest">
-<h2>HTTP_REST<a class="headerlink" href="#http-rest" title="Permalink to this headline"></a></h2>
-<p>name: HTTP API Request</p>
-<p>uuid: 91c4d870-8594-46eb-a0f0-fa4e16dcb428</p>
-<p>Inputs:</p>
-<table class="colwidths-auto docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>type</p></th>
-<th class="head"><p>default value</p></th>
-<th class="head"><p>title</p></th>
-<th class="head"><p>description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>$alias_name</p></td>
-<td><p>string</p></td>
-<td><p>“CUSTOM_CODE”</p></td>
-<td><p>Aliased Block</p></td>
-<td><p>Aliased Block</p></td>
-</tr>
-<tr class="row-odd"><td><p>$partial_input_parameters</p></td>
-<td><p>object</p></td>
-<td><p>{‘code’: “from typing import Any, Dict, List, Optional, Union\nfrom urllib.parse import urljoin\n\nfrom oauthlib.oauth2 import BackendApplicationClient, MissingTokenError\nfrom pydantic import Field\nfrom requests import Response, Session\nfrom requests_oauthlib import OAuth2Session\n\nfrom blocks.base_python_block import Block, WFEngineTask, WFEngineTaskResult\nfrom blocks.types import BlockInputs\nfrom blocks.utils import response_content\n\n\nclass HTTPError(Exception):\n    def <strong>init</strong>(self, code: int, msg: str, *args: object) -&gt; None:\n        super().<strong>init</strong>(*args)\n        self.code = code\n        self.msg = msg\n\n    def <strong>str</strong>(self) -&gt; str:\n        return ‘HTTP Error %s: %s’ % (self.code, self.msg)\n\n    def <strong>repr</strong>(self) -&gt; str:\n        return ‘&lt;HTTPError %s: %r&gt;’ % (self.code, self.msg)\n\n\nclass CustomCodeBlockProxyInputs(BlockInputs):\n    method: str\n    headers: Dict[str, str] = Field(default_factory=dict)\n    params: Dict[str, Any] = Field(default_factory=dict)\n    payload: Dict[str, str] = Field(default_factory=dict)\n    json_content: Dict[str, Any] = Field(default_factory=dict, alias=’json’)\n    sdm_app_endpoint: str = ‘’\n    endpoint: str = ‘’\n    authorization_header: Optional[str] = None\n    authorization_type: Optional[str] = None\n    auth_url: Optional[str] = None\n    client_id: Optional[str] = None\n    client_secret: Optional[str] = None\n    audience: Optional[str] = None\n    handled_error_codes: Optional[List[Union[int, str]]] = None\n\n\nclass AuthenticatedSession(OAuth2Session):\n    def <strong>init</strong>(\n        self, client: str, token_url: str, client_secret: str, audience: str, **kwargs: Any\n    ) -&gt; None:\n        self._token_url = token_url\n        self._client_secret = client_secret\n        self._audience = audience\n        self._fetching_token = False\n        super().<strong>init</strong>(client=client, **kwargs)\n        try:\n            self.fetch_token(\n                token_url=self._token_url,\n                client_secret=self._client_secret,\n                audience=self._audience,\n            )\n            print(‘Token fetched’, flush=True)\n        except MissingTokenError as ex:\n            raise HTTPError(code=404, msg=f’{self._token_url} was not found’) from ex\n\n    def request(self, method: str, url: str, **kwargs: Any) -&gt; Response:\n        return super().request(method, url, **kwargs)\n\n\ndef _get_session(block_input: CustomCodeBlockProxyInputs) -&gt; Session:\n    if not block_input.authorization_type or block_input.authorization_type == ‘none’:\n        session = Session()\n    elif block_input.authorization_type == ‘http_header’:\n        session = Session()\n        if block_input.authorization_header:\n            session.headers.update({‘Authorization’: block_input.authorization_header})\n    else:\n        assert block_input.authorization_type == ‘oauth_2_client_credentials’\n        assert block_input.auth_url\n        assert block_input.client_secret\n        assert block_input.audience\n\n        session = AuthenticatedSession(\n            client=BackendApplicationClient(client_id=block_input.client_id),\n            token_url=block_input.auth_url,\n            client_secret=block_input.client_secret,\n            audience=block_input.audience,\n        )\n\n    return session\n\n\ndef is_code_handled(\n    status_code: int, handled_error_codes: Optional[List[Union[int, str]]] = None\n) -&gt; bool:\n    if not handled_error_codes:\n        return False\n\n    status_code_str = str(status_code)\n    for code in handled_error_codes:\n        pattern_code_str = str(code)\n        if len(status_code_str) == len(pattern_code_str) and all(\n            p.lower() == ‘x’ or s == p for s, p in zip(status_code_str, pattern_code_str)\n        ):\n            return True\n    return False\n\n\ndef process_task(\n    proxy: Block, task: WFEngineTask[CustomCodeBlockProxyInputs]\n) -&gt; WFEngineTaskResult:\n    method = task.inputData.method\n    headers = task.inputData.headers\n    params = task.inputData.params\n    data = task.inputData.payload\n    json_content = task.inputData.json_content\n    url = task.inputData.endpoint\n    handled_error_codes = task.inputData.handled_error_codes\n\n    if not url:\n        url = urljoin(proxy.sdm_app_url, task.inputData.sdm_app_endpoint)\n        headers[‘Authorization’] = ‘Token {}’.format(proxy.sdm_app_auth_token)\n\n    proxy.log(‘Received input: method={} endpoint={}’, method, url)\n\n    kwargs: Any = {‘headers’: headers, ‘params’: params}\n    if data:\n        kwargs[‘data’] = data\n    if json_content:\n        kwargs[‘json’] = json_content\n\n    with _get_session(task.inputData) as session:\n        response = session.request(method, url, **kwargs)\n\n    if not is_code_handled(response.status_code, handled_error_codes):\n        response.raise_for_status()\n\n    return {\n        ‘data’: response_content(response),\n        ‘status’: response.status_code,\n        ‘headers’: dict(response.headers),\n    }\n”}</p></td>
-<td><p>Partial Input Parameters</p></td>
-<td><p>Pass these partial input parameters to the aliased block</p></td>
-</tr>
-<tr class="row-even"><td><p>endpoint</p></td>
-<td><p>string</p></td>
-<td><p>null</p></td>
-<td><p>Endpoint URL</p></td>
-<td><p>Absolute URL including schema to HTTP endpoint for this request. Mutually exclusive with sdm_app_endpoint.</p></td>
-</tr>
-<tr class="row-odd"><td><p>method</p></td>
-<td><p>string</p></td>
-<td><p>“”</p></td>
-<td><p>Method</p></td>
-<td><p>HTTP Method</p></td>
-</tr>
-<tr class="row-even"><td><p>headers</p></td>
-<td><p>object</p></td>
-<td><p>{}</p></td>
-<td><p>HTTP Headers</p></td>
-<td><p>HTTP Headers</p></td>
-</tr>
-<tr class="row-odd"><td><p>authorization_type</p></td>
-<td><p>string</p></td>
-<td><p>“none”</p></td>
-<td><p>Authorization type</p></td>
-<td><p>Type of authorization</p></td>
-</tr>
-<tr class="row-even"><td><p>authorization_header</p></td>
-<td><p>Password</p></td>
-<td><p>N/A</p></td>
-<td><p>Authorization header</p></td>
-<td><p>Authorization header to be set in the notification request</p></td>
-</tr>
-<tr class="row-odd"><td><p>auth_url</p></td>
-<td><p>string</p></td>
-<td><p>null</p></td>
-<td><p>OAuth2 authorization URL</p></td>
-<td><p>The endpoint for the authorization server</p></td>
-</tr>
-<tr class="row-even"><td><p>client_id</p></td>
-<td><p>string</p></td>
-<td><p>null</p></td>
-<td><p>Client ID</p></td>
-<td><p>The client identifier issued to the client during the application registration process</p></td>
-</tr>
-<tr class="row-odd"><td><p>client_secret</p></td>
-<td><p>Password</p></td>
-<td><p>N/A</p></td>
-<td><p>Client Secret</p></td>
-<td><p>The client secret issued to the client during the application registration process</p></td>
-</tr>
-<tr class="row-even"><td><p>audience</p></td>
-<td><p>string</p></td>
-<td><p>null</p></td>
-<td><p>Audience</p></td>
-<td><p>Resource service URL where token will be valid</p></td>
-</tr>
-<tr class="row-odd"><td><p>sdm_app_endpoint</p></td>
-<td><p>string</p></td>
-<td><p>null</p></td>
-<td><p>HTTP SDM relative URL</p></td>
-<td><p>Relative URL to a URL served by SDM. Mutually exclusive with endpoint.</p></td>
-</tr>
-<tr class="row-even"><td><p>params</p></td>
-<td><p>object</p></td>
-<td><p>null</p></td>
-<td><p>HTTP Query Params</p></td>
-<td><p>Key-value pair used as query parameters in the request</p></td>
-</tr>
-<tr class="row-odd"><td><p>payload</p></td>
-<td><p>object</p></td>
-<td><p>null</p></td>
-<td><p>HTTP Post urlencoded data</p></td>
-<td><p>Key-value pair to be used as x-www-form-urlencoded data. Mutually exclusive with json.</p></td>
-</tr>
-<tr class="row-even"><td><p>json</p></td>
-<td><p>object</p></td>
-<td><p>null</p></td>
-<td><p>HTTP Post json-encoded data</p></td>
-<td><p>Key-value pair to be used as json data. Mutually exclusive with payload.</p></td>
-</tr>
-<tr class="row-odd"><td><p>handled_error_codes</p></td>
-<td><p>array</p></td>
-<td><p>[]</p></td>
-<td><p>Handled HTTP error codes</p></td>
-<td><p>These HTTP error codes will not fail the task. An array with integer and string codes, allowing for wildcards with the <code class="docutils literal notranslate"><span class="pre">x</span></code> char. Example: [400, “5xx”]</p></td>
 </tr>
 </tbody>
 </table>
@@ -2315,6 +2203,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="examples/examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="faq.html" class="btn btn-neutral float-right" title="Frequently Asked Questions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
