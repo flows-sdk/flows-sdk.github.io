@@ -1,0 +1,650 @@
+# Block Library
+
+A library of Blocks that are part of the Hyperscience platform.
+
+
+## MQ_LISTENER
+
+name: Message Queue Listener
+
+uuid: 7e0fcbbe-b6a1-4266-beac-c8034cb2bcb5
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| MQ_TYPE | string | "ACTIVE_MQ" | Message Queue type | N/A|
+| MQ_NO_AUTH_REQUIRED | boolean | False | No auth credentials required | N/A|
+| MQ_USERNAME | string | null | Username | N/A|
+| MQ_PASSWORD | Password | null | Password | N/A|
+| MQ_QUEUE_NAME | string | null | Queue Name | N/A|
+| MQ_HOST | string | null | Host Name | N/A|
+| MQ_REGION | string | null | AWS Region | N/A|
+| MQ_QUEUE_URL | string | null | Queue URL | N/A|
+| MQ_USE_EC2_INSTANCE_CREDENTIALS | boolean | True | Use AWS EC2 Instance IAM Role Credentials | If selected, credentials are obtained from the EC2 instance directly, and the AWS Access Key ID and Secret Key are not used.|
+| MQ_PORT | integer | N/A | Port Number | N/A|
+| MQ_QUEUE_MANAGER | string | null | Queue Manager | N/A|
+| MQ_CHANNEL | string | null | Channel | N/A|
+| MQ_SSL_CIPHER_SUITE | string | null | SSL cipher suite | SSL cipher suite to use if SSL connection is used|
+| MQ_VIRTUAL_HOST | string | null | Virtual Host | N/A|
+| MQ_EXCHANGE | string | "" | Exchange | N/A|
+| MQ_ROUTING_KEY | string | null | Routing key | N/A|
+| api_params | object | {} | API Parameters | N/A|
+
+
+## FOLDER_TRIGGER
+
+name: Folder Listener
+
+uuid: 51b6ddee-3b57-4deb-a7b3-f4d102561635
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| folder | Path | N/A | Folder to scan for submissions | N/A|
+| file_extensions | string | N/A | File extensions | List of file extensions to monitor for (e.g.: 'png, jpg, pdf')|
+| has_meta | boolean | False | Enable metadata | Select this if a metadata file is to be expected along with document files (in XXX_index.txt file)|
+| poll_interval | integer | 10 | Poll interval | Poll interval in seconds|
+| warmup_interval | integer | 15 | Warm-up interval | Seconds to wait past document last modified time before processing it|
+| folder_cleanup_delay | integer | 86400 | Folder cleanup delay | Seconds to wait before cleaning up subfolders|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+## KOFAX_FOLDER_TRIGGER
+
+name: Kofax Folder Listener
+
+uuid: 06dd55c7-0124-4403-9b8d-04b57e8afca2
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| folder | Path | N/A | Folder to scan for submissions | N/A|
+| file_extensions | string | N/A | File extensions | List of file extensions to monitor for (e.g.: 'png, jpg, pdf')|
+| poll_interval | integer | 10 | Poll interval in seconds | N/A|
+| warmup_interval | integer | 15 | Warm-up interval | Seconds to wait past document last modified time before processing it|
+| folder_cleanup_delay | integer | 86400 | Folder cleanup delay | Seconds to wait before cleaning up subfolders|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+## EXPORT_EMAIL
+
+name: Email Notifier
+
+uuid: d48463e0-32ee-43dc-a8a8-48d1b2ff3b87
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| from_email | string | N/A | From | Name<email> of the sender|
+| to_emails | string | N/A | To | Comma-separated list of email addresses|
+| cc_emails | string | null | CC | Comma-separated list of email addresses|
+| subject | string | null | Subject | Subject of email|
+| smtp_host | string | N/A | SMTP Host | Host name or IP of the SMTP server|
+| smtp_port | integer | 587 | SMTP Port | SMTP server's listening port|
+| smtp_username | string | N/A | SMTP Username | Username for the SMTP server|
+| smtp_password | Password | N/A | SMTP Password | Password for the SMTP server|
+| mako_template | MultilineText | null | Mako Template | Mako template to convert submissions's payload|
+| file_uuid_list | array | [] | File UUIDs | List of file uuids|
+| payload_uuid | string | null | Payload | Payload to be sent in notification|
+
+
+
+## DB_ACCESS
+
+name: Database Request
+
+uuid: 3d2c7993-3096-4d83-884d-c447500dc063
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| db_type | string | "mssql" | Database type | N/A|
+| host | string | N/A | Host/Server | URL/IP Address of the server DB is hosted on|
+| port | integer | 1433 | Port | N/A|
+| database | string | N/A | Database/Service | Database or Service name|
+| username | string | N/A | Username | N/A|
+| password | string | N/A | Password | N/A|
+| options | object | {} | Additional Options | Dictionary of additional connection string options|
+| timeout | integer | 120 | Timeout | Timeout in seconds|
+| query | MultilineText | N/A | Query | Parameterized query|
+| query_params | object | {} | Parameters | Dictionary of values for query placeholders|
+
+
+
+## IMAP_TRIGGER
+
+name: Email Listener (IMAP)
+
+uuid: 67056d96-b485-4005-aab2-c709df60933c
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| host | string | N/A | IMAP server address | N/A|
+| port | integer | 993 | Port Number | N/A|
+| ssl | boolean | True | Use SSL connection | N/A|
+| username | string | N/A | Username | N/A|
+| password | Password | N/A | Password | N/A|
+| poll_interval | integer | 60 | Polling interval in seconds | N/A|
+| folder | Path | N/A | Folder to scan for emails | N/A|
+| email_body_treatment | string | "ignore" | Email body treatment | What to do with the body of an email that is ingested|
+| post_process_action | string | "move" | Post process action | What to do with the email after it is processed|
+| post_process_move_folder | string | "" | Post process archive folder | Folder to move emails to once they are processed|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+## HTTP_REST
+
+name: HTTP API Request
+
+uuid: 91c4d870-8594-46eb-a0f0-fa4e16dcb428
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| $alias_name | string | "CUSTOM_CODE" | Aliased Block | Aliased Block|
+| $partial_input_parameters | object | {'code': "from typing import Any, Dict, List, Optional, Union\nfrom urllib.parse import urljoin\n\nfrom oauthlib.oauth2 import BackendApplicationClient, MissingTokenError\nfrom pydantic import Field\nfrom requests import Response, Session\nfrom requests_oauthlib import OAuth2Session\n\nfrom blocks.base_python_block import Block, WFEngineTask, WFEngineTaskResult\nfrom blocks.types import BlockInputs\nfrom blocks.utils import response_content\n\n\nclass HTTPError(Exception):\n    def __init__(self, code: int, msg: str, *args: object) -> None:\n        super().__init__(*args)\n        self.code = code\n        self.msg = msg\n\n    def __str__(self) -> str:\n        return 'HTTP Error %s: %s' % (self.code, self.msg)\n\n    def __repr__(self) -> str:\n        return '<HTTPError %s: %r>' % (self.code, self.msg)\n\n\nclass CustomCodeBlockProxyInputs(BlockInputs):\n    method: str\n    headers: Dict[str, str] = Field(default_factory=dict)\n    params: Dict[str, Any] = Field(default_factory=dict)\n    payload: Dict[str, str] = Field(default_factory=dict)\n    json_content: Dict[str, Any] = Field(default_factory=dict, alias='json')\n    sdm_app_endpoint: str = ''\n    endpoint: str = ''\n    authorization_header: Optional[str] = None\n    authorization_type: Optional[str] = None\n    auth_url: Optional[str] = None\n    client_id: Optional[str] = None\n    client_secret: Optional[str] = None\n    audience: Optional[str] = None\n    handled_error_codes: Optional[List[Union[int, str]]] = None\n\n\nclass AuthenticatedSession(OAuth2Session):\n    def __init__(\n        self, client: str, token_url: str, client_secret: str, audience: str, **kwargs: Any\n    ) -> None:\n        self._token_url = token_url\n        self._client_secret = client_secret\n        self._audience = audience\n        self._fetching_token = False\n        super().__init__(client=client, **kwargs)\n        try:\n            self.fetch_token(\n                token_url=self._token_url,\n                client_secret=self._client_secret,\n                audience=self._audience,\n            )\n            print('Token fetched', flush=True)\n        except MissingTokenError as ex:\n            raise HTTPError(code=404, msg=f'{self._token_url} was not found') from ex\n\n    def request(self, method: str, url: str, **kwargs: Any) -> Response:\n        return super().request(method, url, **kwargs)\n\n\ndef _get_session(block_input: CustomCodeBlockProxyInputs) -> Session:\n    if not block_input.authorization_type or block_input.authorization_type == 'none':\n        session = Session()\n    elif block_input.authorization_type == 'http_header':\n        session = Session()\n        if block_input.authorization_header:\n            session.headers.update({'Authorization': block_input.authorization_header})\n    else:\n        assert block_input.authorization_type == 'oauth_2_client_credentials'\n        assert block_input.auth_url\n        assert block_input.client_secret\n        assert block_input.audience\n\n        session = AuthenticatedSession(\n            client=BackendApplicationClient(client_id=block_input.client_id),\n            token_url=block_input.auth_url,\n            client_secret=block_input.client_secret,\n            audience=block_input.audience,\n        )\n\n    return session\n\n\ndef is_code_handled(\n    status_code: int, handled_error_codes: Optional[List[Union[int, str]]] = None\n) -> bool:\n    if not handled_error_codes:\n        return False\n\n    status_code_str = str(status_code)\n    for code in handled_error_codes:\n        pattern_code_str = str(code)\n        if len(status_code_str) == len(pattern_code_str) and all(\n            p.lower() == 'x' or s == p for s, p in zip(status_code_str, pattern_code_str)\n        ):\n            return True\n    return False\n\n\ndef process_task(\n    proxy: Block, task: WFEngineTask[CustomCodeBlockProxyInputs]\n) -> WFEngineTaskResult:\n    method = task.inputData.method\n    headers = task.inputData.headers\n    params = task.inputData.params\n    data = task.inputData.payload\n    json_content = task.inputData.json_content\n    url = task.inputData.endpoint\n    handled_error_codes = task.inputData.handled_error_codes\n\n    if not url:\n        url = urljoin(proxy.sdm_app_url, task.inputData.sdm_app_endpoint)\n        headers['Authorization'] = 'Token {}'.format(proxy.sdm_app_auth_token)\n\n    proxy.log('Received input: method={} endpoint={}', method, url)\n\n    kwargs: Any = {'headers': headers, 'params': params}\n    if data:\n        kwargs['data'] = data\n    if json_content:\n        kwargs['json'] = json_content\n\n    with _get_session(task.inputData) as session:\n        response = session.request(method, url, **kwargs)\n\n    if not is_code_handled(response.status_code, handled_error_codes):\n        response.raise_for_status()\n\n    return {\n        'data': response_content(response),\n        'status': response.status_code,\n        'headers': dict(response.headers),\n    }\n"} | Partial Input Parameters | Pass these partial input parameters to the aliased block|
+| endpoint | string | null | Endpoint URL | Absolute URL including schema to HTTP endpoint for this request. Mutually exclusive with sdm_app_endpoint.|
+| method | string | "" | Method | HTTP Method|
+| headers | object | {} | HTTP Headers | HTTP Headers|
+| authorization_type | string | "none" | Authorization type | Type of authorization|
+| authorization_header | Password | N/A | Authorization header | Authorization header to be set in the notification request|
+| auth_url | string | null | OAuth2 authorization URL | The endpoint for the authorization server|
+| client_id | string | null | Client ID | The client identifier issued to the client during the application registration process|
+| client_secret | Password | N/A | Client Secret | The client secret issued to the client during the application registration process|
+| audience | string | null | Audience | Resource service URL where token will be valid|
+| sdm_app_endpoint | string | null | HTTP SDM relative URL | Relative URL to a URL served by SDM. Mutually exclusive with endpoint.|
+| params | object | null | HTTP Query Params | Key-value pair used as query parameters in the request|
+| payload | object | null | HTTP Post urlencoded data | Key-value pair to be used as x-www-form-urlencoded data. Mutually exclusive with json.|
+| json | object | null | HTTP Post json-encoded data | Key-value pair to be used as json data. Mutually exclusive with payload.|
+| handled_error_codes | array | [] | Handled HTTP error codes | These HTTP error codes will not fail the task. An array with integer and string codes, allowing for wildcards with the `x` char. Example: [400, "5xx"]|
+
+
+
+## S3_DOWNLOADER
+
+name: S3 Downloader
+
+uuid: ed85bc11-eee0-4159-b66e-a3e67d5ef4a3
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| config | json | N/A |  | N/A|
+| url | string | "" | URL | URL|
+| endpoint_url | string | null | Endpoint URL | Endpoint URL|
+
+
+
+## BOX_FOLDER_TRIGGER
+
+name: Box Folder Listener
+
+uuid: 5ba19375-d8c2-4876-b666-a08e427d186f
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| source_folder_id | integer | N/A | Folder to scan for submissions | Use the Box Folder ID found in the URL|
+| target_folder_id | integer | N/A | Folder to move completed files | Use the Box Folder ID found in the URL|
+| file_extensions | array | [] | File extensions | Types of file extensions for which to monitor|
+| custom_file_extensions | string | N/A | Other file extension types | Comma separated list of file extensions for which to monitor (e.g. 'png, jpg, pdf')|
+| poll_interval | integer | 10 | Polling interval (in seconds) | How often the connector will check the base folder for submissions|
+| warmup_interval | integer | 15 | Warm-up interval (in seconds) | How long the connector will wait to process the document after it was last modified|
+| public_key_id | string | N/A | Public-Key ID | ID of the Public-key used for authentication with Box|
+| private_key | Password | N/A | Private-Key | Private key used for authentication with Box|
+| passphrase | Password | N/A | Passphrase | Passphrase used for authentication with Box|
+| client_id | string | N/A | Client ID | Client Id used for authentication with Box|
+| client_secret | Password | N/A | Client Secret | Client Secret used for authentication with Box|
+| enterprise_id | string | N/A | Enterprise ID | Enterprise Id used for authentication with Box|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+## SOAP_REQ
+
+name: SOAP API Request
+
+uuid: 2c6aa317-2a06-44dd-af0c-08d8f4050129
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| endpoint | string | N/A | Endpoint URL | Absolute URL including schema to HTTP endpoint for this request.|
+| method | string | "" | Method | SOAP Method to invoke|
+| body_namespace | string | null | Body Namespace | SOAP request body namespace URI|
+| headers_namespace | string | null | Headers Namespace | SOAP request headers namespace URI|
+| headers | object | N/A | SOAP Headers | SOAP Headers|
+| params | object | null | SOAP parameters | Key-value pair used as query parameters in the request to be inserted as soap body|
+
+
+
+## HTTP_DOWNLOADER
+
+name: HTTP Downloader
+
+uuid: c7e1f048-f817-43fc-900b-6eabfa3dfb9a
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| headers | object | {} | URL Headers | N/A|
+| url | string | "" | URL | URL|
+
+
+
+## BOX_NOTIFIER
+
+name: Box Notifier
+
+uuid: d1b27dfe-799d-416f-87fe-a2810fc7c658
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| public_key_id | string | N/A | Public-Key ID | ID of the Public-key used for authentication with Box|
+| private_key | Password | N/A | Private-Key | Private key used for authentication with Box|
+| passphrase | Password | N/A | Passphrase | Passphrase used for authentication with Box|
+| client_id | string | N/A | Client ID | Client Id used for authentication with Box|
+| client_secret | Password | N/A | Client Secret | Client Secret used for authentication with Box|
+| enterprise_id | string | N/A | Enterprise ID | Enterprise Id used for authentication with Box|
+| template_key | string | "" | Box Metadata Template Key | Enter the key of the Box Metadata template that you would like to map the Hyperscience metadata to.|
+| static_output_fields_to_map | array | [] | Static Metadata Fields | Specify the Hyperscience fields you want to store in Box metadata.|
+| submission_id | string | "" | Key for Mapping Submission ID | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_id | string | "" | Key for Mapping Document ID | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| submission_state | string | "" | Key for Mapping Submission State | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_state | string | "" | Key for Mapping Document State | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| submission_exceptions | string | "" | Key for Mapping Submission Exceptions | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_exceptions | string | "" | Key for Mapping Document Exceptions | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_layout_uuid | string | "" | Key for Mapping Document Layout Uuid | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_layout_name | string | "" | Key for Mapping Document Layout Name | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| start_time | string | "" | Key for Mapping Start Time | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| complete_time | string | "" | Key for Mapping Complete Time | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_fields_template_mappings | json | {} | JSON for Additional Metadata Fields | Specify additional metadata fields using their key value. Please consult Box Integration setup manual for JSON template and instructions.|
+| payload_uuid | string | null | Payload | Payload to be sent in notification|
+
+
+
+## CRON_TRIGGER
+
+name: Cron Listener
+
+uuid: 798a30f3-06d7-49dd-8156-fe04b6cab2f2
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| cron_spec | string | "*/5 * * * *" | Cron specification | N/A|
+| time_zone | string | "US/Eastern" | Time Zone | N/A|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+## MANUAL_CLASSIFICATION_2
+
+name: Manual Classification
+
+uuid: 36f1316e-284c-482a-bf42-9ed4c5517f0d
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| layout_release_uuid | ReleaseUUID | N/A | Layout Release | N/A|
+| manual_nlc_enabled | boolean | True | Manual Classification Supervision | Enables manual classification when applicable|
+| submission | Submission | N/A | Submission Object | N/A|
+| api_params | json | N/A | API Parameters | N/A|
+| task_restrictions | TaskRestrictions | N/A | Default Task Restrictions | Defines what users can access Supervision tasks created by this block.|
+| notification_workflow | string | "" | Notification Flow | Notification flow name to run when the submission enters Manual Classification|
+
+
+
+## MACHINE_CLASSIFICATION_2
+
+name: Machine Classification
+
+uuid: 8a2d4c33-8e48-4192-b6a3-5194967e9501
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| layout_release_uuid | ReleaseUUID | N/A | Layout Release | N/A|
+| submission | Submission | N/A | Submission Object | N/A|
+| api_params | json | N/A | API Parameters | N/A|
+| vpc_registration_threshold | number | 0.6 | Layout Variation Match Threshold | Structured pages above this threshold will be automatically matched to a layout variation.|
+| nlc_enabled | boolean | True | Automatic Document Classification | Enables workflow to manage a model for automated classification of semi-structured and additional layout variations.|
+| nlc_target_accuracy | Percentage | 0.99 | Classification Target Accuracy | N/A|
+| nlc_doc_grouping_logic | string | N/A | Document Grouping Logic | Logic to handle multiple pages matched to the same layout variationin a given submission.|
+| rotation_correction_enabled | boolean | True | Enabled | Identifies and corrects the orientation of semi-structured images.|
+| mobile_processing_enabled | boolean | False | Enabled | Improves the machine readability of photo captured documents|
+
+
+
+## MACHINE_TRANSCRIPTION_3
+
+name: Machine Transcription
+
+uuid: ca78dd22-d969-43c8-92ec-caae3321a7a4
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| layout_release_uuid | ReleaseUUID | N/A | Layout Release | N/A|
+| submission | Submission | N/A | Submission Object | N/A|
+| api_params | json | N/A | API Parameters | N/A|
+| transcription_automation_training | boolean | True | Transcription Automation Training | N/A|
+| transcription_model | string | N/A | Transcription Model Name | The transcription model that will be used for this flow|
+| flex_confidence_boosting_enabled | boolean | False | Semi-structured confidence boosting | Boosts semi-structured transcription confidence for repeated values.|
+| structured_text_target_accuracy | Percentage | 0.95 | Structured text target accuracy | N/A|
+| structured_text_confidence_threshold | number | 0.52 | Default structured text threshold | N/A|
+| structured_text_acceptable_confidence | number | 0.1 | Structured text minimum legibility threshold | N/A|
+| semi_structured_text_target_accuracy | Percentage | 0.95 | Semi-structured text target accuracy | N/A|
+| semi_structured_text_confidence_threshold | number | 0.52 | Default semi-structured text threshold | N/A|
+| semi_structured_text_acceptable_confidence | number | 0.1 | Semi-structured text minimum legibility threshold | N/A|
+| structured_checkbox_target_accuracy | Percentage | 0.95 | Structured checkbox target accuracy | N/A|
+| structured_checkbox_confidence_threshold | number | 0.56 | Default structured checkbox threshold | N/A|
+| structured_checkbox_acceptable_confidence | number | 0.5 | Structured checkbox minimum legibility threshold | N/A|
+| structured_signature_target_accuracy | Percentage | 0.95 | Structured signature target accuracy | N/A|
+| structured_signature_confidence_threshold | number | 0.99 | Default structured signature threshold | N/A|
+| structured_signature_acceptable_confidence | number | 0.5 | Structured signature minimum legibility threshold | N/A|
+| semi_structured_checkbox_target_accuracy | Percentage | 0.95 | Semi-structured checkbox target accuracy | N/A|
+| semi_structured_checkbox_confidence_threshold | number | 0.56 | Default semi-structured checkbox threshold | N/A|
+| semi_structured_checkbox_acceptable_confidence | number | 0.5 | Semi-structured checkbox minimum legibility threshold | N/A|
+| finetuning_only_trained_layouts | boolean | False | Run finetuning only for trained layouts | N/A|
+
+
+
+## MANUAL_TRANSCRIPTION_2
+
+name: Manual Transcription
+
+uuid: 61b64899-9ea5-4911-81c5-764b24fb0f4d
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | N/A|
+| api_params | json | N/A | API Parameters | N/A|
+| task_restrictions | TaskRestrictions | N/A | Default Task Restrictions | Defines what users can access Supervision tasks for submission from a particular source or submissions matching a specific layout.|
+| manual_transcription_enabled | boolean | True | Manual Transcription Supervision | Enables manual transcription when applicable.|
+| supervision_transcription_masking | boolean | True | Supervision Transcription Masking | Prevents users from inputting invalid characters during Supervision Transcription tasks.|
+| table_output_manual_review | boolean | False | Table Output Manual Review | Always generates a table transcription task if the layout contains a table. If disabled, a table transcription task will only be generated if one or more cells have transcribed values below the defined thresholds.|
+| always_supervise_blank_cells | boolean | True | Send Blank Cells to Manual Transcription | If enabled, always send blank cells in transcribed tables to be supervised manually, regardless of confidence.|
+| notification_workflow | string | "" | Notification Flow | Notification flow name to run when the submission enters Manual Transcription|
+
+
+
+## SEGMENT_AND_OICR_2
+
+name: Segmentation and Full Page OICR
+
+uuid: c00417d3-7955-42bb-99de-10d25ad72b6a
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| app_metadata | array | N/A | App Metadata | N/A|
+| rotation_correction_enabled | boolean | True | Rotation Correction Enabled | N/A|
+| mobile_processing_enabled | boolean | False | Captured Image Enhancement | N/A|
+| page | Page | N/A | Page Object | N/A|
+
+
+
+## COB_BOX_NOTIFIER
+
+name: Box Notifier Output Block
+
+uuid: eb3cc3c6-32bf-4e8a-8b34-3ed13ccac295
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | N/A|
+| enabled | boolean | True | Enabled | Enable or disable this output block|
+| api_version | string | N/A | API Version | API version to be used for rendering payload|
+| export_type | string | N/A | Export Type | Payload rendering choice. If "Flat" is chosen, a simplified version of the payload will be sent, as described in the "flat" parameter for submission retrieval API|
+| export_routing_filter | string | null | Routing Filter | By default, status change notifications are sent for each submission processed by the system. You can filter what notifications are received through this connection by specifying an expression like has_layout_tag('some_layout_tag') or has_source_routing_tag('some_source_routing_tag')|
+| public_key_id | string | N/A | Public-Key ID | ID of the Public-key used for authentication with Box|
+| private_key | Password | N/A | Private-Key | Private key used for authentication with Box|
+| passphrase | Password | N/A | Passphrase | Passphrase used for authentication with Box|
+| client_id | string | N/A | Client ID | Client Id used for authentication with Box|
+| client_secret | Password | N/A | Client Secret | Client Secret used for authentication with Box|
+| enterprise_id | string | N/A | Enterprise ID | Enterprise Id used for authentication with Box|
+| template_key | string | "" | Box Metadata Template Key | Enter the key of the Box Metadata template that you would like to map the Hyperscience metadata to.|
+| static_output_fields_to_map | array | [] | Static Metadata Fields | Specify the Hyperscience fields you want to store in Box metadata.|
+| submission_id | string | "" | Key for Mapping Submission ID | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_id | string | "" | Key for Mapping Document ID | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| submission_state | string | "" | Key for Mapping Submission State | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_state | string | "" | Key for Mapping Document State | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| submission_exceptions | string | "" | Key for Mapping Submission Exceptions | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_exceptions | string | "" | Key for Mapping Document Exceptions | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_layout_uuid | string | "" | Key for Mapping Document Layout Uuid | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_layout_name | string | "" | Key for Mapping Document Layout Name | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| start_time | string | "" | Key for Mapping Start Time | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| complete_time | string | "" | Key for Mapping Complete Time | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_fields_template_mappings | json | {} | JSON for Additional Metadata Fields | Specify additional metadata fields using their key value. Please consult Box Integration setup manual for JSON template and instructions.|
+
+
+
+## COB_MQ_NOTIFIER
+
+name: Message Queue Notifier Output Block
+
+uuid: 28ec69fb-a2c0-41bd-8f7f-6059dce4dbb0
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | N/A|
+| enabled | boolean | True | Enabled | Enable or disable this output block|
+| api_version | string | N/A | API Version | API version to be used for rendering payload|
+| export_type | string | N/A | Export Type | Payload rendering choice. If "Flat" is chosen, a simplified version of the payload will be sent, as described in the "flat" parameter for submission retrieval API|
+| export_routing_filter | string | null | Routing Filter | By default, status change notifications are sent for each submission processed by the system. You can filter what notifications are received through this connection by specifying an expression like has_layout_tag('some_layout_tag') or has_source_routing_tag('some_source_routing_tag')|
+| MQ_TYPE | string | "ACTIVE_MQ" | Message Queue type | N/A|
+| MQ_NO_AUTH_REQUIRED | boolean | False | No auth credentials required | N/A|
+| MQ_USERNAME | string | null | Username | N/A|
+| MQ_PASSWORD | Password | null | Password | N/A|
+| MQ_QUEUE_NAME | string | null | Queue Name | N/A|
+| MQ_HOST | string | null | Host Name | N/A|
+| MQ_REGION | string | null | AWS Region | N/A|
+| MQ_QUEUE_URL | string | null | Queue URL | N/A|
+| MQ_MESSAGE_GROUP_ID | string | null | Group ID for FIFO queues | Group ID for FIFO queues|
+| MQ_USE_EC2_INSTANCE_CREDENTIALS | boolean | True | Use AWS EC2 Instance IAM Role Credentials | If selected, credentials are obtained from the EC2 instance directly, and the AWS Access Key ID and Secret Key are not used.|
+| MQ_PORT | integer | 1415 | Port Number | N/A|
+| MQ_QUEUE_MANAGER | string | null | Queue Manager | N/A|
+| MQ_CHANNEL | string | null | Channel | N/A|
+| MQ_SSL_CIPHER_SUITE | string | null | SSL cipher suite | SSL cipher suite to use if SSL connection is used|
+| MQ_VIRTUAL_HOST | string | null | Virtual Host | N/A|
+| MQ_EXCHANGE | string | "" | Exchange | N/A|
+| MQ_ROUTING_KEY | string | null | Routing key | N/A|
+
+
+
+## COB_EXPORT_UIPATH
+
+name: UiPath Notifier Output Block
+
+uuid: 78008a6d-d17b-4351-a38f-e2e64f5bd8b5
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | N/A|
+| enabled | boolean | True | Enabled | Enable or disable this output block|
+| api_version | string | N/A | API Version | API version to be used for rendering payload|
+| export_type | string | N/A | Export Type | Payload rendering choice. If "Flat" is chosen, a simplified version of the payload will be sent, as described in the "flat" parameter for submission retrieval API|
+| export_routing_filter | string | null | Routing Filter | By default, status change notifications are sent for each submission processed by the system. You can filter what notifications are received through this connection by specifying an expression like has_layout_tag('some_layout_tag') or has_source_routing_tag('some_source_routing_tag')|
+| url | string | N/A | URL | Base URL of the uipath instance|
+| organization_unit_id | string | null | Organization unit id | Organization unit id|
+| tenant | string | N/A | Tenant | Tenant|
+| username | string | N/A | Username | Username|
+| password | Password | N/A | Password | Password|
+| queue | string | N/A | Queue | Queue|
+
+
+
+## SUBMISSION_COMPLETE_3
+
+name: Complete
+
+uuid: cf0d8e8e-b736-46aa-bef1-5f4447a2d505
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | N/A|
+| payload | json | N/A | Transformed Output | N/A|
+| nlc_qa_sampling_ratio | Percentage | 0.05 | QA sample rate | Defines the percentage of documents sampled for Classification QA.|
+| field_id_qa_enabled | boolean | True | Quality Assurance | N/A|
+| field_id_qa_sampling_ratio | Percentage | 0.05 | QA sample rate | Defines the percentage of documents sampled for Identification QA.|
+| table_id_qa_enabled | boolean | True | TABLE IDENTIFICATION QUALITY ASSURANCE | Allows users to verify the location of table cells.|
+| table_id_qa_sampling_ratio | Percentage | 0.05 | TABLE IDENTIFICATION QA SAMPLE RATE | Defines the percentage of tables the system samples for QA.|
+| transcription_qa_enabled | boolean | True | Quality Assurance | N/A|
+| transcription_qa_sampling_ratio | Percentage | 0.05 | QA sample rate | Defines the percentage of fields sampled for Transcription QA.|
+| table_cell_transcription_qa_enabled | boolean | True | Table Transcription Quality Assurance | N/A|
+| table_cell_transcription_qa_sample_rate | Percentage | 0.05 | Table Transcription QA Sample Rate | Defines the percentage of cells the system samples for QA. This value is likely to be lower than "Transcription QA Sample Rate" since there are more table cells than fields on any given page.|
+
+
+
+## COB_HTTP_EXPORT
+
+name: HTTP Notifier Output Block
+
+uuid: 815e1ce8-83a2-48fc-b3bb-53b37e8cc33a
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | N/A|
+| enabled | boolean | True | Enabled | Enable or disable this output block|
+| api_version | string | N/A | API Version | API version to be used for rendering payload|
+| export_type | string | N/A | Export Type | Payload rendering choice. If "Flat" is chosen, a simplified version of the payload will be sent, as described in the "flat" parameter for submission retrieval API|
+| export_routing_filter | string | null | Routing Filter | By default, status change notifications are sent for each submission processed by the system. You can filter what notifications are received through this connection by specifying an expression like has_layout_tag('some_layout_tag') or has_source_routing_tag('some_source_routing_tag')|
+| endpoint | string | N/A | Endpoint URL | URL that output notifications will be posted to|
+| authorization_type | string | "none" | Authorization type | Type of authorization|
+| authorization_header | Password | null | Authorization header | Authorization header to be set in the notification request|
+| auth_url | string | null | OAuth2 authorization URL | The endpoint for the authorization server|
+| client_id | string | null | Client ID | The client identifier issued to the client during the application registration process|
+| client_secret | Password | null | Client Secret | The client secret issued to the client during the application registration process|
+| audience | string | null | Audience | Resource service URL where token will be valid|
+
+
+
+## MACHINE_IDENTIFICATION_3
+
+name: Machine Identification
+
+uuid: 7ea6fcc1-47ac-406d-b82c-e72371e6eda6
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | Submission object|
+| api_params | json | N/A | API Parameters | N/A|
+| field_id_target_accuracy | Percentage | 0.95 | Field ID Target Accuracy | Field ID Target Accuracy|
+| table_id_target_accuracy | Percentage | 0.96 | Table ID Target Accuracy | Table ID Target Accuracy|
+| manual_field_id_enabled | boolean | True | Manual Field Identification Supervision | Enables manual identification when applicable|
+
+
+
+## MANUAL_IDENTIFICATION_3
+
+name: Manual Identification
+
+uuid: 0eab3750-0abb-4d02-a585-7e7e43e9cffe
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | Submission object|
+| layout_release_uuid | ReleaseUUID | N/A | Layout Release UUID | Layout Release UUID|
+| api_params | json | N/A | API Parameters | N/A|
+| task_restrictions | TaskRestrictions | N/A | Default Task Restrictions | Defines what users can access Supervision tasks created by this block|
+| manual_field_id_enabled | boolean | True | Manual Field Identification Supervision | Enables manual identification when applicable|
+| notification_workflow | string | "" | Notification Flow | Notification flow name to run when the submission enters Manual Identification|
+
+
+
+## SUBMISSION_BOOTSTRAP_2
+
+name: Submission Initialization
+
+uuid: f0028612-775c-42b3-92df-848db8c8d530
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| $trigger | object | N/A | Trigger | Trigger|
+| workflow_uuid | uuid | N/A | Workflow Version UUID | UUID of the triggered workflow version|
+| workflow_name | string | N/A | Workflow name | Name of the triggered workflow|
+| workflow_version | integer | N/A | Workflow version | Version of the triggered workflow|
+| s3_config | object | N/A | S3 Submission Retrieval Store | Specify Amazon S3 credentials for submission retrieval store. Expects a json expression: {"aws_access_key_id": "X", "aws_secret_access_key": "Y"}|
+| s3_endpoint_url | string | N/A | S3 Submission Retrieval Endpoint URL | Endpoint URL for S3 submission retrieval store|
+| ocs_config | object | N/A | OCS Configuration | OCS Configuration for downloading submission data|
+| layout_release_uuid | uuid | N/A | Layout Release UUID | Layout Release UUID at submission creation time|
+| notification_workflow | string | "" | Notification Flow | Notification flow name to run when the submission is initialized|
+
+
+
+## FLEXIBLE_EXTRACTION
+
+name: Flexible Extraction
+
+uuid: efda60f7-4150-4164-b191-312ad1512314
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| layout_release_uuid | ReleaseUUID | N/A | Layout Release UUID | Layout Release UUID|
+| submission | Submission | N/A | Submission Object | N/A|
+| api_params | json | N/A | API Parameters | N/A|
+| task_restrictions | TaskRestrictions | N/A | Default Task Restrictions | Defines what users can access Supervision tasks created by this block.|
+| supervision_transcription_masking | boolean | True | Flexible Extraction Transcription Masking | Prevents users from inputting invalid characters during the Flexible Extraction task.|
+| notification_workflow | string | "" | Notification Flow | Notification flow name to run when the submission enters Flexible Extraction|
+
+
+
+## MACHINE_COLLATION_2
+
+name: Machine Collation
+
+uuid: d21063fa-f79d-4b55-a48a-801b61a9e270
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | Submission object|
+| cases | array | N/A | Cases information | This parameter accepts an array of JSON objects that contain information on how Cases should be created. There are two ways to collate a case: by the filenames specified in the current Submission, or by the ids of the Documents or Pages submitted in previous submissions.|
+| dedupe_files | boolean | False | Replace case data from duplicate file names | Enabling this setting will replace case data from repeated file names within the same case. Cases will retain data from the most recently submitted version of a particular file. Note that this setting does not delete the old data, it just removes it from the case|
+
+

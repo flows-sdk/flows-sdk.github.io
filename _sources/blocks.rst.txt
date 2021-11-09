@@ -1,7 +1,0 @@
-blocks.py
-===========
-
-.. automodule:: flows_sdk.blocks
-   :members:
-   :undoc-members:
-
