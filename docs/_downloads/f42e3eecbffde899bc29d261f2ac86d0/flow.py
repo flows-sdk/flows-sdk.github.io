@@ -3,6 +3,7 @@ from uuid import UUID
 from flows_sdk import utils
 from flows_sdk.blocks import CodeBlock
 from flows_sdk.flows import Flow, Manifest, Parameter
+from flows_sdk.package_utils import export_flow
 
 # Flow identifiers are globally unique
 # New versions in case of backward incompatibility are expected to have a different name
@@ -47,3 +48,7 @@ def sample_flow_with_secret() -> Flow:
         uuid=HELLO_FLOW_UUID,
         input={FlowInputs.HELLO_INPUT: 'World'},
     )
+
+
+if __name__ == '__main__':
+    export_flow(flow=entry_point_flow())

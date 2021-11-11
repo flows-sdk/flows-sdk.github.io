@@ -87,18 +87,31 @@
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.blocks.</span></span><span class="sig-name descname"><span class="pre">Block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.Block" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Base structure representing an executable within a Hyperscience deployment.
-Available blocks can be found in the <a class="reference internal" href="block-library.html"><span class="doc">Block Library</span></a>. Available blocks depend on the version of
-the underlying Hyperscience platform, but additional blocks may have also been manually installed.</p>
+Available blocks can be found in the <a class="reference internal" href="block-library.html"><span class="doc">Block Library</span></a>. Available blocks depend on the
+version of the underlying Hyperscience platform, but additional blocks may have also been
+manually installed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier on a per-Flow basis, used to identify the concrete block
-within a Flow (e.g., in order to reference the outputs of a concrete block)</p></li>
-<li><p><strong>identifier</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – block implementation that will be used at runtime (e.g., <cite>MACHINE_CLASSIFICATION</cite>).
-Multiple blocks with same identifier can be present in a Flow.</p></li>
-<li><p><strong>input</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – inputs being passed during execution of the Block. Can both have static values (e.g. <code class="code docutils literal notranslate"><span class="pre">&quot;foo&quot;,</span> <span class="pre">42</span></code>)
-or various dynamic values (e.g., output from a previously executed block). Most blocks have mandatory
-inputs. Concrete inputs required can be found based on the identifier.</p></li>
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier on a per-Flow basis, used to identify the concrete
+block within a Flow (e.g., in order to reference the outputs of a concrete block)</p></li>
+<li><p><strong>identifier</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – block implementation that will be used at runtime
+(e.g., <cite>MACHINE_CLASSIFICATION</cite>). Multiple blocks with same identifier
+can be present in a Flow. See the list of available block identifiers
+in the <a class="reference internal" href="block-library.html"><span class="doc">Block Library</span></a>.</p></li>
+<li><p><strong>input</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – <p>key-value dict being passed during execution of the Block.
+Can both have static values or various dynamic values (e.g., output from a previously
+executed block, see <a class="reference internal" href="#flows_sdk.blocks.Block.output" title="flows_sdk.blocks.Block.output"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block.output()</span></code></a>). Most blocks have mandatory
+inputs, depending on their identifier. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="n">some_previous_block</span><span class="o">.</span><span class="n">output</span><span class="p">(),</span>
+    <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="n">another_previous_block</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;nested.path&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
 <li><p><strong>title</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – UI-visible title of the block.</p></li>
 <li><p><strong>description</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Description of the block. Both useful for documentation purpose and visible
 to users in the Flow studio.</p></li>
@@ -108,19 +121,18 @@ to users in the Flow studio.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="flows_sdk.blocks.Block.output">
 <span class="sig-name descname"><span class="pre">output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.Block.output" title="Permalink to this definition"></a></dt>
-<dd><p>Used to referencethe output of a block that has already been executed.
+<dd><p>Used to reference the output of a block that has already been executed.
 For example, if we have a Flow with two blocks, the second can reference
 the output of the first as part of its inputs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>key</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – When not provided, the entire output of the referenced block will be passed along.
-When provided, will pass a concrete key from the output (e.g. for an output like
-<cite>{“a”: 42}</cite>, calling <cite>output()</cite> will pass it as a dictionary, while calling
-<cite>output(“a”)</cite> will pass <cite>42</cite>.
-)</p>
+<dd class="field-odd"><p><strong>key</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – When not provided, the entire output of the referenced block will be
+passed along. When provided, will pass a concrete key from the output
+(e.g. for an output like <code class="docutils literal notranslate"><span class="pre">{&quot;a&quot;:</span> <span class="pre">42}</span></code>, calling <code class="docutils literal notranslate"><span class="pre">output()</span></code> will pass it
+as a dictionary, while calling <code class="docutils literal notranslate"><span class="pre">output(&quot;a&quot;)</span></code> will pass <code class="docutils literal notranslate"><span class="pre">42</span></code>.)</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a string-formatted reference that will be unpacked to a concrete value during runtime.</p>
+<dd class="field-even"><p>a string-formatted reference that will be unpacked to a value during runtime.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>str</p>
@@ -152,80 +164,62 @@ When provided, will pass a concrete key from the output (e.g. for an output like
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="flows_sdk.blocks.Block.render_self">
-<span class="sig-name descname"><span class="pre">render_self</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.Block.render_self" title="Permalink to this definition"></a></dt>
-<dd><p>Dictionary representation of the Block.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the instance as a serializable dictionary.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Dict[str, Any]</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="flows_sdk.blocks.CodeBlock">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.blocks.</span></span><span class="sig-name descname"><span class="pre">CodeBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.CodeBlock" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
-<p>Code blocks are a special type of block that can run custom python code on the Hyperscience platform.
-The code will be serialized, then, as part of a Flow run, executed on an isolated environment and will not have access
+<p>Code blocks are a special type of block that can run custom python code on
+the Hyperscience platform. Code will be serialized, then, as part of a Flow run,
+executed on an isolated environment and will not have access
 to dependencies outside of basic ones like the standard python library.</p>
-<p>Lambda functions are executed in the context of the execution engine itself (less overhead, but cannot be scaled)
+<p>Lambda functions are executed in the context of the execution engine itself
+(less overhead, but cannot be scaled)
 Code functions are executed in a dedicated container (more overhead, can scale horizontally)</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="flows_sdk.blocks.CodeBlock.format_code">
-<span class="sig-name descname"><span class="pre">format_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.CodeBlock.format_code" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
-</dd>
-</dl>
-</dd></dl>
+<p>Example usage with a code function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">code_fn</span><span class="p">(</span><span class="n">a_static_input</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">a_dynamic_input</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Hello </span><span class="si">{</span><span class="n">code_block_input_param</span><span class="si">}</span><span class="s1">&#39;</span>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="flows_sdk.blocks.CodeBlock.generate_code_from_template">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">generate_code_from_template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_imports</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.CodeBlock.generate_code_from_template" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="flows_sdk.blocks.CodeBlock.get_short_lambda_source">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_short_lambda_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lambda_func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.CodeBlock.get_short_lambda_source" title="Permalink to this definition"></a></dt>
-<dd><p>Return the source of a (short) lambda function.
-If it’s impossible to obtain, returns None.
-Slightly refactored from: <a class="reference external" href="http://disq.us/p/1vq0bes">http://disq.us/p/1vq0bes</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
+<span class="n">function_ccb</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
+    <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;example_function_ccb&#39;</span><span class="p">,</span>
+    <span class="n">code</span><span class="o">=</span><span class="n">code_fn</span><span class="p">,</span>
+    <span class="n">code_input</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;a_static_input&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+        <span class="s1">&#39;a_dynamic_input&#39;</span><span class="p">:</span> <span class="n">some_previous_block</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;path.to.value&#39;</span><span class="p">)</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Example usage with a lambda:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lambda_ccb</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
+    <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;example_lambda_ccb&#39;</span><span class="p">,</span>
+    <span class="n">code</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a_static_input</span><span class="p">,</span> <span class="n">a_dynamic_input</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;prefix_</span><span class="si">{</span><span class="n">a_dynamic_input</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bar&#39;</span><span class="p">:</span> <span class="mi">5</span> <span class="o">+</span> <span class="n">a_static_input</span>
+    <span class="p">},</span>
+    <span class="n">code_input</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;a_static_input&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+        <span class="s1">&#39;a_dynamic_input&#39;</span><span class="p">:</span> <span class="n">some_previous_block</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;path.to.value&#39;</span><span class="p">)</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="flows_sdk.blocks.CodeBlock.output">
 <span class="sig-name descname"><span class="pre">output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.CodeBlock.output" title="Permalink to this definition"></a></dt>
-<dd><p>Used to referencethe output of a block that has already been executed.
+<dd><p>Used to reference the output of a block that has already been executed.
 For example, if we have a Flow with two blocks, the second can reference
 the output of the first as part of its inputs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>key</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – When not provided, the entire output of the referenced block will be passed along.
-When provided, will pass a concrete key from the output (e.g. for an output like
-<cite>{“a”: 42}</cite>, calling <cite>output()</cite> will pass it as a dictionary, while calling
-<cite>output(“a”)</cite> will pass <cite>42</cite>.
-)</p>
+<dd class="field-odd"><p><strong>key</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – When not provided, the entire output of the referenced block will be
+passed along. When provided, will pass a concrete key from the output
+(e.g. for an output like <code class="docutils literal notranslate"><span class="pre">{&quot;a&quot;:</span> <span class="pre">42}</span></code>, calling <code class="docutils literal notranslate"><span class="pre">output()</span></code> will pass it
+as a dictionary, while calling <code class="docutils literal notranslate"><span class="pre">output(&quot;a&quot;)</span></code> will pass <code class="docutils literal notranslate"><span class="pre">42</span></code>.)</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a string-formatted reference that will be unpacked to a concrete value during runtime.</p>
+<dd class="field-even"><p>a string-formatted reference that will be unpacked to a value during runtime.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>str</p>
@@ -243,16 +237,6 @@ When provided, will pass a concrete key from the output (e.g. for an output like
 </div>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="flows_sdk.blocks.CodeBlock.parse_source">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">parse_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.CodeBlock.parse_source" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ASTTokens</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -261,8 +245,10 @@ When provided, will pass a concrete key from the output (e.g. for an output like
 <dd><p>Bases: <a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
 <p>Fork is a system block that is used to schedule other
 blocks for parallel execution.</p>
-<p>While all branches of a Fork will be scheudled for parallel execution,
+<p>While all branches of a Fork will be scheduled for parallel execution,
 the tasks within a branch itself will be executed serially.</p>
+<p>The output of a Fork is a dictionary with key: identifier of the output block from each branch
+and value: the output from that block</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -274,10 +260,12 @@ to users in the Flow studio.</p></li>
 </ul>
 </dd>
 </dl>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span>
 
 <span class="kn">from</span> <span class="nn">flows_sdk.blocks</span> <span class="kn">import</span> <span class="n">CodeBlock</span><span class="p">,</span> <span class="n">Fork</span>
 <span class="kn">from</span> <span class="nn">flows_sdk.flows</span> <span class="kn">import</span> <span class="n">Flow</span><span class="p">,</span> <span class="n">Manifest</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.package_utils</span> <span class="kn">import</span> <span class="n">export_flow</span>
 
 
 <span class="k">def</span> <span class="nf">entry_point_flow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Flow</span><span class="p">:</span>
@@ -286,11 +274,18 @@ to users in the Flow studio.</p></li>
 
 <span class="k">def</span> <span class="nf">example_flow_with_fork</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Flow</span><span class="p">:</span>
 
-    <span class="n">ccb_A</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
-        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;ccb_A&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;response from A&#39;</span><span class="p">},</span> <span class="n">code_input</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;_&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+    <span class="n">ccb_A_1</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;ccb_A_1&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;response from A 1&#39;</span><span class="p">},</span> <span class="n">code_input</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;_&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
     <span class="p">)</span>
 
-    <span class="n">branch_A</span> <span class="o">=</span> <span class="n">Fork</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span><span class="n">blocks</span><span class="o">=</span><span class="p">[</span><span class="n">ccb_A</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="n">ccb_A</span><span class="o">.</span><span class="n">_reference_name</span><span class="p">)</span>
+    <span class="n">ccb_A_2</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;ccb_A_2&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;response from A 2&#39;</span><span class="p">},</span> <span class="n">code_input</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;_&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Note that both ccb_A_1 and ccb_A_2 will be executed in this branch sequentially,</span>
+    <span class="c1"># but because of output=ccb_A_1._reference_name, only it will &quot;ccb_A_1&quot; will have its output</span>
+    <span class="c1"># as a key under &quot;fork_output&quot; (check sample output in the comment below)</span>
+    <span class="n">branch_A</span> <span class="o">=</span> <span class="n">Fork</span><span class="o">.</span><span class="n">Branch</span><span class="p">(</span><span class="n">blocks</span><span class="o">=</span><span class="p">[</span><span class="n">ccb_A_1</span><span class="p">,</span> <span class="n">ccb_A_2</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="n">ccb_A_1</span><span class="o">.</span><span class="n">_reference_name</span><span class="p">)</span>
 
     <span class="n">ccb_B</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;ccb_B&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;response from B&#39;</span><span class="p">},</span> <span class="n">code_input</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;_&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
@@ -299,14 +294,14 @@ to users in the Flow studio.</p></li>
 
     <span class="n">fork</span> <span class="o">=</span> <span class="n">Fork</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;a_fork&#39;</span><span class="p">,</span> <span class="n">branches</span><span class="o">=</span><span class="p">[</span><span class="n">branch_A</span><span class="p">,</span> <span class="n">branch_B</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="nf">print_function</span><span class="p">(</span><span class="n">fork_output</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">print_function</span><span class="p">(</span><span class="n">fork_output</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">fork_output</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="c1"># &quot;fork_output&quot;: {</span>
-    <span class="c1">#     &quot;ccb_A&quot;: {</span>
+    <span class="c1">#  {</span>
+    <span class="c1">#     &quot;ccb_A_1&quot;: {</span>
     <span class="c1">#        &quot;result&quot;: {</span>
-    <span class="c1">#           &quot;a&quot;: &quot;response from A&quot;</span>
+    <span class="c1">#           &quot;a&quot;: &quot;response from A 1&quot;</span>
     <span class="c1">#        }</span>
     <span class="c1">#     },</span>
     <span class="c1">#     &quot;ccb_B&quot;: {</span>
@@ -329,6 +324,10 @@ to users in the Flow studio.</p></li>
         <span class="n">uuid</span><span class="o">=</span><span class="n">UUID</span><span class="p">(</span><span class="s1">&#39;3e3ab564-fcf5-41fb-a573-4bc2fd153b6d&#39;</span><span class="p">),</span>
         <span class="nb">input</span><span class="o">=</span><span class="p">{},</span>
     <span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">export_flow</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span><span class="n">entry_point_flow</span><span class="p">())</span>
+
 </pre></div>
 </div>
 <dl class="py class">
@@ -339,102 +338,13 @@ to users in the Flow studio.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>blocks</strong> (<em>Sequence</em><em>[</em><a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><em>Block</em></a><em>]</em>) – A sequence of Blocks that will be executed as part of that Fork.Branch. Should contain at least one.</p></li>
-<li><p><strong>label</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Unuque label on a per-Fork basis.</p></li>
-<li><p><strong>output</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Reference name of the Block which will be used as the output of the entire branch.
-When not provided, the output of the last block of the branch will be treated as the branch output.</p></li>
+<li><p><strong>blocks</strong> (<em>Sequence</em><em>[</em><a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><em>Block</em></a><em>]</em>) – A sequence of Blocks that will be executed as part of that Fork.Branch.
+Should contain at least one.</p></li>
+<li><p><strong>label</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – UI-visible text lable of the branch.</p></li>
+<li><p><strong>output</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Reference name of the Block which will be used as the output of the entire
+branch. When not provided, the output of the last block of the branch will be treated
+as the branch output.</p></li>
 </ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="flows_sdk.blocks.Fork.render_self">
-<span class="sig-name descname"><span class="pre">render_self</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.Fork.render_self" title="Permalink to this definition"></a></dt>
-<dd><p>Dictionary representation of the Block.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the instance as a serializable dictionary.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Dict[str, Any]</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="flows_sdk.blocks.IOBlock">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.blocks.</span></span><span class="sig-name descname"><span class="pre">IOBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.IOBlock" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
-<p>A Block that has the additional boolean property <cite>enabled</cite>.
-Used for Triggers and Outputs where enabled can be triggered via the Flow Studio UI
-and is considered during processing (e.g. only enabled Triggers can initiate Flow execution).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier on a per-Flow basis, used to identify the concrete block
-within a Flow (e.g., in order to reference the outputs of a concrete block)</p></li>
-<li><p><strong>identifier</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – block implementation that will be used at runtime (e.g., <cite>MACHINE_CLASSIFICATION</cite>).
-Multiple blocks with same identifier can be present in a Flow.</p></li>
-<li><p><strong>enabled</strong> (<em>bool</em>) – on-off state of the Block. Visualized as a checkbox and taken into account during processing.</p></li>
-<li><p><strong>input</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – inputs being passed during execution of the Block. Can both have static values (e.g. <code class="code docutils literal notranslate"><span class="pre">&quot;foo&quot;,</span> <span class="pre">42</span></code>)
-or various dynamic values (e.g., output from a previously executed block). Most blocks have mandatory
-inputs. Concrete inputs required can be found based on the identifier.</p></li>
-<li><p><strong>title</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – UI-visible title of the block.</p></li>
-<li><p><strong>description</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Description of the block. Both useful for documentation purpose and visible
-to users in the Flow studio.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="flows_sdk.blocks.IOBlock.render_self">
-<span class="sig-name descname"><span class="pre">render_self</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.IOBlock.render_self" title="Permalink to this definition"></a></dt>
-<dd><p>Dictionary representation of the Block.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the instance as a serializable dictionary.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Dict[str, Any]</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="flows_sdk.blocks.Output">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.blocks.</span></span><span class="sig-name descname"><span class="pre">Output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role_filter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.Output" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
-<p>Outut is a special block-section meant to provide an easy way for users to configure flow output connections
-through the UI. They contain a list of output blocks, that can optionally be filtered by role
-and define an input template that will wire these blocks’ inputs automatically after the user adds them.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier on a per-Flow basis, used to identify the concrete block
-within a Flow (e.g., in order to reference the outputs of a concrete block)</p></li>
-<li><p><strong>role_filter</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – [description]</p></li>
-<li><p><strong>input_template</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – [description]</p></li>
-<li><p><strong>blocks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>[<a class="reference internal" href="#flows_sdk.blocks.IOBlock" title="flows_sdk.blocks.IOBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">IOBlock</span></code></a>]) – [description]</p></li>
-<li><p><strong>title</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – UI-visible title of the block.</p></li>
-<li><p><strong>description</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Description of the block. Both useful for documentation purpose and visible
-to users in the Flow studio.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="flows_sdk.blocks.Output.render_self">
-<span class="sig-name descname"><span class="pre">render_self</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.Output.render_self" title="Permalink to this definition"></a></dt>
-<dd><p>Dictionary representation of the Block.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the instance as a serializable dictionary.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Dict[str, Any]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -445,7 +355,7 @@ to users in the Flow studio.</p></li>
 <dt class="sig sig-object py" id="flows_sdk.blocks.Routing">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.blocks.</span></span><span class="sig-name descname"><span class="pre">Routing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decision</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branches</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_branch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.Routing" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
-<p>Routing is a system Block that that executes only
+<p>Routing is a system Block that executes only
 the blocks in one of its branches that meets a condition.
 Similar in concept to a <cite>switch..case</cite> or an <cite>if/else</cite> construction.</p>
 <dl class="field-list simple">
@@ -460,7 +370,8 @@ Similar in concept to a <cite>switch..case</cite> or an <cite>if/else</cite> con
 </ul>
 </dd>
 </dl>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span>
 
 <span class="kn">from</span> <span class="nn">flows_sdk.blocks</span> <span class="kn">import</span> <span class="n">CodeBlock</span><span class="p">,</span> <span class="n">Routing</span>
 <span class="kn">from</span> <span class="nn">flows_sdk.flows</span> <span class="kn">import</span> <span class="n">Flow</span><span class="p">,</span> <span class="n">Manifest</span>
@@ -473,7 +384,9 @@ Similar in concept to a <cite>switch..case</cite> or an <cite>if/else</cite> con
 <span class="k">def</span> <span class="nf">example_flow_with_routing</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Flow</span><span class="p">:</span>
 
     <span class="n">decision_ccb</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
-        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;decision_ccb&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a_char</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;some_field&#39;</span><span class="p">:</span> <span class="n">a_char</span><span class="p">},</span> <span class="n">code_input</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a_char&#39;</span><span class="p">:</span> <span class="s1">&#39;A&#39;</span><span class="p">}</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;decision_ccb&#39;</span><span class="p">,</span>
+        <span class="n">code</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a_char</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;some_field&#39;</span><span class="p">:</span> <span class="n">a_char</span><span class="p">},</span>
+        <span class="n">code_input</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a_char&#39;</span><span class="p">:</span> <span class="s1">&#39;A&#39;</span><span class="p">},</span>
     <span class="p">)</span>
 
     <span class="n">ccb_A</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
@@ -484,16 +397,20 @@ Similar in concept to a <cite>switch..case</cite> or an <cite>if/else</cite> con
     <span class="n">ccb_B</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;ccb_B&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;response from B&#39;</span><span class="p">},</span> <span class="n">code_input</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;_&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
     <span class="p">)</span>
-    <span class="n">default_branch</span> <span class="o">=</span> <span class="n">Routing</span><span class="o">.</span><span class="n">DefaultBranch</span><span class="p">(</span><span class="n">blocks</span><span class="o">=</span><span class="p">[</span><span class="n">ccb_B</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="n">ccb_B</span><span class="o">.</span><span class="n">_reference_name</span><span class="p">)</span>
+    <span class="n">default_branch</span> <span class="o">=</span> <span class="n">Routing</span><span class="o">.</span><span class="n">DefaultBranch</span><span class="p">(</span>
+        <span class="n">blocks</span><span class="o">=</span><span class="p">[</span><span class="n">ccb_B</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="n">ccb_B</span><span class="o">.</span><span class="n">_reference_name</span>
+    <span class="p">)</span>
 
-    <span class="c1"># &#39;decision&#39; is like a switch..case statement - when a Branch &#39;case&#39;is matched,</span>
-    <span class="c1"># that branch will be executed. If no case matches, a &#39;default_branch&#39; can be defined as fallback.</span>
-    <span class="n">routing</span> <span class="o">=</span> <span class="n">Routing</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;a_routing&#39;</span><span class="p">,</span>
-                        <span class="n">decision</span><span class="o">=</span><span class="n">decision_ccb</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;some_field&#39;</span><span class="p">),</span>
-                        <span class="n">branches</span><span class="o">=</span><span class="p">[</span><span class="n">branch_A</span><span class="p">],</span>
-                        <span class="n">default_branch</span><span class="o">=</span><span class="n">default_branch</span><span class="p">)</span>
+    <span class="c1"># &#39;decision&#39; is like a switch..case statement - when a Branch &#39;case&#39; is matched, it will be</span>
+    <span class="c1"># scheduled for execution. If no case matches, a &#39;default_branch&#39; can be defined as fallback.</span>
+    <span class="n">routing</span> <span class="o">=</span> <span class="n">Routing</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;a_routing&#39;</span><span class="p">,</span>
+        <span class="n">decision</span><span class="o">=</span><span class="n">decision_ccb</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;some_field&#39;</span><span class="p">),</span>
+        <span class="n">branches</span><span class="o">=</span><span class="p">[</span><span class="n">branch_A</span><span class="p">],</span>
+        <span class="n">default_branch</span><span class="o">=</span><span class="n">default_branch</span><span class="p">,</span>
+    <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">print_function</span><span class="p">(</span><span class="n">routing_output</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">print_function</span><span class="p">(</span><span class="n">routing_output</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">routing_output</span><span class="p">)</span>
         <span class="k">return</span>
 
@@ -503,7 +420,9 @@ Similar in concept to a <cite>switch..case</cite> or an <cite>if/else</cite> con
     <span class="c1">#       }</span>
     <span class="c1">#    }</span>
     <span class="n">print_ccb</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
-        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;print_ccb&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="n">print_function</span><span class="p">,</span> <span class="n">code_input</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;routing_output&#39;</span><span class="p">:</span> <span class="n">routing</span><span class="o">.</span><span class="n">output</span><span class="p">()}</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;print_ccb&#39;</span><span class="p">,</span>
+        <span class="n">code</span><span class="o">=</span><span class="n">print_function</span><span class="p">,</span>
+        <span class="n">code_input</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;routing_output&#39;</span><span class="p">:</span> <span class="n">routing</span><span class="o">.</span><span class="n">output</span><span class="p">()},</span>
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Flow</span><span class="p">(</span>
@@ -526,11 +445,13 @@ Similar in concept to a <cite>switch..case</cite> or an <cite>if/else</cite> con
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>case</strong> (<em>str</em>) – case that must be matched in order for this branch to be scheduled for execution.</p></li>
+<li><p><strong>case</strong> (<em>str</em>) – case that must be matched in order for this branch to be scheduled for
+execution.</p></li>
 <li><p><strong>blocks</strong> (<em>Sequence</em><em>[</em><a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><em>Block</em></a><em>]</em>) – sequence of blocks to be executed as part of this branch</p></li>
 <li><p><strong>label</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – UI-visible text lable of the branch</p></li>
-<li><p><strong>output</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Reference name of the Block which will be used as the output of the entire branch.
-When not provided, the output of the last block of the branch will be treated as the branch output.</p></li>
+<li><p><strong>output</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Reference name of the Block which will be used as the output of the entire
+branch. When not provided, the output of the last block of the branch will be treated
+as the branch output.</p></li>
 </ul>
 </dd>
 </dl>
@@ -550,25 +471,58 @@ When not provided, the output of the last block of the branch will be treated as
 <dt class="sig sig-object py" id="flows_sdk.blocks.Routing.DefaultBranch">
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">DefaultBranch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blocks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.Routing.DefaultBranch" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks._Branch</span></code></p>
-<p>Same as Routing.Branch, but without a case.
+<p>Same as <a class="reference internal" href="#flows_sdk.blocks.Routing.Branch" title="flows_sdk.blocks.Routing.Branch"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Routing.Branch</span></code></a>, but without a case.
 DefaultBranch is optionally provided and executed as a fallback when there is no
 matching case from other branches.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="flows_sdk.blocks.Routing.render_self">
-<span class="sig-name descname"><span class="pre">render_self</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.Routing.render_self" title="Permalink to this definition"></a></dt>
-<dd><p>Dictionary representation of the Block.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flows_sdk.blocks.IOBlock">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.blocks.</span></span><span class="sig-name descname"><span class="pre">IOBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.IOBlock" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
+<p>A Block that has the additional boolean property <cite>enabled</cite>.
+Used for Triggers and Outputs where enabled can be triggered via the Flow Studio UI
+and is considered during processing (e.g. only enabled Triggers can initiate Flow execution).</p>
+<p>See <a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a> for description of the inherited parameters.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the instance as a serializable dictionary.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Dict[str, Any]</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>enabled</strong> (<em>bool</em>) – on-off state of the Block.
+Visualized as a checkbox and taken into account during processing.</p>
 </dd>
 </dl>
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="flows_sdk.blocks.Output">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.blocks.</span></span><span class="sig-name descname"><span class="pre">Output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role_filter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.Output" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
+<p>Output is a special block-section meant to provide an easy way for users to configure
+Flow output connections through the UI. They contain a list of output blocks, that can
+optionally be filtered by role and define an input template that will wire these blocks’
+inputs automatically after the user adds them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier on a per-Flow basis, used to identify the
+concrete block within a Flow (e.g., in order to reference the outputs of a concrete block)</p></li>
+<li><p><strong>role_filter</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Serves as an instruction to the UI for what blocks are allowed in
+this output section, since not all output blocks will be suitable for all flows.
+UI will allow adding only blocks that have all listed roles.
+If empty, blocks with any role will be allowed.</p></li>
+<li><p><strong>input_template</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – Used by the UI to automatically pre-populate the input of
+newly added blocks. Thus the Flow designer can define the wiring of output blocks
+to the results from previous blocks in the Flow, while allowing the user
+to add or remove output blocks via the UI.</p></li>
+<li><p><strong>blocks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>[<a class="reference internal" href="#flows_sdk.blocks.IOBlock" title="flows_sdk.blocks.IOBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">IOBlock</span></code></a>]) – List of output IOBlocks for sending results to external systems.
+Can be empty, since the outputs within an Outputs section are editable in Flow studio.</p></li>
+<li><p><strong>title</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – UI-visible title of the block.</p></li>
+<li><p><strong>description</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Description of the block. Both useful for documentation purpose and visible
+to users in the Flow studio.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -595,6 +549,303 @@ matching case from other branches.</p>
 <dt class="sig sig-object py" id="flows_sdk.flows.Dependency.override">
 <em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">override</span></span><em class="property"><span class="pre">:</span> <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Dependency.override" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py pydantic_model">
+<dt class="sig sig-object py" id="flows_sdk.flows.Parameter">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">Parameter</span></span><a class="headerlink" href="#flows_sdk.flows.Parameter" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows._BaseModel</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.dependencies" title="flows_sdk.flows.Parameter.dependencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dependencies</span> <span class="pre">(Optional[List[flows_sdk.flows.Dependency]])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.description" title="flows_sdk.flows.Parameter.description"><code class="xref py py-obj docutils literal notranslate"><span class="pre">description</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.json_schema" title="flows_sdk.flows.Parameter.json_schema"><code class="xref py py-obj docutils literal notranslate"><span class="pre">json_schema</span> <span class="pre">(Optional[Dict[str,</span> <span class="pre">Any]])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.name" title="flows_sdk.flows.Parameter.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.optional" title="flows_sdk.flows.Parameter.optional"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.secret" title="flows_sdk.flows.Parameter.secret"><code class="xref py py-obj docutils literal notranslate"><span class="pre">secret</span> <span class="pre">(Optional[bool])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.title" title="flows_sdk.flows.Parameter.title"><code class="xref py py-obj docutils literal notranslate"><span class="pre">title</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.type" title="flows_sdk.flows.Parameter.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.ui" title="flows_sdk.flows.Parameter.ui"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ui</span> <span class="pre">(Optional[Dict[str,</span> <span class="pre">Any]])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.value" title="flows_sdk.flows.Parameter.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span> <span class="pre">(Any)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.dependencies">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">dependencies</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.flows.Dependency" title="flows_sdk.flows.Dependency"><span class="pre">flows_sdk.flows.Dependency</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.dependencies" title="Permalink to this definition"></a></dt>
+<dd><p>Internal mechanism for describing dependencies between fields (e.g. show A when B is checked,
+hide A when B is unchecked</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.description">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.description" title="Permalink to this definition"></a></dt>
+<dd><p>UI-visible description of the field</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.json_schema">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">json_schema</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><em class="property"> <span class="pre">(alias</span> <span class="pre">'schema')</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.json_schema" title="Permalink to this definition"></a></dt>
+<dd><p>Defines a format for the field using the JSON Schema specification
+(<a class="reference external" href="https://json-schema.org/understanding-json-schema/">https://json-schema.org/understanding-json-schema/</a>).
+Field values will be validated against this format when a flow is imported or edited.</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.name">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.name" title="Permalink to this definition"></a></dt>
+<dd><p>Must be a valid Python identifier</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.optional">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">optional</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.optional" title="Permalink to this definition"></a></dt>
+<dd><p>True when the field can be omitted, False when it is mandatory.
+The default value is False, i.e. if the <cite>optional</cite> flag is not specified,
+the field will be considered mandatory.</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.secret">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">secret</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.secret" title="Permalink to this definition"></a></dt>
+<dd><p>UI-hint that the field should be presented as a secret (hidden symbols)
+rather than plain text.</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.title">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.title" title="Permalink to this definition"></a></dt>
+<dd><p>UI-visible representation of the field name</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.type">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.type" title="Permalink to this definition"></a></dt>
+<dd><p>Json-schema-like type (e.g. string, integer, number, array, object…)
+Between Hyperscience platform versions there are also extensions like:</p>
+<ul class="simple">
+<li><p>Percentage (number between 0 and 1)</p></li>
+<li><p>UUID (string in UUID format or null)</p></li>
+<li><p>MultilineText (string, but represented as multiline text box in Flow studio)</p></li>
+</ul>
+<p>Depending on the Hyperscience version, other supported types may also exist,
+some of which allow for specific rendering in UI.</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.ui">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">ui</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.ui" title="Permalink to this definition"></a></dt>
+<dd><p>Presentation-related customizations for the field</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.value">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="pre">:</span> <span class="pre">Any</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.value" title="Permalink to this definition"></a></dt>
+<dd><p>Optional default value of the field,
+used when its value is not specified explicitly in the inputs</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py pydantic_model">
+<dt class="sig sig-object py" id="flows_sdk.flows.InputDefinition">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">InputDefinition</span></span><a class="headerlink" href="#flows_sdk.flows.InputDefinition" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows._BaseModel</span></code></p>
+<p>Declaratively defines what parameters are expected, usually part of a Manifest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#flows_sdk.flows.InputDefinition.input" title="flows_sdk.flows.InputDefinition.input"><code class="xref py py-obj docutils literal notranslate"><span class="pre">input</span> <span class="pre">(List[flows_sdk.flows.Parameter])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.InputDefinition.ui" title="flows_sdk.flows.InputDefinition.ui"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ui</span> <span class="pre">(Optional[Dict[str,</span> <span class="pre">Any]])</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Validators</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_input</span></code> » <a class="reference internal" href="#flows_sdk.flows.InputDefinition.input" title="flows_sdk.flows.InputDefinition.input"><code class="xref py py-obj docutils literal notranslate"><span class="pre">input</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.InputDefinition.input">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">input</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.flows.Parameter" title="flows_sdk.flows.Parameter"><span class="pre">flows_sdk.flows.Parameter</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.InputDefinition.input" title="Permalink to this definition"></a></dt>
+<dd><p>All parameters that are part of this definition</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_input</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.InputDefinition.ui">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">ui</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.InputDefinition.ui" title="Permalink to this definition"></a></dt>
+<dd><p>Presentation-related customizations for how fields are grouped together.
+ui[‘groups’] defines how fields are grouped together in the UI and specifies the group titles.
+groups are optional - if omitted, every input field is listed in the “default” group.
+If any fields are not included in any group, then they are shown as part of the “default”
+group of non-nested fields.</p>
+<p>example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ui</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">groups</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="n">title</span><span class="p">:</span> <span class="s1">&#39;Group 1&#39;</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s1">&#39;layout_release_uuid&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;policy&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="n">title</span><span class="p">:</span> <span class="s1">&#39;Group 2&#39;</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">],</span>
+    <span class="p">},</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py pydantic_model">
+<dt class="sig sig-object py" id="flows_sdk.flows.Manifest">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">Manifest</span></span><a class="headerlink" href="#flows_sdk.flows.Manifest" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#flows_sdk.flows.InputDefinition" title="flows_sdk.flows.InputDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows.InputDefinition</span></code></a></p>
+<p>Describes how the Flow studio should present the Flow/Block.
+The parameters are displayed in the Flow studio and can be futher customized into sections via.
+the <cite>ui</cite> section.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#flows_sdk.flows.Manifest.enable_overrides" title="flows_sdk.flows.Manifest.enable_overrides"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_overrides</span> <span class="pre">(Optional[bool])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Manifest.identifier" title="flows_sdk.flows.Manifest.identifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">identifier</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Manifest.output" title="flows_sdk.flows.Manifest.output"><code class="xref py py-obj docutils literal notranslate"><span class="pre">output</span> <span class="pre">(Optional[List[flows_sdk.flows.Parameter]])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Manifest.roles" title="flows_sdk.flows.Manifest.roles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">roles</span> <span class="pre">(List[str])</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Validators</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_output</span></code> » <a class="reference internal" href="#flows_sdk.flows.Manifest.output" title="flows_sdk.flows.Manifest.output"><code class="xref py py-obj docutils literal notranslate"><span class="pre">output</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Manifest.enable_overrides">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">enable_overrides</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.Manifest.enable_overrides" title="Permalink to this definition"></a></dt>
+<dd><p>UI representation of overrides if present.
+This requires additional API calls and should generally be set to True only when overrides
+are defined
+Advanced functionality, contact Hyperscience if you think you need it!</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Manifest.identifier">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">identifier</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Manifest.identifier" title="Permalink to this definition"></a></dt>
+<dd><p>Globally-unique identifier of the block/flow</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Manifest.output">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.flows.Parameter" title="flows_sdk.flows.Parameter"><span class="pre">flows_sdk.flows.Parameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#flows_sdk.flows.Manifest.output" title="Permalink to this definition"></a></dt>
+<dd><p>Documents the outputs of the block/flow. For the time being, used for documentation
+purposes only.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_output</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Manifest.roles">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">roles</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#flows_sdk.flows.Manifest.roles" title="Permalink to this definition"></a></dt>
+<dd><p>Allows for “tagging” blocks/flows, used by internal features.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py pydantic_model">
+<dt class="sig sig-object py" id="flows_sdk.flows.Triggers">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">Triggers</span></span><a class="headerlink" href="#flows_sdk.flows.Triggers" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows._BaseModel</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.api_params_manifest" title="flows_sdk.flows.Triggers.api_params_manifest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">api_params_manifest</span> <span class="pre">(Optional[flows_sdk.flows.InputDefinition])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.blocks" title="flows_sdk.flows.Triggers.blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">blocks</span> <span class="pre">(List[flows_sdk.blocks.IOBlock])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.description" title="flows_sdk.flows.Triggers.description"><code class="xref py py-obj docutils literal notranslate"><span class="pre">description</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.processing_block" title="flows_sdk.flows.Triggers.processing_block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">processing_block</span> <span class="pre">(Optional[flows_sdk.blocks.Block])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.reference_name" title="flows_sdk.flows.Triggers.reference_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reference_name</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.role_filter" title="flows_sdk.flows.Triggers.role_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">role_filter</span> <span class="pre">(Optional[List[str]])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.title" title="flows_sdk.flows.Triggers.title"><code class="xref py py-obj docutils literal notranslate"><span class="pre">title</span> <span class="pre">(str)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.api_params_manifest">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">api_params_manifest</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.flows.InputDefinition" title="flows_sdk.flows.InputDefinition"><span class="pre">flows_sdk.flows.InputDefinition</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.api_params_manifest" title="Permalink to this definition"></a></dt>
+<dd><p>[deprecated] Defines a shared inputs between all Triggers. Will be replaced in r33+</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.blocks">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">blocks</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.blocks.IOBlock" title="flows_sdk.blocks.IOBlock"><span class="pre">flows_sdk.blocks.IOBlock</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.blocks" title="Permalink to this definition"></a></dt>
+<dd><p>List of trigger blocks used to initiate the Flow. Can be empty and is modifiable by the
+Flow studio.</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.description">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.description" title="Permalink to this definition"></a></dt>
+<dd><p>User-facing description</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.processing_block">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">processing_block</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><span class="pre">flows_sdk.blocks.Block</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.processing_block" title="Permalink to this definition"></a></dt>
+<dd><p>[deprecated] A block that is executed after the Flow is triggered, but before other
+blocks in the Flow. Instead, add a block in the Flow itself.</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.reference_name">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">reference_name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.reference_name" title="Permalink to this definition"></a></dt>
+<dd><p>unique reference on a per-Flow basis</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.role_filter">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">role_filter</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.role_filter" title="Permalink to this definition"></a></dt>
+<dd><p>Lists the roles that blocks used within this triggers section should have.
+Blocks should have all listed roles to be compatible. If empty, blocks with any role can be
+used.</p>
+</dd></dl>
+
+<dl class="py pydantic_field">
+<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.title">
+<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.title" title="Permalink to this definition"></a></dt>
+<dd><p>User-facing title</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.flows.Triggers.render" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -652,7 +903,8 @@ matching case from other branches.</p>
 <dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.input">
 <em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">input</span></span><em class="property"><span class="pre">:</span> <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">{}</span></em><a class="headerlink" href="#flows_sdk.flows.Flow.input" title="Permalink to this definition"></a></dt>
-<dd><p>Key-value pairs for top-level inputs of the flow. Their types / UI representations are part of the Manifest.</p>
+<dd><p>Key-value pairs for top-level inputs of the flow. Their types / UI representations are part
+of the Manifest.</p>
 </dd></dl>
 
 <dl class="py pydantic_field">
@@ -668,7 +920,7 @@ matching case from other branches.</p>
 <dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.owner_email">
 <em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">owner_email</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Flow.owner_email" title="Permalink to this definition"></a></dt>
-<dd><p>an email address where the creator of the Flow can be reached.</p>
+<dd><p>An email address where the creator of the Flow can be reached.</p>
 </dd></dl>
 
 <dl class="py pydantic_field">
@@ -686,7 +938,7 @@ matching case from other branches.</p>
 <dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.uuid">
 <em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">uuid</span></span><em class="property"><span class="pre">:</span> <span class="pre">uuid.UUID</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Flow.uuid" title="Permalink to this definition"></a></dt>
-<dd><p>unique identifier of the Flow. Should usually be a static value,
+<dd><p>Unique identifier of the Flow. Should usually be a static value,
 allowing for iteration over the same Flow in Hyperscience.</p>
 </dd></dl>
 
@@ -698,313 +950,6 @@ allowing for iteration over the same Flow in Hyperscience.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.render">
 <span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.flows.Flow.render" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py pydantic_model">
-<dt class="sig sig-object py" id="flows_sdk.flows.InputDefinition">
-<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">InputDefinition</span></span><a class="headerlink" href="#flows_sdk.flows.InputDefinition" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows._BaseModel</span></code></p>
-<p>Declaratively defines what parameters are expected, usually part of a Manifest.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>input</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p></li>
-<li><p><strong>ui</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p></li>
-</ul>
-</dd>
-<dt class="field-even">Fields</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="#flows_sdk.flows.InputDefinition.input" title="flows_sdk.flows.InputDefinition.input"><code class="xref py py-obj docutils literal notranslate"><span class="pre">input</span> <span class="pre">(List[flows_sdk.flows.Parameter])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.InputDefinition.ui" title="flows_sdk.flows.InputDefinition.ui"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ui</span> <span class="pre">(Optional[Dict[str,</span> <span class="pre">Any]])</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Validators</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#flows_sdk.flows.InputDefinition.validate_input" title="flows_sdk.flows.InputDefinition.validate_input"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_input</span></code></a> » <a class="reference internal" href="#flows_sdk.flows.InputDefinition.input" title="flows_sdk.flows.InputDefinition.input"><code class="xref py py-obj docutils literal notranslate"><span class="pre">input</span></code></a></p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.InputDefinition.input">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">input</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.flows.Parameter" title="flows_sdk.flows.Parameter"><span class="pre">flows_sdk.flows.Parameter</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.InputDefinition.input" title="Permalink to this definition"></a></dt>
-<dd><p>List of input parameters representing that are part of the definition</p>
-<dl class="field-list simple">
-<dt class="field-odd">Validated by</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#flows_sdk.flows.InputDefinition.validate_input" title="flows_sdk.flows.InputDefinition.validate_input"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_input</span></code></a></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.InputDefinition.ui">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">ui</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.InputDefinition.ui" title="Permalink to this definition"></a></dt>
-<dd><p>presentation-related customizations for how fields are grouped together.
-ui[‘groups’] defines how fields are grouped together in the UI and specifies the group titles.
-groups are optional - if omitted, every input field is listed in the “default” group.
-If any fields are not included in any group, then they are shown as part of the “default” group of non-nested fields.</p>
-<p>example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ui</span><span class="p">:</span> <span class="p">{</span>
-    <span class="n">groups</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-        <span class="n">title</span><span class="p">:</span> <span class="s1">&#39;Group 1&#39;</span><span class="p">,</span>
-        <span class="n">fields</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s1">&#39;layout_release_uuid&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;policy&#39;</span><span class="p">,</span>
-        <span class="p">],</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-        <span class="n">title</span><span class="p">:</span> <span class="s1">&#39;Group 2&#39;</span><span class="p">,</span>
-        <span class="n">fields</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">],</span>
-    <span class="p">},</span>
-    <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py pydantic_validator">
-<dt class="sig sig-object py" id="flows_sdk.flows.InputDefinition.validate_input">
-<em class="property"><span class="pre">validator</span> </em><span class="sig-name descname"><span class="pre">validate_input</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#flows_sdk.flows.InputDefinition.input" title="flows_sdk.flows.InputDefinition.input"><em class="xref py py-obj"><span class="pre">input</span></em></a><a class="headerlink" href="#flows_sdk.flows.InputDefinition.validate_input" title="Permalink to this definition"></a></dt>
-<dd><p>validates that all parameters have unique names.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#flows_sdk.flows.Parameter" title="flows_sdk.flows.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py pydantic_model">
-<dt class="sig sig-object py" id="flows_sdk.flows.Manifest">
-<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">Manifest</span></span><a class="headerlink" href="#flows_sdk.flows.Manifest" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#flows_sdk.flows.InputDefinition" title="flows_sdk.flows.InputDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows.InputDefinition</span></code></a></p>
-<p>Describes how the Flow studio should present the Flow/Block.
-The parameters are displayed in the Flow studio and can be futher customized into sections via. the <cite>ui</cite> section.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Fields</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#flows_sdk.flows.Manifest.enable_overrides" title="flows_sdk.flows.Manifest.enable_overrides"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_overrides</span> <span class="pre">(Optional[bool])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Manifest.identifier" title="flows_sdk.flows.Manifest.identifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">identifier</span> <span class="pre">(str)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Manifest.output" title="flows_sdk.flows.Manifest.output"><code class="xref py py-obj docutils literal notranslate"><span class="pre">output</span> <span class="pre">(Optional[List[flows_sdk.flows.Parameter]])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Manifest.roles" title="flows_sdk.flows.Manifest.roles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">roles</span> <span class="pre">(List[str])</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-even">Validators</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="#flows_sdk.flows.Manifest.validate_output" title="flows_sdk.flows.Manifest.validate_output"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_output</span></code></a> » <a class="reference internal" href="#flows_sdk.flows.Manifest.output" title="flows_sdk.flows.Manifest.output"><code class="xref py py-obj docutils literal notranslate"><span class="pre">output</span></code></a></p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Manifest.enable_overrides">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">enable_overrides</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.Manifest.enable_overrides" title="Permalink to this definition"></a></dt>
-<dd><p>enables UI representation of overrides if present.
-This requires additional API calls and should generally be set to True only when overrides are defined</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Manifest.identifier">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">identifier</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Manifest.identifier" title="Permalink to this definition"></a></dt>
-<dd><p>globally-unique identifier of the block/flow</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Manifest.output">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.flows.Parameter" title="flows_sdk.flows.Parameter"><span class="pre">flows_sdk.flows.Parameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#flows_sdk.flows.Manifest.output" title="Permalink to this definition"></a></dt>
-<dd><p>documents the outputs of the block/flow. For the time being, used for documentation purposes only.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Validated by</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#flows_sdk.flows.Manifest.validate_output" title="flows_sdk.flows.Manifest.validate_output"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_output</span></code></a></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Manifest.roles">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">roles</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#flows_sdk.flows.Manifest.roles" title="Permalink to this definition"></a></dt>
-<dd><p>allows for “tagging” blocks/flows, used by internal features.</p>
-</dd></dl>
-
-<dl class="py pydantic_validator">
-<dt class="sig sig-object py" id="flows_sdk.flows.Manifest.validate_output">
-<em class="property"><span class="pre">validator</span> </em><span class="sig-name descname"><span class="pre">validate_output</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#flows_sdk.flows.Manifest.output" title="flows_sdk.flows.Manifest.output"><em class="xref py py-obj"><span class="pre">output</span></em></a><a class="headerlink" href="#flows_sdk.flows.Manifest.validate_output" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#flows_sdk.flows.Parameter" title="flows_sdk.flows.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py pydantic_model">
-<dt class="sig sig-object py" id="flows_sdk.flows.Parameter">
-<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">Parameter</span></span><a class="headerlink" href="#flows_sdk.flows.Parameter" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows._BaseModel</span></code></p>
-<dl class="field-list simple">
-<dt class="field-odd">Fields</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.dependencies" title="flows_sdk.flows.Parameter.dependencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dependencies</span> <span class="pre">(Optional[List[flows_sdk.flows.Dependency]])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.description" title="flows_sdk.flows.Parameter.description"><code class="xref py py-obj docutils literal notranslate"><span class="pre">description</span> <span class="pre">(Optional[str])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.json_schema" title="flows_sdk.flows.Parameter.json_schema"><code class="xref py py-obj docutils literal notranslate"><span class="pre">json_schema</span> <span class="pre">(Optional[Dict[str,</span> <span class="pre">Any]])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.name" title="flows_sdk.flows.Parameter.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span> <span class="pre">(str)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.optional" title="flows_sdk.flows.Parameter.optional"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span> <span class="pre">(bool)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.secret" title="flows_sdk.flows.Parameter.secret"><code class="xref py py-obj docutils literal notranslate"><span class="pre">secret</span> <span class="pre">(Optional[bool])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.title" title="flows_sdk.flows.Parameter.title"><code class="xref py py-obj docutils literal notranslate"><span class="pre">title</span> <span class="pre">(Optional[str])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.type" title="flows_sdk.flows.Parameter.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(str)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.ui" title="flows_sdk.flows.Parameter.ui"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ui</span> <span class="pre">(Optional[Dict[str,</span> <span class="pre">Any]])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Parameter.value" title="flows_sdk.flows.Parameter.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span> <span class="pre">(Any)</span></code></a></p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.dependencies">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">dependencies</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.flows.Dependency" title="flows_sdk.flows.Dependency"><span class="pre">flows_sdk.flows.Dependency</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.dependencies" title="Permalink to this definition"></a></dt>
-<dd><p>internal mechanism for describing dependencies between fields (e.g. hide A when B is true, show A when B is falce</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.description">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.description" title="Permalink to this definition"></a></dt>
-<dd><p>UI-visible description of the field</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.json_schema">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">json_schema</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><em class="property"> <span class="pre">(alias</span> <span class="pre">'schema')</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.json_schema" title="Permalink to this definition"></a></dt>
-<dd><p>json-schema validation that will be taken into account when validation values passed to the Parameter</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.name">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.name" title="Permalink to this definition"></a></dt>
-<dd><p>must be a valid Python identifier</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.optional">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">optional</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.optional" title="Permalink to this definition"></a></dt>
-<dd><p>True when the field is mandatory, False when it can be omitted.</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.secret">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">secret</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.secret" title="Permalink to this definition"></a></dt>
-<dd><p>UI-hint that the field should be presented as a secret (hidden symbols) rather than plain text.</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.title">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.title" title="Permalink to this definition"></a></dt>
-<dd><p>UI-visible representation of the field name</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.type">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.type" title="Permalink to this definition"></a></dt>
-<dd><p>json-schema-like type (e.g. string, integer, number, array, object…)
-Between Hyperscience platform versions there are also extensions like:
-- Percentage (number between 0 and 1)
-- UUID (string in UUID format or null)
-- MultilineText (string, but represented as multiline text box in Flow studio)
-Depending on the Hyperscience release, other other types also exist.</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.ui">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">ui</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.ui" title="Permalink to this definition"></a></dt>
-<dd><p>presentation-related customizations for the field</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Parameter.value">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="pre">:</span> <span class="pre">Any</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.value" title="Permalink to this definition"></a></dt>
-<dd><p>Optionall default value of the field</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py pydantic_model">
-<dt class="sig sig-object py" id="flows_sdk.flows.Triggers">
-<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span> </em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">Triggers</span></span><a class="headerlink" href="#flows_sdk.flows.Triggers" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows._BaseModel</span></code></p>
-<dl class="field-list simple">
-<dt class="field-odd">Config</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Fields</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.api_params_manifest" title="flows_sdk.flows.Triggers.api_params_manifest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">api_params_manifest</span> <span class="pre">(Optional[flows_sdk.flows.InputDefinition])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.blocks" title="flows_sdk.flows.Triggers.blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">blocks</span> <span class="pre">(List[flows_sdk.blocks.IOBlock])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.description" title="flows_sdk.flows.Triggers.description"><code class="xref py py-obj docutils literal notranslate"><span class="pre">description</span> <span class="pre">(Optional[str])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.processing_block" title="flows_sdk.flows.Triggers.processing_block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">processing_block</span> <span class="pre">(Optional[flows_sdk.blocks.Block])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.reference_name" title="flows_sdk.flows.Triggers.reference_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reference_name</span> <span class="pre">(str)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.role_filter" title="flows_sdk.flows.Triggers.role_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">role_filter</span> <span class="pre">(Optional[List[str]])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#flows_sdk.flows.Triggers.title" title="flows_sdk.flows.Triggers.title"><code class="xref py py-obj docutils literal notranslate"><span class="pre">title</span> <span class="pre">(str)</span></code></a></p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.api_params_manifest">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">api_params_manifest</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.flows.InputDefinition" title="flows_sdk.flows.InputDefinition"><span class="pre">flows_sdk.flows.InputDefinition</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.api_params_manifest" title="Permalink to this definition"></a></dt>
-<dd><p>[deprecated] Defines a shared inputs between all Triggers. Will be replaced in r33+</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.blocks">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">blocks</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.blocks.IOBlock" title="flows_sdk.blocks.IOBlock"><span class="pre">flows_sdk.blocks.IOBlock</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.blocks" title="Permalink to this definition"></a></dt>
-<dd><p>list of trigger blocks used to initiate the Flow. Can be empty and is modifiable by the Flow studio.</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.description">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.description" title="Permalink to this definition"></a></dt>
-<dd><p>User-facing description</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.processing_block">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">processing_block</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><span class="pre">flows_sdk.blocks.Block</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.processing_block" title="Permalink to this definition"></a></dt>
-<dd><p>[deprecated] a block that is executed after the Flow is triggered, but before other blocks in the Flow.
-Instead, add a block in the Flow itself.</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.reference_name">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">reference_name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.reference_name" title="Permalink to this definition"></a></dt>
-<dd><p>unique reference on a per-Flow basis</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.role_filter">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">role_filter</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.role_filter" title="Permalink to this definition"></a></dt>
-<dd><p>lists the roles that blocks used within this triggers section should have.
-Blocks should have all listed roles to be compatible. If empty, blocks with any role can be used.</p>
-</dd></dl>
-
-<dl class="py pydantic_field">
-<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.title">
-<em class="property"><span class="pre">field</span> </em><span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.title" title="Permalink to this definition"></a></dt>
-<dd><p>User-facing title</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="flows_sdk.flows.Triggers.render">
-<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.flows.Triggers.render" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
