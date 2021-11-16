@@ -10,12 +10,13 @@ Welcome to flows_sdk's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   intro.md
-   quickstart.md
-   source-docs
-   examples/examples
-   block-library.md
-   faq.md
+   pages/intro
+   pages/basic_concepts
+   pages/quickstart
+   pages/source-docs
+   pages/examples
+   pages/faq
+   pages/block_library
 
 
 Indices and tables

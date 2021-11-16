@@ -20,7 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Introduction to Flows SDK" href="intro.html" /> 
+    <link rel="next" title="Introduction to Flows SDK" href="pages/intro.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -40,13 +40,13 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Flows SDK</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro.html#basic-concepts">Basic Concepts</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples/examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="block-library.html">Block Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/intro.html">Introduction to Flows SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/basic_concepts.html">Basic Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/source-docs.html">Source documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/block_library.html">Block Library V32</a></li>
 </ul>
 
         </div>
@@ -78,54 +78,40 @@
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Flows SDK</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro.html#basic-concepts">Basic Concepts</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="intro.html#flow">Flow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intro.html#block">Block</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intro.html#triggers">Triggers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/intro.html">Introduction to Flows SDK</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/intro.html#prerequisites">Prerequisites</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="source-docs.html#module-flows_sdk.blocks">blocks.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="source-docs.html#module-flows_sdk.flows">flows.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/basic_concepts.html">Basic Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/basic_concepts.html#flow">Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/basic_concepts.html#block">Block</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/basic_concepts.html#routing">Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/basic_concepts.html#fork">Fork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/basic_concepts.html#triggers">Triggers</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="examples/examples.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples/examples.html#hello-flow">Hello Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/quickstart.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/quickstart.html#steps">Steps</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="block-library.html">Block Library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#mq-listener">MQ_LISTENER</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#folder-trigger">FOLDER_TRIGGER</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#kofax-folder-trigger">KOFAX_FOLDER_TRIGGER</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#export-email">EXPORT_EMAIL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#db-access">DB_ACCESS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#imap-trigger">IMAP_TRIGGER</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#s3-downloader">S3_DOWNLOADER</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#box-folder-trigger">BOX_FOLDER_TRIGGER</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#soap-req">SOAP_REQ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#http-downloader">HTTP_DOWNLOADER</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#box-notifier">BOX_NOTIFIER</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#cron-trigger">CRON_TRIGGER</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#manual-classification-2">MANUAL_CLASSIFICATION_2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#machine-classification-2">MACHINE_CLASSIFICATION_2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#machine-transcription-3">MACHINE_TRANSCRIPTION_3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#manual-transcription-2">MANUAL_TRANSCRIPTION_2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#segment-and-oicr-2">SEGMENT_AND_OICR_2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#cob-box-notifier">COB_BOX_NOTIFIER</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#cob-mq-notifier">COB_MQ_NOTIFIER</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#cob-export-uipath">COB_EXPORT_UIPATH</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#submission-complete-3">SUBMISSION_COMPLETE_3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#cob-http-export">COB_HTTP_EXPORT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#machine-identification-3">MACHINE_IDENTIFICATION_3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#manual-identification-3">MANUAL_IDENTIFICATION_3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#submission-bootstrap-2">SUBMISSION_BOOTSTRAP_2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#flexible-extraction">FLEXIBLE_EXTRACTION</a></li>
-<li class="toctree-l2"><a class="reference internal" href="block-library.html#machine-collation-2">MACHINE_COLLATION_2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/source-docs.html">Source documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/source-docs.html#module-flows_sdk.blocks">blocks.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/source-docs.html#module-flows_sdk.flows">flows.py</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/examples.html#hello-flow">Hello Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/examples.html#idp-example">IDP Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pages/faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/block_library.html">Block Library V32</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/block_library.html#trigger-io-blocks">Trigger IO Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/block_library.html#output-io-blocks">Output IO Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/block_library.html#blocks">Blocks</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -142,7 +128,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="intro.html" class="btn btn-neutral float-right" title="Introduction to Flows SDK" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="pages/intro.html" class="btn btn-neutral float-right" title="Introduction to Flows SDK" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

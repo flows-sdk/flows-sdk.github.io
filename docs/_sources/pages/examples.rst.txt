@@ -1,0 +1,30 @@
+=========
+Examples
+=========
+
+Examples that can be used as a starting point when building custom Flows
+
+Hello Flow
+###########
+
+:download:`Download Hello Flow <../../../samples/hello_flow/flow.py>`
+
+.. image:: ../media/images/hello_world_flow_studio.png
+
+.. include:: ../../../samples/hello_flow/flow.py
+   :literal:
+
+
+
+IDP Example
+###########
+
+The IDP Flow is a snapshot of our V32 Document Processing Flow. It can be used as a starting point
+when developing more complex Flows.
+The example is archived as it consists of multiple python files.
+
+:download:`Downllad IDP Example <../../../samples/idp_flow/idp_flow.tar.gz>`
+
+.. include:: ../../../samples/idp_flow/flow.py
+   :literal:
+

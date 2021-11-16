@@ -1,0 +1,25 @@
+# Basic Concepts
+
+## Flow
+
+Flows are like processing blueprints that the Hyperscience platform can manage and execute. Within a Flow, Blocks are wired together to define the order of operations alongside Triggers, Flow inputs, and other helper components.
+
+## Block
+
+Using `flows_sdk`, Blocks can be defined and ordered, and their inputs can be customized and passed statically (e.g., during Flow definition or via. UI-exposed setting) or dynamically (e.g., output from a previous Block).
+
+Execution and lifecycle of blocks is managed by the Hyperscience platform.
+
+## Routing
+
+A system Block that routes execution to one of its branches based on a condition (similar to a `switch..case` statement).
+
+## Fork
+
+A system Block that schedules other blocks for parallel execution.
+
+
+## Triggers
+
+Triggers are a special type of block that can initiate Flow runs (e.g., watching a folder for new files,
+checking an inbox, listening to a message queue, etc.)

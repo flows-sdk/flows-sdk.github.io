@@ -7,8 +7,9 @@ from flows_sdk.package_utils import export_flow
 
 # Flow identifiers are globally unique
 # New versions in case of backward incompatibility are expected to have a different name
-# (e.g. hello_flow_2)
-HELLO_FLOW_IDENTIFIER = 'hello_flow'
+# (e.g. HELLO_FLOW_2).
+# By convention, identifiers are snake-cased capital letter strings with an optional numeric suffix.
+HELLO_FLOW_IDENTIFIER = 'HELLO_FLOW'
 
 # Flows should have a deterministic UUID ensuring cross-system consistency
 HELLO_FLOW_UUID = UUID('2e3ab564-fcf5-41fb-a573-4bc2fd153b6d')

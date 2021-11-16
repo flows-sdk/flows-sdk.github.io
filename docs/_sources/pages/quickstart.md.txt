@@ -1,0 +1,57 @@
+# Quickstart
+
+As part of this quickstart, we will build and deploy a simple Flow.
+
+After completin the quickstart, you will:
+- have a local environment with `flows-sdk` installed
+- package a simple "Hello World" Flow into an artifact
+- import that artifact into a running Hyperscience platform
+
+While this quickstart imports a simple "Hello World" Flow that doesn't do much, the same steps
+are used when developing and exporting more complex flows like "Document Processing" as well.
+
+## Prerequisites
+
+- python 3.7+
+
+This quickstart assumes that you have a unix shell, but very similar steps can also be used for other
+terminals.
+
+## Steps
+
+1. Create a virtual environment and source it
+
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+2. Install the flows_sdk package
+
+    > Link below is used for illustrative purposes. Contact your CX representative for an exact installable link!
+
+    ```bash
+    pip install https://build-storage.int.hyperscience.com/flows_sdk/v0.1.2/flows_sdk-0.1.2-py3-none-any.whl
+    ```
+
+3. Download the Hello Flow example
+
+    ```{eval-rst}
+    :ref:`pages/examples:Hello Flow`
+    ```
+
+4. Package the example flow to a .json file
+
+    ```bash
+    python flow.py > hello_flow.json
+    ```
+    > the filename `flow.py` can be different depending on how you saved the file
+
+5. upload the produced `hello_flow.json` to a running Hyperscience instance from `https://{hyperscience-url}/flows` -> Import Flow
+
+
+![](../media/images/import_flow.png)
+
+If everything went as expected, you should be redirected to the Flow Studio:
+
+![](../media/images/hello_world_flow_studio.png)
