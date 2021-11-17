@@ -42,7 +42,7 @@ def sample_flow_with_secret() -> Flow:
     return Flow(
         depedencies={},
         title='Hello World Flow',
-        description='A simple Flow showcasitng how inputs are passed',
+        description='A simple Flow showcasing how inputs are passed',
         blocks=[ccb],
         owner_email='viktor.penelski@hyperscience.com',
         manifest=Manifest(identifier=HELLO_FLOW_IDENTIFIER, input=[hello_input_param]),
