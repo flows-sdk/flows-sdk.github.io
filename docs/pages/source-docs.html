@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Source documentation &mdash; flows_sdk 0.2.1 documentation</title>
+  <title>Source documentation &mdash; flows_sdk 0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
@@ -20,8 +20,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Examples" href="examples.html" />
-    <link rel="prev" title="Quickstart" href="quickstart.html" /> 
+    <link rel="prev" title="Starter: IDP V32" href="idp_32.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -32,7 +31,7 @@
             <a href="../index.html" class="icon icon-home"> flows_sdk
           </a>
               <div class="version">
-                0.2.1
+                0.4.0
 
               </div>
 <div role="search">
@@ -48,14 +47,14 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Flows SDK</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic_concepts.html">Basic Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idp_32.html">Starter: IDP V32</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Source documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-flows_sdk.blocks">blocks.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-flows_sdk.flows">flows.py</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="block_library.html">Block Library V32</a></li>
 </ul>
 
         </div>
@@ -91,9 +90,9 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.blocks.</span></span><span class="sig-name descname"><span class="pre">Block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.Block" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Base structure representing an executable within a Hyperscience deployment.
-Available blocks can be found in the <a class="reference internal" href="block_library.html"><span class="doc">Block Library V32</span></a>. Available blocks depend on the
-version of the underlying Hyperscience platform, but additional blocks may have also been
-manually installed.</p>
+Available blocks depend on the version of the underlying Hyperscience platform,
+but additional blocks may have also been manually installed. Check out <a class="reference internal" href="idp_32.html"><span class="doc">Starter: IDP V32</span></a> for
+example blocks used for the Document Processing flow that comes with V32.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -101,8 +100,7 @@ manually installed.</p>
 block within a Flow (e.g., in order to reference the outputs of a concrete block)</p></li>
 <li><p><strong>identifier</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – block implementation that will be used at runtime
 (e.g., <cite>MACHINE_CLASSIFICATION</cite>). Multiple blocks with same identifier
-can be present in a Flow. See the list of available block identifiers
-in the <a class="reference internal" href="block_library.html"><span class="doc">Block Library V32</span></a>.</p></li>
+can be present in a Flow.</p></li>
 <li><p><strong>input</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – <p>key-value dict being passed during execution of the Block.
 Can both have static values or various dynamic values (e.g., output from a previously
 executed block, see <a class="reference internal" href="#flows_sdk.blocks.Block.output" title="flows_sdk.blocks.Block.output"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block.output()</span></code></a>). Most blocks have mandatory
@@ -315,9 +313,9 @@ to users in the Flow studio.</p></li>
         <span class="nb">input</span><span class="o">=</span><span class="p">{},</span>
     <span class="p">)</span>
 
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">export_flow</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span><span class="n">entry_point_flow</span><span class="p">())</span>
-
 </pre></div>
 </div>
 <dl class="py class">
@@ -475,10 +473,10 @@ Visualized as a checkbox and taken into account during processing.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="flows_sdk.blocks.Output">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.blocks.</span></span><span class="sig-name descname"><span class="pre">Output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role_filter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.Output" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="flows_sdk.blocks.Outputs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.blocks.</span></span><span class="sig-name descname"><span class="pre">Outputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role_filter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.Outputs" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
-<p>Output is a special block-section meant to provide an easy way for users to configure
+<p>Outputs is a special block-section meant to provide an easy way for users to configure
 Flow output connections through the UI. They contain a list of output blocks, that can
 optionally be filtered by role and define an input template that will wire these blocks’
 inputs automatically after the user adds them.</p>
@@ -697,6 +695,49 @@ group of non-nested fields.</p>
 <p>Describes how the Flow studio should present the Flow/Block.
 The parameters are displayed in the Flow studio and can be futher customized into sections via.
 the <cite>ui</cite> section.</p>
+<p>Inputs are used both for visualization and for validation - for example, in the
+<a class="reference internal" href="#flows_sdk.flows.Flow" title="flows_sdk.flows.Flow"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows.Flow</span></code></a> manifest <code class="docutils literal notranslate"><span class="pre">.input</span></code>, if a string is passed for a parameter
+defined as number in the manifest, the user will be prompted to</p>
+<p>Here is an example of how the manifest is visualized on the Flow level with
+<a class="reference internal" href="#flows_sdk.flows.Parameter" title="flows_sdk.flows.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows.Parameter</span></code></a> groupped under <em>Classification</em> and <em>Identification</em></p>
+<a class="reference internal image-reference" href="../_images/flow_settings.png"><img alt="../_images/flow_settings.png" src="../_images/flow_settings.png" style="width: 250px;" /></a>
+<p>example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Manifest</span><span class="p">(</span>
+    <span class="n">identifier</span><span class="o">=</span><span class="s1">&#39;CUSTOM_FLOW&#39;</span><span class="p">,</span>
+    <span class="nb">input</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">Parameter</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;setting_a&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Setting A&#39;</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+        <span class="p">),</span>
+        <span class="n">Parameter</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;setting_b&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;number&#39;</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Setting B&#39;</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="mi">42</span>
+        <span class="p">),</span>
+        <span class="n">Parameter</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;setting_c&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Setting C&#39;</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">ui</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;groups&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Groupped Settings&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s1">&#39;setting_a&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;setting_b&#39;</span><span class="p">,</span>
+                <span class="p">],</span>
+            <span class="p">},</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Fields</dt>
 <dd class="field-odd"><ul class="simple">
@@ -929,8 +970,7 @@ as UUID(‘&lt;the_uuid&gt;’)</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quickstart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="idp_32.html" class="btn btn-neutral float-left" title="Starter: IDP V32" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

@@ -7,8 +7,8 @@ After completin the quickstart, you will:
 - package a simple "Hello World" Flow into an artifact
 - import that artifact into a running Hyperscience platform
 
-While this quickstart imports a simple "Hello World" Flow that doesn't do much, the same steps
-are used when developing and exporting more complex flows like "Document Processing" as well.
+While this quickstart imports a simple "Hello World" Flow, the same steps
+are used when developing and exporting more complex flows like "Document Processing".
 
 ## Prerequisites
 

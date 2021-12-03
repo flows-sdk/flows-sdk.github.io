@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction to Flows SDK &mdash; flows_sdk 0.2.1 documentation</title>
+  <title>Introduction to Flows SDK &mdash; flows_sdk 0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
@@ -32,7 +32,7 @@
             <a href="../index.html" class="icon icon-home"> flows_sdk
           </a>
               <div class="version">
-                0.2.1
+                0.4.0
 
               </div>
 <div role="search">
@@ -51,10 +51,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basic_concepts.html">Basic Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="block_library.html">Block Library V32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idp_32.html">Starter: IDP V32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source documentation</a></li>
 </ul>
 
         </div>
@@ -86,15 +86,15 @@
 <p><code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> is a library that assists with programmatically defining Flows - sequences of actions managed and executed by the Hyperscience platform.</p>
 <p><img alt="" src="../_images/intro.png" /></p>
 <p>Flow definitions are first defined as a source using classes from the library. They are then converted to an importable format that can later be deployed on a Hyperscience instance.</p>
-<p>The definitions are like blueprints - they configure and wire together Triggers, Blocks and other parameters, while the Hyperscience platform takes care of the execution and lifecycle during the actual runtime.</p>
-<p>The code used to build Flows via. the <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> is managed externally from the Hyperscience platform (e.g. in a separate git repository), while the produced artefacts can be uploaded to and managed by the Hyperscience platform.</p>
+<p>The definitions are like blueprints - they configure and wire together Triggers, Blocks, and other parameters, while the Hyperscience platform takes care of the execution and lifecycle during the actual runtime.</p>
+<p>The code used to build Flows via. <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> is managed externally from the Hyperscience platform (e.g., in a separate git repository), while the produced artifacts can be uploaded to and managed by the Hyperscience platform.</p>
 <p><img alt="" src="../_images/i_e_management_diagram.png" /></p>
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h2>
 <ul class="simple">
-<li><p>Dev: In order to develop Flows using <code class="docutils literal notranslate"><span class="pre">flows-sdk</span></code>, the only local requirement is <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">3.7+</span></code> and
+<li><p>Dev: In order to develop Flows using <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code>, the only local requirement is <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">3.7+</span></code> and
 a link to this library, provided by your CX representative. Additional dependencies will later be pulled via. <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p></li>
-<li><p>Deploy: In order to deploy Flows built using `flows-sdk, you need</p>
+<li><p>Deploy: In order to deploy Flows built using <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code>, you need</p>
 <ul>
 <li><p>a running instance of the Hyperscience platform (<code class="docutils literal notranslate"><span class="pre">v30</span></code> and above)</p></li>
 <li><p>a user with permissions to edit and import Flows</p></li>

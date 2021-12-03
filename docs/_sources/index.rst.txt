@@ -13,10 +13,10 @@ Welcome to flows_sdk's documentation!
    pages/intro
    pages/basic_concepts
    pages/quickstart
-   pages/source-docs
    pages/examples
    pages/faq
-   pages/block_library
+   pages/idp_32
+   pages/source-docs
 
 
 Indices and tables

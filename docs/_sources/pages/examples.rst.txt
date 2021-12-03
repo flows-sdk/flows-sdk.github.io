@@ -23,7 +23,7 @@ The IDP Flow is a snapshot of our V32 Document Processing Flow. It can be used a
 when developing more complex Flows.
 The example is archived as it consists of multiple python files.
 
-:download:`Download IDP Example <../../../samples/idp_flow/idp_flow.tar.gz>`
+:download:`Download IDP Example <../../../samples/idp_flow/flow.py>`
 
 .. image:: ../media/images/idp_example_flow_studio.png
 
@@ -36,7 +36,7 @@ IDP Customized Example
 
 Similar to the :ref:`pages/examples:IDP Starter Example`, but includes additional custom code logic.
 
-:download:`Download IDP Example <../../../samples/custom_idp_flow/custom_idp_flow.tar.gz>`
+:download:`Download IDP Example <../../../samples/custom_idp_flow/flow.py>`
 
 .. image:: ../media/images/custom_idp_example_flow_studio.png
 

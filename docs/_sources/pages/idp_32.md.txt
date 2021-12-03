@@ -1,0 +1,251 @@
+# Starter: IDP V32
+
+## V32 Blocks
+
+```{eval-rst}
+
+.. note::
+    Classes in the idp_v32 example have parameters with ambiguous typing.
+    For example, a field of type `integer` could also be represented as a `string` reference
+    (e.g. that integer gets provided at runtime).
+    The types introduced in the example are therefore incomplete and are likely to be
+    revisioned in a future version.
+
+
+.. automodule:: flows_sdk.examples.idp_v32.idp_blocks
+   :members:
+   :undoc-members:
+   :show-inheritance:
+```
+
+## Triggers
+
+
+### FOLDER_TRIGGER
+
+name: Folder Listener
+
+uuid: 51b6ddee-3b57-4deb-a7b3-f4d102561635
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| folder | Path | N/A | Folder to scan for submissions | N/A|
+| file_extensions | string | N/A | File extensions | List of file extensions to monitor for (e.g.: 'png, jpg, pdf')|
+| has_meta | boolean | False | Enable metadata | Select this if a metadata file is to be expected along with document files (in XXX_index.txt file)|
+| poll_interval | integer | 10 | Poll interval | Poll interval in seconds|
+| warmup_interval | integer | 15 | Warm-up interval | Seconds to wait past document last modified time before processing it|
+| folder_cleanup_delay | integer | 86400 | Folder cleanup delay | Seconds to wait before cleaning up subfolders|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+### KOFAX_FOLDER_TRIGGER
+
+name: Kofax Folder Listener
+
+uuid: 06dd55c7-0124-4403-9b8d-04b57e8afca2
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| folder | Path | N/A | Folder to scan for submissions | N/A|
+| file_extensions | string | N/A | File extensions | List of file extensions to monitor for (e.g.: 'png, jpg, pdf')|
+| poll_interval | integer | 10 | Poll interval in seconds | N/A|
+| warmup_interval | integer | 15 | Warm-up interval | Seconds to wait past document last modified time before processing it|
+| folder_cleanup_delay | integer | 86400 | Folder cleanup delay | Seconds to wait before cleaning up subfolders|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+### IMAP_TRIGGER
+
+name: Email Listener (IMAP)
+
+uuid: 67056d96-b485-4005-aab2-c709df60933c
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| host | string | N/A | IMAP server address | N/A|
+| port | integer | 993 | Port Number | N/A|
+| ssl | boolean | True | Use SSL connection | N/A|
+| username | string | N/A | Username | N/A|
+| password | Password | N/A | Password | N/A|
+| poll_interval | integer | 60 | Polling interval in seconds | N/A|
+| folder | Path | N/A | Folder to scan for emails | N/A|
+| email_body_treatment | string | "ignore" | Email body treatment | What to do with the body of an email that is ingested|
+| post_process_action | string | "move" | Post process action | What to do with the email after it is processed|
+| post_process_move_folder | string | "" | Post process archive folder | Folder to move emails to once they are processed|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+### BOX_FOLDER_TRIGGER
+
+name: Box Folder Listener
+
+uuid: 5ba19375-d8c2-4876-b666-a08e427d186f
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| source_folder_id | integer | N/A | Folder to scan for submissions | Use the Box Folder ID found in the URL|
+| target_folder_id | integer | N/A | Folder to move completed files | Use the Box Folder ID found in the URL|
+| file_extensions | array | [] | File extensions | Types of file extensions for which to monitor|
+| custom_file_extensions | string | N/A | Other file extension types | Comma separated list of file extensions for which to monitor (e.g. 'png, jpg, pdf')|
+| poll_interval | integer | 10 | Polling interval (in seconds) | How often the connector will check the base folder for submissions|
+| warmup_interval | integer | 15 | Warm-up interval (in seconds) | How long the connector will wait to process the document after it was last modified|
+| public_key_id | string | N/A | Public-Key ID | ID of the Public-key used for authentication with Box|
+| private_key | Password | N/A | Private-Key | Private key used for authentication with Box|
+| passphrase | Password | N/A | Passphrase | Passphrase used for authentication with Box|
+| client_id | string | N/A | Client ID | Client Id used for authentication with Box|
+| client_secret | Password | N/A | Client Secret | Client Secret used for authentication with Box|
+| enterprise_id | string | N/A | Enterprise ID | Enterprise Id used for authentication with Box|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+### CRON_TRIGGER
+
+name: Cron Listener
+
+uuid: 798a30f3-06d7-49dd-8156-fe04b6cab2f2
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| cron_spec | string | `"*/5 * * * *"` | Cron specification | N/A|
+| time_zone | string | "US/Eastern" | Time Zone | N/A|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+## Outputs
+
+### COB_BOX_NOTIFIER
+
+name: Box Notifier Output Block
+
+uuid: eb3cc3c6-32bf-4e8a-8b34-3ed13ccac295
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | N/A|
+| enabled | boolean | True | Enabled | Enable or disable this output block|
+| api_version | string | N/A | API Version | API version to be used for rendering payload|
+| export_type | string | N/A | Export Type | Payload rendering choice. If "Flat" is chosen, a simplified version of the payload will be sent, as described in the "flat" parameter for submission retrieval API|
+| export_routing_filter | string | null | Routing Filter | By default, status change notifications are sent for each submission processed by the system. You can filter what notifications are received through this connection by specifying an expression like has_layout_tag('some_layout_tag') or has_source_routing_tag('some_source_routing_tag')|
+| public_key_id | string | N/A | Public-Key ID | ID of the Public-key used for authentication with Box|
+| private_key | Password | N/A | Private-Key | Private key used for authentication with Box|
+| passphrase | Password | N/A | Passphrase | Passphrase used for authentication with Box|
+| client_id | string | N/A | Client ID | Client Id used for authentication with Box|
+| client_secret | Password | N/A | Client Secret | Client Secret used for authentication with Box|
+| enterprise_id | string | N/A | Enterprise ID | Enterprise Id used for authentication with Box|
+| template_key | string | "" | Box Metadata Template Key | Enter the key of the Box Metadata template that you would like to map the Hyperscience metadata to.|
+| static_output_fields_to_map | array | [] | Static Metadata Fields | Specify the Hyperscience fields you want to store in Box metadata.|
+| submission_id | string | "" | Key for Mapping Submission ID | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_id | string | "" | Key for Mapping Document ID | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| submission_state | string | "" | Key for Mapping Submission State | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_state | string | "" | Key for Mapping Document State | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| submission_exceptions | string | "" | Key for Mapping Submission Exceptions | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_exceptions | string | "" | Key for Mapping Document Exceptions | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_layout_uuid | string | "" | Key for Mapping Document Layout Uuid | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_layout_name | string | "" | Key for Mapping Document Layout Name | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| start_time | string | "" | Key for Mapping Start Time | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| complete_time | string | "" | Key for Mapping Complete Time | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
+| document_fields_template_mappings | json | {} | JSON for Additional Metadata Fields | Specify additional metadata fields using their key value. Please consult Box Integration setup manual for JSON template and instructions.|
+
+
+
+### COB_MQ_NOTIFIER
+
+name: Message Queue Notifier Output Block
+
+uuid: 28ec69fb-a2c0-41bd-8f7f-6059dce4dbb0
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | N/A|
+| enabled | boolean | True | Enabled | Enable or disable this output block|
+| api_version | string | N/A | API Version | API version to be used for rendering payload|
+| export_type | string | N/A | Export Type | Payload rendering choice. If "Flat" is chosen, a simplified version of the payload will be sent, as described in the "flat" parameter for submission retrieval API|
+| export_routing_filter | string | null | Routing Filter | By default, status change notifications are sent for each submission processed by the system. You can filter what notifications are received through this connection by specifying an expression like has_layout_tag('some_layout_tag') or has_source_routing_tag('some_source_routing_tag')|
+| MQ_TYPE | string | "ACTIVE_MQ" | Message Queue type | N/A|
+| MQ_NO_AUTH_REQUIRED | boolean | False | No auth credentials required | N/A|
+| MQ_USERNAME | string | null | Username | N/A|
+| MQ_PASSWORD | Password | null | Password | N/A|
+| MQ_QUEUE_NAME | string | null | Queue Name | N/A|
+| MQ_HOST | string | null | Host Name | N/A|
+| MQ_REGION | string | null | AWS Region | N/A|
+| MQ_QUEUE_URL | string | null | Queue URL | N/A|
+| MQ_MESSAGE_GROUP_ID | string | null | Group ID for FIFO queues | Group ID for FIFO queues|
+| MQ_USE_EC2_INSTANCE_CREDENTIALS | boolean | True | Use AWS EC2 Instance IAM Role Credentials | If selected, credentials are obtained from the EC2 instance directly, and the AWS Access Key ID and Secret Key are not used.|
+| MQ_PORT | integer | 1415 | Port Number | N/A|
+| MQ_QUEUE_MANAGER | string | null | Queue Manager | N/A|
+| MQ_CHANNEL | string | null | Channel | N/A|
+| MQ_SSL_CIPHER_SUITE | string | null | SSL cipher suite | SSL cipher suite to use if SSL connection is used|
+| MQ_VIRTUAL_HOST | string | null | Virtual Host | N/A|
+| MQ_EXCHANGE | string | "" | Exchange | N/A|
+| MQ_ROUTING_KEY | string | null | Routing key | N/A|
+
+
+
+### COB_EXPORT_UIPATH
+
+name: UiPath Notifier Output Block
+
+uuid: 78008a6d-d17b-4351-a38f-e2e64f5bd8b5
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | N/A|
+| enabled | boolean | True | Enabled | Enable or disable this output block|
+| api_version | string | N/A | API Version | API version to be used for rendering payload|
+| export_type | string | N/A | Export Type | Payload rendering choice. If "Flat" is chosen, a simplified version of the payload will be sent, as described in the "flat" parameter for submission retrieval API|
+| export_routing_filter | string | null | Routing Filter | By default, status change notifications are sent for each submission processed by the system. You can filter what notifications are received through this connection by specifying an expression like has_layout_tag('some_layout_tag') or has_source_routing_tag('some_source_routing_tag')|
+| url | string | N/A | URL | Base URL of the uipath instance|
+| organization_unit_id | string | null | Organization unit id | Organization unit id|
+| tenant | string | N/A | Tenant | Tenant|
+| username | string | N/A | Username | Username|
+| password | Password | N/A | Password | Password|
+| queue | string | N/A | Queue | Queue|
+
+
+### COB_HTTP_EXPORT
+
+name: HTTP Notifier Output Block
+
+uuid: 815e1ce8-83a2-48fc-b3bb-53b37e8cc33a
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | N/A|
+| enabled | boolean | True | Enabled | Enable or disable this output block|
+| api_version | string | N/A | API Version | API version to be used for rendering payload|
+| export_type | string | N/A | Export Type | Payload rendering choice. If "Flat" is chosen, a simplified version of the payload will be sent, as described in the "flat" parameter for submission retrieval API|
+| export_routing_filter | string | null | Routing Filter | By default, status change notifications are sent for each submission processed by the system. You can filter what notifications are received through this connection by specifying an expression like has_layout_tag('some_layout_tag') or has_source_routing_tag('some_source_routing_tag')|
+| endpoint | string | N/A | Endpoint URL | URL that output notifications will be posted to|
+| authorization_type | string | "none" | Authorization type | Type of authorization|
+| authorization_header | Password | null | Authorization header | Authorization header to be set in the notification request|
+| auth_url | string | null | OAuth2 authorization URL | The endpoint for the authorization server|
+| client_id | string | null | Client ID | The client identifier issued to the client during the application registration process|
+| client_secret | Password | null | Client Secret | The client secret issued to the client during the application registration process|
+| audience | string | null | Audience | Resource service URL where token will be valid|
+
+
+
+
