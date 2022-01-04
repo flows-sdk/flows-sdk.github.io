@@ -1,5 +1,5 @@
 ======================
-Source documentation
+Source Documentation
 ======================
 
 blocks.py

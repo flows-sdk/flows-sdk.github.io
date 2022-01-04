@@ -1,0 +1,96 @@
+# Tutorial
+
+This tutorial will walk you through building and deploying a flow, as well as best practices for testing and debugging flows. While this tutorial uses a prepackaged example flow, these same steps should be used for developing flows specific to your business needs. 
+
+After completing this tutorial, you will:
+- Have a local environment with the `flows-sdk` library installed
+- Package an example "IDP Starter" flow into an artifact
+- Import that artifact into the Hyperscience platform
+- Be able to test and debug your flow
+
+The provided "[IDP Starter Example](/pages/examples)" is a basic approach to extracting text from invoices. It's a good starting point for adding any process logic, data validation, data formatting, etc. specific to your business's document extaction process.
+
+
+## Prerequisites
+
+- Python 3.7+
+- Unix shell or similar terminal
+
+## Building & Deploying
+
+1. Create a virtual environment and source it.
+
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+2. Install the `flows_sdk` Python package. The link below is used for illustrative purposes - contact your CX representative for an exact installable link.
+
+    ```bash
+    pip install https://build-storage.int.hyperscience.com/flows_sdk/v0.1.2/flows_sdk-0.1.2-py3-example.whl
+    ```
+
+3. Download the [IDP Starter Example](/pages/examples) package, which includes...
+
+    - `flow.py` file. This is the Python file, built using the Flows SDK, that defines all of the logic for IDP Starter Example flow
+    - `release.zip`, which includes example layouts for processing invoices. To learn more about releases, visit our (non-technical) [user guide](https://hyperscience.zendesk.com/hc/en-us/sections/4414507191181-Releases)
+    - `sample-invoice.pdf`
+
+4. Package `flow.py` to a .json file. The Hyperscience Platform only accepts `.json` formatted files.
+
+    ```bash
+    python flow.py > starter_flow.json
+    ```
+
+5. Upload the produced `starter_flow.json` to a Hyperscience instance from `https://{hyperscience-url}/flows` -> Import Flow
+
+    ![](../media/images/import_flow.png)
+
+If everything went as expected, you should be redirected to the Flow Studio:
+
+    ![](../media/images/idp-starter-flow-studio.jpg)
+
+You've successfully uploaded your first flow to the Hyperscience Platform!
+
+## Testing & Debugging
+The Hyperscience Platform includes tools to help you test and debug your flows. Continuing with the above example, we'll show you how to submit documents to your new IDP Starter Flow by using the additional materials provided in the package.
+
+
+6. Set your flow's status to "Live." Documents can only be submitted to "Live" flows.
+
+    ![](../media/images/idp-starter-live.jpg)
+
+7. Flows need an associated "Release" to process documents. Navigate to `https://{hyperscience-url}/layouts/releases` and click "Add Release." Select "Upload Existing" and choose the `release.zip` included in the IDP Starter Example package. After a moment you should see the release uploaded to the Hyperscience Platform.
+
+    ![](../media/images/add-release.jpg)
+
+
+8. Assign this release to your IDP Starter Flow by clicking into the release's page and then clicking "Assign to Flow." You're now ready to test your flow by submitting documents!
+
+    % Comment: Insert image of assigning release to a flow
+
+4. Navigate to `https://{hyperscience-url}/submissions` and click "Create Submission." Upload the `sample-invoice.pdf` sample document. You should see that the submission was created - it may take a few minutes to process.
+
+    % Comment: screenshot of completed submission
+
+5. Now we can use our testing and debugging tools to better understand how your flow processed those documents. Click into the completed submission's page, then click Actions > View Flow Execution. 
+
+    ![](../media/images/flow_execution.png)
+
+The Flow Execution page has the following sections:
+
+<img src="../_images/red1.png" class="red-dot"> Overview: The left-hand sidebar shows metadata for the submission.
+
+<img src="../_images/red2.png" class="red-dot"> Flow Run diagram: The upper-right panel shows a diagram of the flow. The processing status for an individual block is shown under the block, along with the time the block completed or failed processing (if applicable). If the block has no status underneath it, it has not processed the submission yet. Clicking on a block reveals its input, output, and logs in the Block Details panel below.
+
+<img src="../_images/red3.png" class="red-dot"> Block Details: The Block Details panel has three tabs:
+
+- Input: The Input tab shows the JSON that the block used for processing.
+- Output: Clicking on the Output tab shows the JSON that the block produced during processing (if applicable).
+Note that the Output JSON for the final block in a completed submission is not the same as the JSON output for the entire submission.
+- Logs: If the block failed to process the submission, the Logs tab shows error information for the block.
+You can copy any of the data shown in the Block Details panel by clicking Copy in the upper-right corner of the panel.
+
+% Comment: Make red dots smaller...I can't find any syntax to accomplish this  ![](../media/images/red2.png) ![](../media/images/red3.png) 
+

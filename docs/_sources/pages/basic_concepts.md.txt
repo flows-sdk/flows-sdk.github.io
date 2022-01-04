@@ -1,25 +1,53 @@
 # Basic Concepts
 
+## System Architecture
+
+The `flows_sdk` enables you build Flows using a Python library in whatever environment/IDE you prefer. The resulting `.py` file must be packaged into a JSON artifact to be imported into the Hyperscience Platform.
+
+Once uploaded to the Hyperscience Platform, this JSON artifact is kept in sync with any changes made in the Flow Studio. The Flow Studio provides a GUI for business users to manage the Flow's settings over time.
+
+![](../media/images/architecture.jpg)
+
 ## Flow
 
-Flows are like processing blueprints that the Hyperscience platform can manage and execute. Within a Flow, Blocks are wired together to define the order of operations alongside Triggers, Flow inputs, and other helper components.
+A Flow is a sequences of business steps managed and executed by the Hyperscience Platform. Flows are composed of Blocks, such as IDP blocks (ex. Classification), Routing, Fork, Triggers, as well as other helper components.
+
+Once uploaded to the Hyperscience Platform, Flows are rendered and management within the Flow Studio:
+
+% Comment: image of flow studio ![](../media/images/architecture.jpg)
 
 ## Block
 
-Using `flows_sdk`, Blocks can be defined and ordered, and their inputs can be customized and passed statically (e.g., during Flow definition or via. UI-exposed setting) or dynamically (e.g., output from a previous Block).
+A Block is a single step in a Flow. Using the `flows_sdk`, Blocks can be defined and ordered, and their inputs can be customized and passed statically (i.e. during Flow definition or via UI-exposed settings) or dynamically (i.e. the output of a previously executed Block).
 
-Execution and lifecycle of blocks is managed by the Hyperscience platform.
+The "core" Blocks of Hyperscience are provided as subclasses within `flows_sdk.examples.idp_v32`. Subclass definitions are listed in the [Block Library](idp_32.md). 
 
 ## Routing
 
-A system Block that routes execution to one of its branches based on a condition (similar to a `switch..case` statement).
+A system Block that routes execution to one of its branches based on a condition (similar to a `switch..case` statement). Routing is viewable within the Flow Studio as a branching of logic:
+
+% Comment: insert example image ![]()
+
+Full definition is in the [Block Library](idp_32.md#Core-Blocks).
+
+% Comment: better deeplinking
 
 ## Fork
 
-A system Block that schedules other blocks for parallel execution.
+A system Block that schedules other Blocks for parallel execution.
+
+Full definition is in the [Block Library](idp_32.md#Core-Blocks).
 
 
-## Triggers
+## Trigger
 
-Triggers are a special type of block that can initiate Flow runs (e.g., watching a folder for new files,
-checking an inbox, listening to a message queue, etc.)
+Trigger Blocks initiate the execution of a Flow. Some examples are: watching a folder for new files; checking an inbox; listening to a message queue, etc. 
+
+Full definition is in the [Block Library](idp_32.md#Trigger-Blocks).
+
+
+## Output
+
+Output Blocks send information to external systems. Some of these blocks are generic (ex. `HTTP_EXPORT`) while others are integrations into specific systems (ex. `EXPORT_UIPATH`).
+
+Full definition is in the [Block Library](idp_32.md#Output-Blocks).

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial &mdash; Flows SDK 0.4.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Basic Concepts" href="basic_concepts.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Flows SDK
+          </a>
+              <div class="version">
+                0.4.1
+
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Flows SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_concepts.html">Basic Concepts</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-deploying">Building &amp; Deploying</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-debugging">Testing &amp; Debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idp_32.html">Block Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Flows SDK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline"></a></h1>
+<p>This tutorial will walk you through building and deploying a flow, as well as best practices for testing and debugging flows. While this tutorial uses a prepackaged example flow, these same steps should be used for developing flows specific to your business needs.</p>
+<p>After completing this tutorial, you will:</p>
+<ul class="simple">
+<li><p>Have a local environment with the <code class="docutils literal notranslate"><span class="pre">flows-sdk</span></code> library installed</p></li>
+<li><p>Package an example “IDP Starter” flow into an artifact</p></li>
+<li><p>Import that artifact into the Hyperscience platform</p></li>
+<li><p>Be able to test and debug your flow</p></li>
+</ul>
+<p>The provided “<a class="reference internal" href="examples.html"><span class="doc std std-doc">IDP Starter Example</span></a>” is a basic approach to extracting text from invoices. It’s a good starting point for adding any process logic, data validation, data formatting, etc. specific to your business’s document extaction process.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Python 3.7+</p></li>
+<li><p>Unix shell or similar terminal</p></li>
+</ul>
+</section>
+<section id="building-deploying">
+<h2>Building &amp; Deploying<a class="headerlink" href="#building-deploying" title="Permalink to this headline"></a></h2>
+<ol>
+<li><p>Create a virtual environment and source it.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m venv venv
+<span class="nb">source</span> venv/bin/activate
+</pre></div>
+</div>
+</li>
+<li><p>Install the <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> Python package. The link below is used for illustrative purposes - contact your CX representative for an exact installable link.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install https://build-storage.int.hyperscience.com/flows_sdk/v0.1.2/flows_sdk-0.1.2-py3-example.whl
+</pre></div>
+</div>
+</li>
+<li><p>Download the <a class="reference internal" href="examples.html"><span class="doc std std-doc">IDP Starter Example</span></a> package, which includes…</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">flow.py</span></code> file. This is the Python file, built using the Flows SDK, that defines all of the logic for IDP Starter Example flow</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">release.zip</span></code>, which includes example layouts for processing invoices. To learn more about releases, visit our (non-technical) <a class="reference external" href="https://hyperscience.zendesk.com/hc/en-us/sections/4414507191181-Releases">user guide</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sample-invoice.pdf</span></code></p></li>
+</ul>
+</li>
+<li><p>Package <code class="docutils literal notranslate"><span class="pre">flow.py</span></code> to a .json file. The Hyperscience Platform only accepts <code class="docutils literal notranslate"><span class="pre">.json</span></code> formatted files.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python flow.py &gt; starter_flow.json
+</pre></div>
+</div>
+</li>
+<li><p>Upload the produced <code class="docutils literal notranslate"><span class="pre">starter_flow.json</span></code> to a Hyperscience instance from <code class="docutils literal notranslate"><span class="pre">https://{hyperscience-url}/flows</span></code> -&gt; Import Flow</p>
+<p><img alt="" src="../_images/import_flow.png" /></p>
+</li>
+</ol>
+<p>If everything went as expected, you should be redirected to the Flow Studio:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>![](../media/images/idp-starter-flow-studio.jpg)
+</pre></div>
+</div>
+<p>You’ve successfully uploaded your first flow to the Hyperscience Platform!</p>
+</section>
+<section id="testing-debugging">
+<h2>Testing &amp; Debugging<a class="headerlink" href="#testing-debugging" title="Permalink to this headline"></a></h2>
+<p>The Hyperscience Platform includes tools to help you test and debug your flows. Continuing with the above example, we’ll show you how to submit documents to your new IDP Starter Flow by using the additional materials provided in the package.</p>
+<ol>
+<li><p>Set your flow’s status to “Live.” Documents can only be submitted to “Live” flows.</p>
+<p><img alt="" src="../_images/idp-starter-live.jpg" /></p>
+</li>
+<li><p>Flows need an associated “Release” to process documents. Navigate to <code class="docutils literal notranslate"><span class="pre">https://{hyperscience-url}/layouts/releases</span></code> and click “Add Release.” Select “Upload Existing” and choose the <code class="docutils literal notranslate"><span class="pre">release.zip</span></code> included in the IDP Starter Example package. After a moment you should see the release uploaded to the Hyperscience Platform.</p>
+<p><img alt="" src="../_images/add-release.jpg" /></p>
+</li>
+<li><p>Assign this release to your IDP Starter Flow by clicking into the release’s page and then clicking “Assign to Flow.” You’re now ready to test your flow by submitting documents!</p>
+</li>
+<li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">https://{hyperscience-url}/submissions</span></code> and click “Create Submission.” Upload the <code class="docutils literal notranslate"><span class="pre">sample-invoice.pdf</span></code> sample document. You should see that the submission was created - it may take a few minutes to process.</p>
+</li>
+<li><p>Now we can use our testing and debugging tools to better understand how your flow processed those documents. Click into the completed submission’s page, then click Actions &gt; View Flow Execution.</p>
+<p><img alt="" src="../_images/flow_execution.png" /></p>
+</li>
+</ol>
+<p>The Flow Execution page has the following sections:</p>
+<p><img src="../_images/red1.png" class="red-dot"> Overview: The left-hand sidebar shows metadata for the submission.</p>
+<p><img src="../_images/red2.png" class="red-dot"> Flow Run diagram: The upper-right panel shows a diagram of the flow. The processing status for an individual block is shown under the block, along with the time the block completed or failed processing (if applicable). If the block has no status underneath it, it has not processed the submission yet. Clicking on a block reveals its input, output, and logs in the Block Details panel below.</p>
+<p><img src="../_images/red3.png" class="red-dot"> Block Details: The Block Details panel has three tabs:</p>
+<ul class="simple">
+<li><p>Input: The Input tab shows the JSON that the block used for processing.</p></li>
+<li><p>Output: Clicking on the Output tab shows the JSON that the block produced during processing (if applicable).
+Note that the Output JSON for the final block in a completed submission is not the same as the JSON output for the entire submission.</p></li>
+<li><p>Logs: If the block failed to process the submission, the Logs tab shows error information for the block.
+You can copy any of the data shown in the Block Details panel by clicking Copy in the upper-right corner of the panel.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="basic_concepts.html" class="btn btn-neutral float-left" title="Basic Concepts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Hyperscience.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
