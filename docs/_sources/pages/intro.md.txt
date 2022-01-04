@@ -1,21 +1,19 @@
 # Introduction to Flows SDK
 
-`flows_sdk` is a library that assists with programmatically defining Flows - sequences of actions managed and executed by the Hyperscience platform.
-
-![](../media/images/intro.png)
+`flows_sdk` is a Python library for programmatically building Flows: a sequences of business steps managed and executed by the Hyperscience Platform. We encourage you to complete the [Tutorial](tutorial.md) as the best way to get started.
 
 Flow definitions are first defined as a source using classes from the library. They are then converted to an importable format that can later be deployed on a Hyperscience instance.
 
 The definitions are like blueprints - they configure and wire together Triggers, Blocks, and other parameters, while the Hyperscience platform takes care of the execution and lifecycle during the actual runtime.
 
-The code used to build Flows via. `flows_sdk` is managed externally from the Hyperscience platform (e.g., in a separate git repository), while the produced artifacts can be uploaded to and managed by the Hyperscience platform.
+The code used to build Flows via `flows_sdk` is managed externally from the Hyperscience platform (e.g., in a separate git repository), while the produced artifacts can be uploaded to and managed by the Hyperscience platform.
 
-![](../media/images/i_e_management_diagram.png)
+## Requirements
 
-## Prerequisites
+- Development: The only local requirement for development is `python 3.7+` and
+a link to this library, provided by your CX representative. Additional dependencies will later be pulled via `pip`.
+- Deployment: In order to deploy Flows built using the `flows_sdk`, you need:
+    - A running instance of the Hyperscience Platform (`v30` and above)
+    - A user account with permissions to edit and import Flows
 
-- Dev: In order to develop Flows using `flows_sdk`, the only local requirement is `python 3.7+` and
-a link to this library, provided by your CX representative. Additional dependencies will later be pulled via. `pip`.
-- Deploy: In order to deploy Flows built using `flows_sdk`, you need
-    - a running instance of the Hyperscience platform (`v30` and above)
-    - a user with permissions to edit and import Flows
+% Comment: @vik is v30 and above correct? I thought we could only do v32 and above?

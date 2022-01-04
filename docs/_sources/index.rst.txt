@@ -12,9 +12,8 @@ Welcome to flows_sdk's documentation!
 
    pages/intro
    pages/basic_concepts
-   pages/quickstart
+   pages/tutorial
    pages/examples
-   pages/faq
    pages/idp_32
    pages/source-docs
 

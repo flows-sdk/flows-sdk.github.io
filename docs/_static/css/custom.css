@@ -19,3 +19,91 @@ dl.class > dt:first-of-type {
 .wy-table-responsive table td {
     white-space: normal;
 }
+
+
+body.wy-body-for-nav {
+    color: #000000;
+    background-color: #fff;
+}
+
+/*******************************************
+Navigation
+*******************************************/
+
+/* Mobile top menu */
+nav.wy-nav-top {
+    background: #000;
+}
+
+/* Full vertical side bar */
+.wy-nav-side {
+    color: #fff;
+    background-color: #000;
+}
+
+.wy-menu-vertical a {
+    color: #fff;
+}
+
+.wy-menu-vertical li.toctree-l2 a, .wy-menu-vertical li.toctree-l3 a, .wy-menu-vertical li.toctree-l4 a, .wy-menu-vertical li.toctree-l5 a, .wy-menu-vertical li.toctree-l6 a, .wy-menu-vertical li.toctree-l7 a, .wy-menu-vertical li.toctree-l8 a, .wy-menu-vertical li.toctree-l9 a, .wy-menu-vertical li.toctree-l10 a, .wy-menu-vertical li.current>a, .wy-menu-vertical li.on a {
+    color: #000; /* Selected sidebar page */
+}
+
+/* Blue search bar at top */
+.wy-side-nav-search {
+    background-color: #176ef9;  
+}
+
+.icon-home:before {
+    display: none; /* Remove little house logo */
+}
+
+.wy-menu-vertical p.caption {
+    color: #176ef9;
+}
+
+/*******************************************
+Content
+*******************************************/
+.wy-nav-content {
+    max-width: 100%
+}
+
+.rst-content ol li {
+    margin-bottom: 10px;
+}
+
+@media screen and (min-width: 1048px) {
+    .rst-content {
+        max-width: 90%;
+    }
+
+    .rst-content img {
+        max-width: 80%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    div.rst-content {
+        margin-top: 20px;
+    }
+}
+
+/* Breadcumbs */
+div.rst-content > div[role="navigation"] {
+    display: none;
+}
+
+img.red-dot {
+    width: 24px;
+    margin-top: -4px;
+}
+
+/*******************************************
+Buttons
+*******************************************/
+.btn, .btn-neutral {
+    /*background-color: #176ef9 !important; not working for some reason...*/
+    /*color: #fff !important;*/
+    box-shadow: none;
+}

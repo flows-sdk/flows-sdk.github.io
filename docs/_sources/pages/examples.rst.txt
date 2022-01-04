@@ -1,44 +1,110 @@
-=========
+=============
 Examples
-=========
+=============
 
-Examples that can be used as a starting point when building custom Flows
+This section contains examples of fully executable flows. We recommend using one of these examples as a template for building a Flow to fit your exact business process.
+
+Examples marked "OOTB" (i.e. "Out-of-the-box") contain any releases, models, and sample documents necessary to execute the flow in your instance of the Hyperscience Platform. 
+
+.. list-table::
+   :widths: 25 40 10 30
+   :header-rows: 1
+
+   * - Name
+     - Description
+     - OOTB
+     - Download
+   * - :ref:`pages/examples:Hello Flow`
+     - A single Custom Code block.
+     - 
+     - :download:`hello_flow.py <../../../samples/hello_flow/flow.py>`
+   * - :ref:`pages/examples:IDP Starter`
+     - Basic document processing flow. 
+     - .. image:: ../media/images/checkmark.png 
+         :width: 20
+         :align: center
+     - :download:`idp_starter.zip <../../../samples/idp_flow/idp-starter.zip>`
+   * - :ref:`pages/examples:IDP w/ Custom Code Block`
+     - IDP Starter + a script to modify the extracted data.
+     - 
+     - :download:`idp_custom.py <../../../samples/custom_idp_flow/flow.py>`
+   * - :ref:`pages/examples:Invoice Validation`
+     - Validates invoice line items and the total invoice amount.
+     - .. image:: ../media/images/checkmark.png 
+         :width: 20
+         :align: center
+     - :download:`invoice_validation.zip <../../../samples/invoice_validation/invoice_validation_v32.zip>`
+   * - :ref:`pages/examples:PDF Redaction`
+     - Redaction of fields in a PDF by performing REGEX on fields and blacking out the corresponding bounding box.
+     - .. image:: ../media/images/checkmark.png 
+         :width: 20
+         :align: center
+     - :download:`pdf_redaction.zip <../../../samples/pdf_redaction/pdf_redaction_v32.zip>`
 
 Hello Flow
 ###########
 
-:download:`Download Hello Flow <../../../samples/hello_flow/flow.py>`
+This example consists of a single Custom Code block. It is the simplest possible executable flow.
 
-.. image:: ../media/images/hello_world_flow_studio.png
+:download:`Download hello_flow.py <../../../samples/hello_flow/flow.py>`
+
+.. 
+   image:: ../media/images/hello_world_flow_studio.png
 
 .. include:: ../../../samples/hello_flow/flow.py
    :literal:
 
 
-
-IDP Starter Example
+IDP Starter
 ###################
 
-The IDP Flow is a snapshot of our V32 Document Processing Flow. It can be used as a starting point
-when developing more complex Flows.
-The example is archived as it consists of multiple python files.
+This example is a snapshot of our V32 Intelligent Document Processing (IDP) flow. It uses both Machine and Manual blocks to:
 
-:download:`Download IDP Example <../../../samples/idp_flow/flow.py>`
+1. Classify and collate pages
+2. Identify and transcribe text
+3. Additional manual transcription for any fields marked for review 
+4. Output results to a downstream system
 
-.. image:: ../media/images/idp_example_flow_studio.png
+:download:`idp_starter.zip <../../../samples/idp_flow/idp-starter.zip>`
+
+.. 
+   image:: ../media/images/idp_example_flow_studio.png
 
 .. include:: ../../../samples/idp_flow/flow.py
    :literal:
 
 
-IDP Customized Example
-######################
+IDP w/ Custom Code Block
+###########################
 
-Similar to the :ref:`pages/examples:IDP Starter Example`, but includes additional custom code logic.
+This example is identical to the :ref:`pages/examples:IDP Starter` example, however it includes an additional Custom Code block to add "time completed" metadata to each document in the submission. This is an example of how Custom Code blocks can arbitrarily modify extracted data before outputting to downstream systems.
 
-:download:`Download IDP Example <../../../samples/custom_idp_flow/flow.py>`
+:download:`Download idp_custom.py <../../../samples/custom_idp_flow/flow.py>`
 
-.. image:: ../media/images/custom_idp_example_flow_studio.png
+.. 
+   image:: ../media/images/custom_idp_example_flow_studio.png
 
 .. include:: ../../../samples/custom_idp_flow/flow.py
+   :literal:
+
+
+Invoice Validation
+###########################
+
+This example validates invoice line items and the total invoice amount and routes to a Flexible Extraction block for discrepancies.
+
+:download:`Download invoice_validation.zip <../../../samples/invoice_validation/invoice_validation_v32.zip>`
+
+.. include:: ../../../samples/invoice_validation/invoice_validation_v32/invoice_validation.py
+   :literal:
+
+
+PDF Redaction
+###########################
+
+This example allows redaction of fields in a PDF by performing REGEX on fields/segments and blacking out corresponding bounding boxes.
+
+:download:`Download pdf_redaction.zip <../../../samples/pdf_redaction/pdf_redaction_v32.zip>`
+
+.. include:: ../../../samples/pdf_redaction/pdf_redaction_v32/pdf_redaction.py
    :literal:

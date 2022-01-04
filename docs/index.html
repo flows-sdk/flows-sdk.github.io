@@ -4,11 +4,12 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to flows_sdk’s documentation! &mdash; flows_sdk 0.4.0 documentation</title>
+  <title>Welcome to flows_sdk’s documentation! &mdash; Flows SDK 0.4.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/autodoc_pydantic.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.png"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -28,10 +29,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="#" class="icon icon-home"> flows_sdk
+            <a href="#" class="icon icon-home"> Flows SDK
           </a>
               <div class="version">
-                0.4.0
+                0.4.1
 
               </div>
 <div role="search">
@@ -46,11 +47,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pages/intro.html">Introduction to Flows SDK</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/basic_concepts.html">Basic Concepts</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/faq.html">Frequently Asked Questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/idp_32.html">Starter: IDP V32</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/source-docs.html">Source documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/idp_32.html">Block Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/source-docs.html">Source Documentation</a></li>
 </ul>
 
         </div>
@@ -59,7 +59,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">flows_sdk</a>
+          <a href="#">Flows SDK</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -69,7 +69,6 @@
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
       <li>Welcome to flows_sdk’s documentation!</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -83,36 +82,40 @@
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pages/intro.html">Introduction to Flows SDK</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/intro.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/intro.html#requirements">Requirements</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pages/basic_concepts.html">Basic Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/basic_concepts.html#system-architecture">System Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pages/basic_concepts.html#flow">Flow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pages/basic_concepts.html#block">Block</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pages/basic_concepts.html#routing">Routing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pages/basic_concepts.html#fork">Fork</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/basic_concepts.html#triggers">Triggers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/basic_concepts.html#trigger">Trigger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/basic_concepts.html#output">Output</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pages/quickstart.html">Quickstart</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/quickstart.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/quickstart.html#steps">Steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/tutorial.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/tutorial.html#building-deploying">Building &amp; Deploying</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/tutorial.html#testing-debugging">Testing &amp; Debugging</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pages/examples.html">Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pages/examples.html#hello-flow">Hello Flow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/examples.html#idp-starter-example">IDP Starter Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/examples.html#idp-customized-example">IDP Customized Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/examples.html#idp-starter">IDP Starter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/examples.html#idp-w-custom-code-block">IDP w/ Custom Code Block</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/examples.html#invoice-validation">Invoice Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/examples.html#pdf-redaction">PDF Redaction</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pages/faq.html">Frequently Asked Questions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/idp_32.html">Starter: IDP V32</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/idp_32.html#v32-blocks">V32 Blocks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/idp_32.html#triggers">Triggers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/idp_32.html#outputs">Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/idp_32.html">Block Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/idp_32.html#core-blocks">Core Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/idp_32.html#trigger-blocks">Trigger Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/idp_32.html#output-blocks">Output Blocks</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pages/source-docs.html">Source documentation</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="pages/source-docs.html">Source Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pages/source-docs.html#module-flows_sdk.blocks">blocks.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pages/source-docs.html#module-flows_sdk.flows">flows.py</a></li>
 </ul>

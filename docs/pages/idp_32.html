@@ -4,11 +4,12 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Starter: IDP V32 &mdash; flows_sdk 0.4.0 documentation</title>
+  <title>Block Library &mdash; Flows SDK 0.4.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -20,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Source documentation" href="source-docs.html" />
-    <link rel="prev" title="Frequently Asked Questions" href="faq.html" /> 
+    <link rel="next" title="Source Documentation" href="source-docs.html" />
+    <link rel="prev" title="Examples" href="examples.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -29,10 +30,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> flows_sdk
+            <a href="../index.html" class="icon icon-home"> Flows SDK
           </a>
               <div class="version">
-                0.4.0
+                0.4.1
 
               </div>
 <div role="search">
@@ -47,12 +48,11 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Flows SDK</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic_concepts.html">Basic Concepts</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Starter: IDP V32</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#v32-blocks">V32 Blocks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#triggers">Triggers</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Block Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#core-blocks">Core Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trigger-blocks">Trigger Blocks</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#folder-trigger">FOLDER_TRIGGER</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#kofax-folder-trigger">KOFAX_FOLDER_TRIGGER</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#imap-trigger">IMAP_TRIGGER</a></li>
@@ -60,7 +60,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#cron-trigger">CRON_TRIGGER</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#outputs">Outputs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#output-blocks">Output Blocks</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cob-box-notifier">COB_BOX_NOTIFIER</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cob-mq-notifier">COB_MQ_NOTIFIER</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cob-export-uipath">COB_EXPORT_UIPATH</a></li>
@@ -69,7 +69,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source Documentation</a></li>
 </ul>
 
         </div>
@@ -78,7 +78,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">flows_sdk</a>
+          <a href="../index.html">Flows SDK</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -86,9 +86,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Starter: IDP V32</li>
+      <li>Block Library</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/pages/idp_32.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -96,10 +95,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section class="tex2jax_ignore mathjax_ignore" id="starter-idp-v32">
-<h1>Starter: IDP V32<a class="headerlink" href="#starter-idp-v32" title="Permalink to this headline"></a></h1>
-<section id="v32-blocks">
-<h2>V32 Blocks<a class="headerlink" href="#v32-blocks" title="Permalink to this headline"></a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="block-library">
+<h1>Block Library<a class="headerlink" href="#block-library" title="Permalink to this headline"></a></h1>
+<p>This section lists all block subclasses necessary to build on Hyperscience Platform V32.</p>
+<ul class="simple">
+<li><p>Core Blocks are provided as convenient Python subclasses for plug-and-play use.</p></li>
+<li><p>Trigger and Output Blocks require use of the base <code class="docutils literal notranslate"><span class="pre">Block</span></code> class.</p></li>
+</ul>
+<section id="core-blocks">
+<h2>Core Blocks<a class="headerlink" href="#core-blocks" title="Permalink to this headline"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Classes in the idp_v32 example have parameters with ambiguous typing.
@@ -533,7 +537,7 @@ defaults to IDP_SUBMISSION_NOTIFY_NAME</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="flows_sdk.examples.idp_v32.idp_blocks.SubmissionCompleteV3Block">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.examples.idp_v32.idp_blocks.</span></span><span class="sig-name descname"><span class="pre">SubmissionCompleteV3Block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlc_qa_sampling_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.semi_qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id_qa_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.field_id_qa_enabled}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id_qa_sampling_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.field_id_qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_id_qa_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.table_id_qa_enabled}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_id_qa_sampling_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.table_id_qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transcription_qa_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.qa}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transcription_qa_sampling_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_cell_transcription_qa_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.table_cell_transcription_qa_enabled}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_cell_transcription_qa_sample_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.table_cell_transcription_qa_sample_rate}'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.examples.idp_v32.idp_blocks.SubmissionCompleteV3Block" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.examples.idp_v32.idp_blocks.</span></span><span class="sig-name descname"><span class="pre">SubmissionCompleteV3Block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlc_qa_sampling_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.semi_qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id_qa_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.field_id_qa_enabled}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id_qa_sampling_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.field_id_qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_id_qa_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.table_id_qa_enabled}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_id_qa_sampling_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.table_id_qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transcription_qa_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.qa}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transcription_qa_sampling_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_cell_transcription_qa_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.table_cell_transcription_qa_enabled}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_cell_transcription_qa_sample_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.table_cell_transcription_qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.examples.idp_v32.idp_blocks.SubmissionCompleteV3Block" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="source-docs.html#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
 <p>Submission complete block finalizes submission processing and updates reporting data</p>
 <p>Mandatory parameters:</p>
@@ -610,8 +614,8 @@ to visualize an enabled/disabled trigger that is controllable via Flow Studio.</
 </dd></dl>
 
 </section>
-<section id="triggers">
-<h2>Triggers<a class="headerlink" href="#triggers" title="Permalink to this headline"></a></h2>
+<section id="trigger-blocks">
+<h2>Trigger Blocks<a class="headerlink" href="#trigger-blocks" title="Permalink to this headline"></a></h2>
 <section id="folder-trigger">
 <h3>FOLDER_TRIGGER<a class="headerlink" href="#folder-trigger" title="Permalink to this headline"></a></h3>
 <p>name: Folder Listener</p>
@@ -943,8 +947,8 @@ to visualize an enabled/disabled trigger that is controllable via Flow Studio.</
 </table>
 </section>
 </section>
-<section id="outputs">
-<h2>Outputs<a class="headerlink" href="#outputs" title="Permalink to this headline"></a></h2>
+<section id="output-blocks">
+<h2>Output Blocks<a class="headerlink" href="#output-blocks" title="Permalink to this headline"></a></h2>
 <section id="cob-box-notifier">
 <h3>COB_BOX_NOTIFIER<a class="headerlink" href="#cob-box-notifier" title="Permalink to this headline"></a></h3>
 <p>name: Box Notifier Output Block</p>
@@ -1438,8 +1442,8 @@ to visualize an enabled/disabled trigger that is controllable via Flow Studio.</
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="faq.html" class="btn btn-neutral float-left" title="Frequently Asked Questions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="source-docs.html" class="btn btn-neutral float-right" title="Source documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="source-docs.html" class="btn btn-neutral float-right" title="Source Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

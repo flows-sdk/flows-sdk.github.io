@@ -1,6 +1,13 @@
-# Starter: IDP V32
+# Block Library
 
-## V32 Blocks
+This section lists all block subclasses necessary to build on Hyperscience Platform V32.
+- Core Blocks are provided as convenient Python subclasses for plug-and-play use.
+- Trigger and Output Blocks require use of the base `Block` class.
+% Comment: need to add simple subclasses of Trigger and Output blocks
+% Comment: add explanation of "V2" naming conventions and how this works
+
+## Core Blocks
+% Comment: Core block section should be expandable in LH navigation
 
 ```{eval-rst}
 
@@ -18,7 +25,7 @@
    :show-inheritance:
 ```
 
-## Triggers
+## Trigger Blocks
 
 
 ### FOLDER_TRIGGER
@@ -126,7 +133,7 @@ Inputs:
 
 
 
-## Outputs
+## Output Blocks
 
 ### COB_BOX_NOTIFIER
 
