@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Examples" href="examples.html" />
-    <link rel="prev" title="Basic Concepts" href="basic_concepts.html" /> 
+    <link rel="prev" title="Introduction to Flows SDK" href="intro.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,7 +47,6 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Flows SDK</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basic_concepts.html">Basic Concepts</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#building-deploying">Building &amp; Deploying</a></li>
@@ -55,8 +54,9 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="idp_32.html">Block Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idp_32.html">IDP Library</a></li>
 </ul>
 
         </div>
@@ -92,7 +92,7 @@
 <li><p>Import that artifact into the Hyperscience platform</p></li>
 <li><p>Be able to test and debug your flow</p></li>
 </ul>
-<p>The provided “<a class="reference internal" href="examples.html"><span class="doc std std-doc">IDP Starter Example</span></a>” is a basic approach to extracting text from invoices. It’s a good starting point for adding any process logic, data validation, data formatting, etc. specific to your business’s document extaction process.</p>
+<p>The provided “<a class="reference internal" href="examples.html"><span class="doc std std-doc">IDP Starter Example</span></a>” is a basic approach to extracting text from documents. It’s a good starting point for adding process logic, data validation, data formatting, etc. specific to your business’s document extaction process.</p>
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h2>
 <ul class="simple">
@@ -117,24 +117,23 @@
 <li><p>Download the <a class="reference internal" href="examples.html"><span class="doc std std-doc">IDP Starter Example</span></a> package, which includes…</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">flow.py</span></code> file. This is the Python file, built using the Flows SDK, that defines all of the logic for IDP Starter Example flow</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">release.zip</span></code>, which includes example layouts for processing invoices. To learn more about releases, visit our (non-technical) <a class="reference external" href="https://hyperscience.zendesk.com/hc/en-us/sections/4414507191181-Releases">user guide</a></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">sample-invoice.pdf</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">release.zip</span></code>, which includes a layout for processing W-9 forms. Because W-9s are a structured document it is not necessary to train any models. To learn more about releases, visit our (non-technical) <a class="reference external" href="https://hyperscience.zendesk.com/hc/en-us/sections/4414507191181-Releases">user guide</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">form-w9-blank.pdf</span></code>, a blank Form W-9 used to build the layout</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">form-w9-sample.png</span></code>, a W-9 form filled out with handwriting. This image can be submitted to test your flow.</p></li>
 </ul>
 </li>
-<li><p>Package <code class="docutils literal notranslate"><span class="pre">flow.py</span></code> to a .json file. The Hyperscience Platform only accepts <code class="docutils literal notranslate"><span class="pre">.json</span></code> formatted files.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python flow.py &gt; starter_flow.json
+<li><p>Package <code class="docutils literal notranslate"><span class="pre">flow.py</span></code> to a <code class="docutils literal notranslate"><span class="pre">.json</span></code> file. The Hyperscience Platform only accepts <code class="docutils literal notranslate"><span class="pre">.json</span></code> formatted files; the <code class="docutils literal notranslate"><span class="pre">json</span></code> file may have any name.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python flow.py &gt; idp_starter_flow.json
 </pre></div>
 </div>
 </li>
-<li><p>Upload the produced <code class="docutils literal notranslate"><span class="pre">starter_flow.json</span></code> to a Hyperscience instance from <code class="docutils literal notranslate"><span class="pre">https://{hyperscience-url}/flows</span></code> -&gt; Import Flow</p>
+<li><p>Upload the produced <code class="docutils literal notranslate"><span class="pre">idp_starter_flow.json</span></code> to a Hyperscience instance from <code class="docutils literal notranslate"><span class="pre">https://{hyperscience-url}/flows</span></code> -&gt; Import Flow</p>
 <p><img alt="" src="../_images/import_flow.png" /></p>
 </li>
+<li><p>If everything went as expected, you should be redirected to the Flow Studio - you’ve successfully uploaded your first flow to the Hyperscience Platform!</p>
+<p><img alt="" src="../_images/idp-starter-flow-studio.jpg" /></p>
+</li>
 </ol>
-<p>If everything went as expected, you should be redirected to the Flow Studio:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>![](../media/images/idp-starter-flow-studio.jpg)
-</pre></div>
-</div>
-<p>You’ve successfully uploaded your first flow to the Hyperscience Platform!</p>
 </section>
 <section id="testing-debugging">
 <h2>Testing &amp; Debugging<a class="headerlink" href="#testing-debugging" title="Permalink to this headline"></a></h2>
@@ -147,11 +146,16 @@
 <p><img alt="" src="../_images/add-release.jpg" /></p>
 </li>
 <li><p>Assign this release to your IDP Starter Flow by clicking into the release’s page and then clicking “Assign to Flow.” You’re now ready to test your flow by submitting documents!</p>
+<p><img alt="" src="../_images/assign-to-flow.jpg" />
+<img alt="" src="../_images/assign-to-flow-2.jpg" /></p>
 </li>
-<li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">https://{hyperscience-url}/submissions</span></code> and click “Create Submission.” Upload the <code class="docutils literal notranslate"><span class="pre">sample-invoice.pdf</span></code> sample document. You should see that the submission was created - it may take a few minutes to process.</p>
+<li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">https://{hyperscience-url}/submissions</span></code> and click “Create Submission.” Upload the <code class="docutils literal notranslate"><span class="pre">form-w9-sample.png</span></code> sample document. Finally, select “IDP Starter Flow” as the flow to submit to. You should see that the submission was created - it may take a few minutes to process.</p>
+<p><img alt="" src="../_images/create-submission.jpg" />
+<img alt="" src="../_images/create-submission-2.jpg" /></p>
 </li>
-<li><p>Now we can use our testing and debugging tools to better understand how your flow processed those documents. Click into the completed submission’s page, then click Actions &gt; View Flow Execution.</p>
-<p><img alt="" src="../_images/flow_execution.png" /></p>
+<li><p>Now we can use our testing and debugging tools to better understand how your flow processed those documents. Click on the completed submission’s id, then click Actions &gt; View Flow Execution. If you used the provided IDP Starter flow and sample document you should see that the document processed without error.</p>
+<p><img alt="" src="../_images/submission-processing.jpg" />
+<img alt="" src="../_images/flow_execution.png" /></p>
 </li>
 </ol>
 <p>The Flow Execution page has the following sections:</p>
@@ -159,12 +163,12 @@
 <p><img src="../_images/red2.png" class="red-dot"> Flow Run diagram: The upper-right panel shows a diagram of the flow. The processing status for an individual block is shown under the block, along with the time the block completed or failed processing (if applicable). If the block has no status underneath it, it has not processed the submission yet. Clicking on a block reveals its input, output, and logs in the Block Details panel below.</p>
 <p><img src="../_images/red3.png" class="red-dot"> Block Details: The Block Details panel has three tabs:</p>
 <ul class="simple">
-<li><p>Input: The Input tab shows the JSON that the block used for processing.</p></li>
-<li><p>Output: Clicking on the Output tab shows the JSON that the block produced during processing (if applicable).
+<li><p>Input - Shows the input JSON arguments that the block used for processing.</p></li>
+<li><p>Output - Shows the output JSON that the block produced as a result of processing (if applicable).
 Note that the Output JSON for the final block in a completed submission is not the same as the JSON output for the entire submission.</p></li>
-<li><p>Logs: If the block failed to process the submission, the Logs tab shows error information for the block.
-You can copy any of the data shown in the Block Details panel by clicking Copy in the upper-right corner of the panel.</p></li>
+<li><p>Logs: If the block failed to process the submission, shows error information for the block during processing.</p></li>
 </ul>
+<p>You can copy any of the data shown in the Block Details panel by clicking Copy in the upper-right corner of the panel.</p>
 </section>
 </section>
 
@@ -172,7 +176,7 @@ You can copy any of the data shown in the Block Details panel by clicking Copy i
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="basic_concepts.html" class="btn btn-neutral float-left" title="Basic Concepts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction to Flows SDK" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

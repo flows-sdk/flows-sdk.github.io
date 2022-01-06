@@ -2,49 +2,55 @@
 Examples
 =============
 
-This section contains examples of fully executable flows. We recommend using one of these examples as a template for building a Flow to fit your exact business process.
+This section contains examples of fully executable flows. We recommend using one of these examples as a template for building a flow to fit your exact business process.
 
-Examples marked "OOTB" (i.e. "Out-of-the-box") contain any releases, models, and sample documents necessary to execute the flow in your instance of the Hyperscience Platform. 
+Most examples marked contain a release and/or sample documents necessary to execute the flow in your instance of the Hyperscience Platform. You can still build your own release and test with additional documents.
 
 .. list-table::
-   :widths: 25 40 10 30
+   :widths: 25 40 10 10 20
    :header-rows: 1
 
    * - Name
      - Description
-     - OOTB
+     - Release
+     - Sample Docs
      - Download
    * - :ref:`pages/examples:Hello Flow`
-     - A single Custom Code block.
+     - A single Code block.
+     -
      - 
      - :download:`hello_flow.py <../../../samples/hello_flow/flow.py>`
    * - :ref:`pages/examples:IDP Starter`
-     - Basic document processing flow. 
+     - Basic document processing flow. Package includes release and sample documents for processing Form W-9s.
      - .. image:: ../media/images/checkmark.png 
-         :width: 20
-         :align: center
+         :class: checkmark
+     - .. image:: ../media/images/checkmark.png 
+         :class: checkmark
      - :download:`idp_starter.zip <../../../samples/idp_flow/idp-starter.zip>`
-   * - :ref:`pages/examples:IDP w/ Custom Code Block`
+   * - :ref:`pages/examples:IDP w/ Code Block`
      - IDP Starter + a script to modify the extracted data.
+     - 
      - 
      - :download:`idp_custom.py <../../../samples/custom_idp_flow/flow.py>`
    * - :ref:`pages/examples:Invoice Validation`
      - Validates invoice line items and the total invoice amount.
      - .. image:: ../media/images/checkmark.png 
-         :width: 20
-         :align: center
+         :class: checkmark
+     - .. image:: ../media/images/checkmark.png 
+         :class: checkmark
      - :download:`invoice_validation.zip <../../../samples/invoice_validation/invoice_validation_v32.zip>`
    * - :ref:`pages/examples:PDF Redaction`
      - Redaction of fields in a PDF by performing REGEX on fields and blacking out the corresponding bounding box.
      - .. image:: ../media/images/checkmark.png 
-         :width: 20
-         :align: center
+         :class: checkmark
+     - .. image:: ../media/images/checkmark.png 
+         :class: checkmark
      - :download:`pdf_redaction.zip <../../../samples/pdf_redaction/pdf_redaction_v32.zip>`
 
 Hello Flow
 ###########
 
-This example consists of a single Custom Code block. It is the simplest possible executable flow.
+This example consists of a single Code block. It is the simplest possible executable flow.
 
 :download:`Download hello_flow.py <../../../samples/hello_flow/flow.py>`
 
@@ -74,10 +80,10 @@ This example is a snapshot of our V32 Intelligent Document Processing (IDP) flow
    :literal:
 
 
-IDP w/ Custom Code Block
+IDP w/ Code Block
 ###########################
 
-This example is identical to the :ref:`pages/examples:IDP Starter` example, however it includes an additional Custom Code block to add "time completed" metadata to each document in the submission. This is an example of how Custom Code blocks can arbitrarily modify extracted data before outputting to downstream systems.
+This example is identical to the :ref:`pages/examples:IDP Starter` example, however it includes an additional Code block to add "time completed" metadata to each document in the submission. This is an example of how Code blocks can arbitrarily modify extracted data before outputting to downstream systems.
 
 :download:`Download idp_custom.py <../../../samples/custom_idp_flow/flow.py>`
 
@@ -108,3 +114,82 @@ This example allows redaction of fields in a PDF by performing REGEX on fields/s
 
 .. include:: ../../../samples/pdf_redaction/pdf_redaction_v32/pdf_redaction.py
    :literal:
+
+
+Code Snippets
+###########################
+.. note::
+    While code snippets are great, the Hyperscience Platform provides easy tools to help you build your own solutions. Make sure to read our Testing & Debugging guide below before diving in.
+
+How do I iterate over multiple documents in a submission?
+*************************************************************
+Block subclasses provided in the :ref:`pages/idp_32:Processing Blocks` generally take a Submission object as a mandatory input parameter as well as output a modified copy of the Submission object. Each block provides a convenience method to access the Submission object:
+
+.. code-block:: python
+   
+   # This example shows the output of MachineTranscriptionV3Block (i.e. machine_transcription) being used as the input to a ManualTranscriptionV2Block
+   manual_transcription = ManualTranscriptionV2Block(
+     reference_name='manual_transcription',
+     submission=machine_transcription.output('submission'),
+     ...
+   )
+
+.. warning:: 
+   Always check the exact output of the preceding block! Some block output includes additional metadata and may require a different key, such as `.output('results.submission')`, to access the Submission object.
+
+The Submission object is constructed as:
+
+.. code-block::
+   
+   {
+      "submission": {
+         "id": "12345",
+         "documents": [
+            {
+                "id": "1",
+                "pages": [...] // list of pages
+                "document_fields": [...] // list of document fields
+            },
+            ...
+         ]
+         "cases": [],
+      }
+   }
+
+And so iterating over multiple documents in a submission is as easy as:
+
+.. code-block::
+   
+   def _iter_docs(submission):
+      for document in submission.get('documents', []):
+         print(document["id"]) # Print the ID of each document in the submission
+      return submission
+   
+   custom_code = CodeBlock(
+      reference_name='code_block',
+      code=_iter_docs,
+      code_input={'submission': manual_transcription.output('submission')}
+   )
+
+
+How do I compare fields across different documents?
+*************************************************************
+Let's assume we're trying to find the maximum value of the "income" field across multiple documents in the same submission. Once transcribed, we iterate over all the transcribed fields in the submission and compare each value to the previous maximum:
+
+.. code-block::
+
+   def _compare_fields(submission):
+      max_income = 0.0
+      for document in submission.get('documents', []):
+         for field in document.get('document_fields', []):
+            if field.get('field_name') == 'income' and float(field.get('transcription')) > max_income:
+               max_income = float(field.get('transcription'))
+
+         print(max_income) # Print the maximum income across all documents
+      return submission
+   
+   custom_code = CodeBlock(
+      reference_name='code_block',
+      code=_compare_fields,
+      code_input={'submission': previous_block.output('submission')}
+   )

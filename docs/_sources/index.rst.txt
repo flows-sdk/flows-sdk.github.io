@@ -11,11 +11,11 @@ Welcome to flows_sdk's documentation!
    :caption: Contents:
 
    pages/intro
-   pages/basic_concepts
    pages/tutorial
    pages/examples
-   pages/idp_32
+   pages/faq
    pages/source-docs
+   pages/idp_32
 
 
 Indices and tables

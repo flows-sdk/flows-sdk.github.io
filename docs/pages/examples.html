@@ -21,7 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Block Library" href="idp_32.html" />
+    <link rel="next" title="FAQ" href="faq.html" />
     <link rel="prev" title="Tutorial" href="tutorial.html" /> 
 </head>
 
@@ -47,18 +47,23 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Flows SDK</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basic_concepts.html">Basic Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#hello-flow">Hello Flow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#idp-starter">IDP Starter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#idp-w-custom-code-block">IDP w/ Custom Code Block</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#idp-w-code-block">IDP w/ Code Block</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#invoice-validation">Invoice Validation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pdf-redaction">PDF Redaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-snippets">Code Snippets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-do-i-iterate-over-multiple-documents-in-a-submission">How do I iterate over multiple documents in a submission?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-do-i-compare-fields-across-different-documents">How do I compare fields across different documents?</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="idp_32.html">Block Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idp_32.html">IDP Library</a></li>
 </ul>
 
         </div>
@@ -86,48 +91,58 @@
              
   <section id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h1>
-<p>This section contains examples of fully executable flows. We recommend using one of these examples as a template for building a Flow to fit your exact business process.</p>
-<p>Examples marked “OOTB” (i.e. “Out-of-the-box”) contain any releases, models, and sample documents necessary to execute the flow in your instance of the Hyperscience Platform.</p>
+<p>This section contains examples of fully executable flows. We recommend using one of these examples as a template for building a flow to fit your exact business process.</p>
+<p>Most examples marked contain a release and/or sample documents necessary to execute the flow in your instance of the Hyperscience Platform. You can still build your own release and test with additional documents.</p>
 <table class="colwidths-given docutils align-default">
 <colgroup>
 <col style="width: 24%" />
 <col style="width: 38%" />
 <col style="width: 10%" />
-<col style="width: 29%" />
+<col style="width: 10%" />
+<col style="width: 19%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Description</p></th>
-<th class="head"><p>OOTB</p></th>
+<th class="head"><p>Release</p></th>
+<th class="head"><p>Sample Docs</p></th>
 <th class="head"><p>Download</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference internal" href="#hello-flow"><span class="std std-ref">Hello Flow</span></a></p></td>
-<td><p>A single Custom Code block.</p></td>
+<td><p>A single Code block.</p></td>
+<td></td>
 <td></td>
 <td><p><a class="reference download internal" download="" href="../_downloads/f42e3eecbffde899bc29d261f2ac86d0/flow.py"><code class="xref download docutils literal notranslate"><span class="pre">hello_flow.py</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#idp-starter"><span class="std std-ref">IDP Starter</span></a></p></td>
-<td><p>Basic document processing flow.</p></td>
-<td><a class="reference internal image-reference" href="../_images/checkmark.png"><img alt="../_images/checkmark.png" class="align-center" src="../_images/checkmark.png" style="width: 20px;" /></a>
+<td><p>Basic document processing flow. Package includes release and sample documents for processing Form W-9s.</p></td>
+<td><img alt="../_images/checkmark.png" class="checkmark" src="../_images/checkmark.png" />
+</td>
+<td><img alt="../_images/checkmark.png" class="checkmark" src="../_images/checkmark.png" />
 </td>
 <td><p><a class="reference download internal" download="" href="../_downloads/2279a32bac9d45ac239eeb28370e1900/idp-starter.zip"><code class="xref download docutils literal notranslate"><span class="pre">idp_starter.zip</span></code></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#idp-w-custom-code-block"><span class="std std-ref">IDP w/ Custom Code Block</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#idp-w-code-block"><span class="std std-ref">IDP w/ Code Block</span></a></p></td>
 <td><p>IDP Starter + a script to modify the extracted data.</p></td>
+<td></td>
 <td></td>
 <td><p><a class="reference download internal" download="" href="../_downloads/0b0c0cb6b7b26a2a7367f0ffc2b6482a/flow.py"><code class="xref download docutils literal notranslate"><span class="pre">idp_custom.py</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#invoice-validation"><span class="std std-ref">Invoice Validation</span></a></p></td>
 <td><p>Validates invoice line items and the total invoice amount.</p></td>
-<td><a class="reference internal image-reference" href="../_images/checkmark.png"><img alt="../_images/checkmark.png" class="align-center" src="../_images/checkmark.png" style="width: 20px;" /></a>
+<td><img alt="../_images/checkmark.png" class="checkmark" src="../_images/checkmark.png" />
+</td>
+<td><img alt="../_images/checkmark.png" class="checkmark" src="../_images/checkmark.png" />
 </td>
 <td><p><a class="reference download internal" download="" href="../_downloads/d13c9b2db3581c7c1719101952ebaf9f/invoice_validation_v32.zip"><code class="xref download docutils literal notranslate"><span class="pre">invoice_validation.zip</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pdf-redaction"><span class="std std-ref">PDF Redaction</span></a></p></td>
 <td><p>Redaction of fields in a PDF by performing REGEX on fields and blacking out the corresponding bounding box.</p></td>
-<td><a class="reference internal image-reference" href="../_images/checkmark.png"><img alt="../_images/checkmark.png" class="align-center" src="../_images/checkmark.png" style="width: 20px;" /></a>
+<td><img alt="../_images/checkmark.png" class="checkmark" src="../_images/checkmark.png" />
+</td>
+<td><img alt="../_images/checkmark.png" class="checkmark" src="../_images/checkmark.png" />
 </td>
 <td><p><a class="reference download internal" download="" href="../_downloads/eff71ec3b851e59f841e9a7789327f57/pdf_redaction_v32.zip"><code class="xref download docutils literal notranslate"><span class="pre">pdf_redaction.zip</span></code></a></p></td>
 </tr>
@@ -135,7 +150,7 @@
 </table>
 <section id="hello-flow">
 <h2>Hello Flow<a class="headerlink" href="#hello-flow" title="Permalink to this headline"></a></h2>
-<p>This example consists of a single Custom Code block. It is the simplest possible executable flow.</p>
+<p>This example consists of a single Code block. It is the simplest possible executable flow.</p>
 <p><a class="reference download internal" download="" href="../_downloads/f42e3eecbffde899bc29d261f2ac86d0/flow.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">hello_flow.py</span></code></a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span>
 
@@ -389,9 +404,9 @@
 </pre></div>
 </div>
 </section>
-<section id="idp-w-custom-code-block">
-<h2>IDP w/ Custom Code Block<a class="headerlink" href="#idp-w-custom-code-block" title="Permalink to this headline"></a></h2>
-<p>This example is identical to the <a class="reference internal" href="#idp-starter"><span class="std std-ref">IDP Starter</span></a> example, however it includes an additional Custom Code block to add “time completed” metadata to each document in the submission. This is an example of how Custom Code blocks can arbitrarily modify extracted data before outputting to downstream systems.</p>
+<section id="idp-w-code-block">
+<h2>IDP w/ Code Block<a class="headerlink" href="#idp-w-code-block" title="Permalink to this headline"></a></h2>
+<p>This example is identical to the <a class="reference internal" href="#idp-starter"><span class="std std-ref">IDP Starter</span></a> example, however it includes an additional Code block to add “time completed” metadata to each document in the submission. This is an example of how Code blocks can arbitrarily modify extracted data before outputting to downstream systems.</p>
 <p><a class="reference download internal" download="" href="../_downloads/0b0c0cb6b7b26a2a7367f0ffc2b6482a/flow.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">idp_custom.py</span></code></a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 <span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span>
@@ -1977,6 +1992,80 @@
 </pre></div>
 </div>
 </section>
+<section id="code-snippets">
+<h2>Code Snippets<a class="headerlink" href="#code-snippets" title="Permalink to this headline"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While code snippets are great, the Hyperscience Platform provides easy tools to help you build your own solutions. Make sure to read our Testing &amp; Debugging guide below before diving in.</p>
+</div>
+<section id="how-do-i-iterate-over-multiple-documents-in-a-submission">
+<h3>How do I iterate over multiple documents in a submission?<a class="headerlink" href="#how-do-i-iterate-over-multiple-documents-in-a-submission" title="Permalink to this headline"></a></h3>
+<p>Block subclasses provided in the <a class="reference internal" href="idp_32.html#processing-blocks"><span class="std std-ref">Processing Blocks</span></a> generally take a Submission object as a mandatory input parameter as well as output a modified copy of the Submission object. Each block provides a convenience method to access the Submission object:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># This example shows the output of MachineTranscriptionV3Block (i.e. machine_transcription) being used as the input to a ManualTranscriptionV2Block</span>
+<span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionV2Block</span><span class="p">(</span>
+  <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_transcription&#39;</span><span class="p">,</span>
+  <span class="n">submission</span><span class="o">=</span><span class="n">machine_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+  <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Always check the exact output of the preceding block! Some block output includes additional metadata and may require a different key, such as <cite>.output(‘results.submission’)</cite>, to access the Submission object.</p>
+</div>
+<p>The Submission object is constructed as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="s2">&quot;submission&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;12345&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;documents&quot;</span><span class="p">:</span> <span class="p">[</span>
+         <span class="p">{</span>
+             <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;pages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">//</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">pages</span>
+             <span class="s2">&quot;document_fields&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">//</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">document</span> <span class="n">fields</span>
+         <span class="p">},</span>
+         <span class="o">...</span>
+      <span class="p">]</span>
+      <span class="s2">&quot;cases&quot;</span><span class="p">:</span> <span class="p">[],</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>And so iterating over multiple documents in a submission is as easy as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_iter_docs</span><span class="p">(</span><span class="n">submission</span><span class="p">):</span>
+   <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">submission</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;documents&#39;</span><span class="p">,</span> <span class="p">[]):</span>
+      <span class="nb">print</span><span class="p">(</span><span class="n">document</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span> <span class="c1"># Print the ID of each document in the submission</span>
+   <span class="k">return</span> <span class="n">submission</span>
+
+<span class="n">custom_code</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
+   <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;code_block&#39;</span><span class="p">,</span>
+   <span class="n">code</span><span class="o">=</span><span class="n">_iter_docs</span><span class="p">,</span>
+   <span class="n">code_input</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">manual_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="how-do-i-compare-fields-across-different-documents">
+<h3>How do I compare fields across different documents?<a class="headerlink" href="#how-do-i-compare-fields-across-different-documents" title="Permalink to this headline"></a></h3>
+<p>Let’s assume we’re trying to find the maximum value of the “income” field across multiple documents in the same submission. Once transcribed, we iterate over all the transcribed fields in the submission and compare each value to the previous maximum:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_compare_fields</span><span class="p">(</span><span class="n">submission</span><span class="p">):</span>
+   <span class="n">max_income</span> <span class="o">=</span> <span class="mf">0.0</span>
+   <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">submission</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;documents&#39;</span><span class="p">,</span> <span class="p">[]):</span>
+      <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">document</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;document_fields&#39;</span><span class="p">,</span> <span class="p">[]):</span>
+         <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field_name&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;income&#39;</span> <span class="ow">and</span> <span class="nb">float</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;transcription&#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">max_income</span><span class="p">:</span>
+            <span class="n">max_income</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;transcription&#39;</span><span class="p">))</span>
+
+      <span class="nb">print</span><span class="p">(</span><span class="n">max_income</span><span class="p">)</span> <span class="c1"># Print the maximum income across all documents</span>
+   <span class="k">return</span> <span class="n">submission</span>
+
+<span class="n">custom_code</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
+   <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;code_block&#39;</span><span class="p">,</span>
+   <span class="n">code</span><span class="o">=</span><span class="n">_compare_fields</span><span class="p">,</span>
+   <span class="n">code_input</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">previous_block</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
 </section>
 
 
@@ -1984,7 +2073,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="tutorial.html" class="btn btn-neutral float-left" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="idp_32.html" class="btn btn-neutral float-right" title="Block Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="faq.html" class="btn btn-neutral float-right" title="FAQ" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
