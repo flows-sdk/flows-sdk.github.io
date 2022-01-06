@@ -1,13 +1,24 @@
-# Block Library
+# IDP Library
 
-This section lists all block subclasses necessary to build on Hyperscience Platform V32.
-- Core Blocks are provided as convenient Python subclasses for plug-and-play use.
-- Trigger and Output Blocks require use of the base `Block` class.
+This IDP Library (`flows_sdk.examples`) includes the latest performant blocks and functions for building **intelligent document processing (IDP)**. This library is specific to **Hyperscience Platform V32**.
+
+The IDP Library contains:
+- Processing Blocks are provided as convenient Python subclasses for plug-and-play use
+- Trigger and Output Blocks require use of the base `Block` class
+- Helper functions for ease of development
 % Comment: need to add simple subclasses of Trigger and Output blocks
-% Comment: add explanation of "V2" naming conventions and how this works
 
-## Core Blocks
-% Comment: Core block section should be expandable in LH navigation
+```{eval-rst}
+
+.. note::
+   Most solutions will also require use of base classes, such as `Flow` or `CodeBlock`, found in the :ref:`pages/source-docs:Source Documentation`.
+
+```
+
+## Processing Blocks
+Core Blocks are powerful processing blocks necessary to build intelligent document processing solutions on Hyperscience. They include both manual and machine processing blocks.
+
+To simplify future development, most blocks include a "version" in the name, ex. `ManualTranscriptionV2Block`.
 
 ```{eval-rst}
 
@@ -253,6 +264,7 @@ Inputs:
 | client_secret | Password | null | Client Secret | The client secret issued to the client during the application registration process|
 | audience | string | null | Audience | Resource service URL where token will be valid|
 
+## Helper Functions
 
 
 

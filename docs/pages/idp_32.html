@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Block Library &mdash; Flows SDK 0.4.1 documentation</title>
+  <title>IDP Library &mdash; Flows SDK 0.4.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
@@ -21,8 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Source Documentation" href="source-docs.html" />
-    <link rel="prev" title="Examples" href="examples.html" /> 
+    <link rel="prev" title="Source Documentation" href="source-docs.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,11 +46,12 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Flows SDK</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basic_concepts.html">Basic Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Block Library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#core-blocks">Core Blocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">IDP Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#processing-blocks">Processing Blocks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trigger-blocks">Trigger Blocks</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#folder-trigger">FOLDER_TRIGGER</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#kofax-folder-trigger">KOFAX_FOLDER_TRIGGER</a></li>
@@ -67,9 +67,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#cob-http-export">COB_HTTP_EXPORT</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#helper-functions">Helper Functions</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source Documentation</a></li>
 </ul>
 
         </div>
@@ -86,7 +86,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Block Library</li>
+      <li>IDP Library</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -95,15 +95,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section class="tex2jax_ignore mathjax_ignore" id="block-library">
-<h1>Block Library<a class="headerlink" href="#block-library" title="Permalink to this headline"></a></h1>
-<p>This section lists all block subclasses necessary to build on Hyperscience Platform V32.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="idp-library">
+<h1>IDP Library<a class="headerlink" href="#idp-library" title="Permalink to this headline"></a></h1>
+<p>This IDP Library (<code class="docutils literal notranslate"><span class="pre">flows_sdk.examples</span></code>) includes the latest performant blocks and functions for building <strong>intelligent document processing (IDP)</strong>. This library is specific to <strong>Hyperscience Platform V32</strong>.</p>
+<p>The IDP Library contains:</p>
 <ul class="simple">
-<li><p>Core Blocks are provided as convenient Python subclasses for plug-and-play use.</p></li>
-<li><p>Trigger and Output Blocks require use of the base <code class="docutils literal notranslate"><span class="pre">Block</span></code> class.</p></li>
+<li><p>Processing Blocks are provided as convenient Python subclasses for plug-and-play use</p></li>
+<li><p>Trigger and Output Blocks require use of the base <code class="docutils literal notranslate"><span class="pre">Block</span></code> class</p></li>
+<li><p>Helper functions for ease of development</p></li>
 </ul>
-<section id="core-blocks">
-<h2>Core Blocks<a class="headerlink" href="#core-blocks" title="Permalink to this headline"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Most solutions will also require use of base classes, such as <cite>Flow</cite> or <cite>CodeBlock</cite>, found in the <a class="reference internal" href="source-docs.html#source-documentation"><span class="std std-ref">Source Documentation</span></a>.</p>
+</div>
+<section id="processing-blocks">
+<h2>Processing Blocks<a class="headerlink" href="#processing-blocks" title="Permalink to this headline"></a></h2>
+<p>Core Blocks are powerful processing blocks necessary to build intelligent document processing solutions on Hyperscience. They include both manual and machine processing blocks.</p>
+<p>To simplify future development, most blocks include a “version” in the name, ex. <code class="docutils literal notranslate"><span class="pre">ManualTranscriptionV2Block</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Classes in the idp_v32 example have parameters with ambiguous typing.
@@ -1436,14 +1444,16 @@ to visualize an enabled/disabled trigger that is controllable via Flow Studio.</
 </table>
 </section>
 </section>
+<section id="helper-functions">
+<h2>Helper Functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline"></a></h2>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="source-docs.html" class="btn btn-neutral float-right" title="Source Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="source-docs.html" class="btn btn-neutral float-left" title="Source Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

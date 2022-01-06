@@ -73,6 +73,15 @@ Content
     margin-bottom: 10px;
 }
 
+.rst-content img {
+    margin-bottom: 10px;
+}
+
+.rst-content img.checkmark {
+    width: 20px;
+    height: 20px;
+}
+
 @media screen and (min-width: 1048px) {
     .rst-content {
         max-width: 90%;
