@@ -11,11 +11,11 @@ Testing and debugging is best done in the Hyperscience Platform by inspecting th
 
 The Flow Execution page has the following sections:
 
-<img src="../_images/red1.png" class="red-dot"> Overview: The left-hand sidebar shows metadata for the submission.
+<img src="../media/images/tutorial/red1.png" class="red-dot" alt="1"> Overview: The left-hand sidebar shows metadata for the submission.
 
-<img src="../_images/red2.png" class="red-dot"> Flow Run diagram: The upper-right panel shows a diagram of the flow. The processing status for an individual block is shown under the block, along with the time the block completed or failed processing (if applicable). If the block has no status underneath it, it has not processed the submission yet. Clicking on a block reveals its input, output, and logs in the Block Details panel below.
+<img src="../media/images/tutorial/red1.png" class="red-dot" alt="2"> Flow Run diagram: The upper-right panel shows a diagram of the flow. The processing status for an individual block is shown under the block, along with the time the block completed or failed processing (if applicable). If the block has no status underneath it, it has not processed the submission yet. Clicking on a block reveals its input, output, and logs in the Block Details panel below.
 
-<img src="../_images/red3.png" class="red-dot"> Block Details: The Block Details panel has three tabs:
+<img src="../media/images/tutorial/red1.png" class="red-dot" alt="3"> Block Details: The Block Details panel has three tabs:
 
 - Input: The Input tab shows the JSON that the block used for processing.
 - Output: Clicking on the Output tab shows the JSON that the block produced during processing (if applicable).

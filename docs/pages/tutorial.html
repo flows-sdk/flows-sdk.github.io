@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial &mdash; Flows SDK 0.4.1 documentation</title>
+  <title>Tutorial &mdash; Flows SDK 0.5.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> Flows SDK
           </a>
               <div class="version">
-                0.4.1
+                0.5.0
 
               </div>
 <div role="search">
@@ -89,7 +89,7 @@
 <ul class="simple">
 <li><p>Have a local environment with the <code class="docutils literal notranslate"><span class="pre">flows-sdk</span></code> library installed</p></li>
 <li><p>Package an example “IDP Starter” flow into an artifact</p></li>
-<li><p>Import that artifact into the Hyperscience platform</p></li>
+<li><p>Import that artifact into the Hyperscience Platform</p></li>
 <li><p>Be able to test and debug your flow</p></li>
 </ul>
 <p>The provided “<a class="reference internal" href="examples.html"><span class="doc std std-doc">IDP Starter Example</span></a>” is a basic approach to extracting text from documents. It’s a good starting point for adding process logic, data validation, data formatting, etc. specific to your business’s document extaction process.</p>
@@ -114,7 +114,7 @@
 </pre></div>
 </div>
 </li>
-<li><p>Download the <a class="reference internal" href="examples.html"><span class="doc std std-doc">IDP Starter Example</span></a> package, which includes…</p>
+<li><p>Download the <a class="reference internal" href="examples.html"><span class="doc std std-doc">IDP Starter Example</span></a> package, which includes:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">flow.py</span></code> file. This is the Python file, built using the Flows SDK, that defines all of the logic for IDP Starter Example flow</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">release.zip</span></code>, which includes a layout for processing W-9 forms. Because W-9s are a structured document it is not necessary to train any models. To learn more about releases, visit our (non-technical) <a class="reference external" href="https://hyperscience.zendesk.com/hc/en-us/sections/4414507191181-Releases">user guide</a></p></li>
@@ -127,7 +127,7 @@
 </pre></div>
 </div>
 </li>
-<li><p>Upload the produced <code class="docutils literal notranslate"><span class="pre">idp_starter_flow.json</span></code> to a Hyperscience instance from <code class="docutils literal notranslate"><span class="pre">https://{hyperscience-url}/flows</span></code> -&gt; Import Flow</p>
+<li><p>Upload the produced <code class="docutils literal notranslate"><span class="pre">idp_starter_flow.json</span></code> to a Hyperscience instance by going to <code class="docutils literal notranslate"><span class="pre">https://{hyperscience-url}/flows</span></code> and clicking <strong>Import Flow</strong>.</p>
 <p><img alt="" src="../_images/import_flow.png" /></p>
 </li>
 <li><p>If everything went as expected, you should be redirected to the Flow Studio - you’ve successfully uploaded your first flow to the Hyperscience Platform!</p>
@@ -142,33 +142,33 @@
 <li><p>Set your flow’s status to “Live.” Documents can only be submitted to “Live” flows.</p>
 <p><img alt="" src="../_images/idp-starter-live.jpg" /></p>
 </li>
-<li><p>Flows need an associated “Release” to process documents. Navigate to <code class="docutils literal notranslate"><span class="pre">https://{hyperscience-url}/layouts/releases</span></code> and click “Add Release.” Select “Upload Existing” and choose the <code class="docutils literal notranslate"><span class="pre">release.zip</span></code> included in the IDP Starter Example package. After a moment you should see the release uploaded to the Hyperscience Platform.</p>
+<li><p>Flows need an associated “Release” to process documents. Go to <code class="docutils literal notranslate"><span class="pre">https://{hyperscience-url}/layouts/releases</span></code> and click <strong>Add Release</strong>. Select <strong>Upload Existing</strong> and choose the <code class="docutils literal notranslate"><span class="pre">release.zip</span></code> included in the IDP Starter Example package. After a moment you should see the release uploaded to the Hyperscience Platform.</p>
 <p><img alt="" src="../_images/add-release.jpg" /></p>
 </li>
-<li><p>Assign this release to your IDP Starter Flow by clicking into the release’s page and then clicking “Assign to Flow.” You’re now ready to test your flow by submitting documents!</p>
+<li><p>Assign this release to your IDP Starter Flow by clicking into the release’s page and then clicking <strong>Assign to Flow</strong>. You’re now ready to test your flow by submitting documents!</p>
 <p><img alt="" src="../_images/assign-to-flow.jpg" />
 <img alt="" src="../_images/assign-to-flow-2.jpg" /></p>
 </li>
-<li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">https://{hyperscience-url}/submissions</span></code> and click “Create Submission.” Upload the <code class="docutils literal notranslate"><span class="pre">form-w9-sample.png</span></code> sample document. Finally, select “IDP Starter Flow” as the flow to submit to. You should see that the submission was created - it may take a few minutes to process.</p>
+<li><p>Go to <code class="docutils literal notranslate"><span class="pre">https://{hyperscience-url}/submissions</span></code> and click <strong>Create Submission</strong>. Upload the <code class="docutils literal notranslate"><span class="pre">form-w9-sample.png</span></code> sample document. Finally, select <strong>IDP Starter Flow</strong> as the flow to submit to. You should see that the submission was created - it may take a few minutes to process.</p>
 <p><img alt="" src="../_images/create-submission.jpg" />
 <img alt="" src="../_images/create-submission-2.jpg" /></p>
 </li>
-<li><p>Now we can use our testing and debugging tools to better understand how your flow processed those documents. Click on the completed submission’s id, then click Actions &gt; View Flow Execution. If you used the provided IDP Starter flow and sample document you should see that the document processed without error.</p>
+<li><p>Now we can use our testing and debugging tools to better understand how your flow processed those documents. Click on the completed submission’s ID, then click <strong>Actions</strong> and select <strong>View Flow Execution</strong>. If you used the provided IDP Starter Flow and sample document, you should see that the document processed without error.</p>
 <p><img alt="" src="../_images/submission-processing.jpg" />
 <img alt="" src="../_images/flow_execution.png" /></p>
 </li>
 </ol>
 <p>The Flow Execution page has the following sections:</p>
-<p><img src="../_images/red1.png" class="red-dot"> Overview: The left-hand sidebar shows metadata for the submission.</p>
-<p><img src="../_images/red2.png" class="red-dot"> Flow Run diagram: The upper-right panel shows a diagram of the flow. The processing status for an individual block is shown under the block, along with the time the block completed or failed processing (if applicable). If the block has no status underneath it, it has not processed the submission yet. Clicking on a block reveals its input, output, and logs in the Block Details panel below.</p>
-<p><img src="../_images/red3.png" class="red-dot"> Block Details: The Block Details panel has three tabs:</p>
+<p><img alt="1" class="red-dot" src="../_images/red1.png" /> Overview: The left-hand sidebar shows metadata for the submission.</p>
+<p><img alt="2" class="red-dot" src="../_images/red2.png" /> Flow Run diagram: The upper-right panel shows a diagram of the flow. The processing status for an individual block is shown under the block, along with the time the block completed or failed processing (if applicable). If the block has no status underneath it, it has not processed the submission yet. Clicking on a block reveals its input, output, and logs in the Block Details panel below.</p>
+<p><img alt="3" class="red-dot" src="../_images/red3.png" /> Block Details: The Block Details panel has the following tabs:</p>
 <ul class="simple">
-<li><p>Input - Shows the input JSON arguments that the block used for processing.</p></li>
-<li><p>Output - Shows the output JSON that the block produced as a result of processing (if applicable).
+<li><p><strong>Input</strong> - Shows the input JSON arguments that the block used for processing.</p></li>
+<li><p><strong>Output</strong> - Shows the output JSON that the block produced as a result of processing (if applicable).
 Note that the Output JSON for the final block in a completed submission is not the same as the JSON output for the entire submission.</p></li>
-<li><p>Logs: If the block failed to process the submission, shows error information for the block during processing.</p></li>
+<li><p><strong>Logs</strong> - If the block failed to process the submission, shows error information for the block during processing.</p></li>
 </ul>
-<p>You can copy any of the data shown in the Block Details panel by clicking Copy in the upper-right corner of the panel.</p>
+<p>You can copy any of the data shown in the Block Details panel by clicking <strong>Copy</strong> in the upper-right corner of the panel.</p>
 </section>
 </section>
 
