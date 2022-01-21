@@ -1,31 +1,31 @@
 # Introduction to Flows SDK
 
-`flows_sdk` is a Python library for programmatically building flows: a sequences of business steps managed and executed by the Hyperscience Platform. We encourage you to complete the [Tutorial](tutorial.md) as the best way to get started.
+`flows_sdk` is a Python library for programmatically building flows: sequences of business steps managed and executed by the Hyperscience Platform. We encourage you to complete the [Tutorial](tutorial.md) as the best way to get started.
 
 Flows are defined as Python files using classes from this library. They are then converted to an importable JSON format that can later be deployed on a Hyperscience instance.
 
-These definitions are like blueprints - they configure and wire together Triggers, Blocks, and other parameters, while the Hyperscience platform takes care of the execution and lifecycle during the actual runtime.
+These definitions are like blueprints - they configure and wire together Triggers, Blocks, and other parameters, while the Hyperscience Platform takes care of the execution and lifecycle during the actual runtime.
 
-Any code you build using the `flows_sdk` is managed externally from the Hyperscience platform (e.g., in a separate git repository), while the produced artifacts can be uploaded to and managed by the Hyperscience platform.
+Any code you build using the `flows_sdk` is managed externally from the Hyperscience Platform (e.g., in a separate git repository), while the produced artifacts can be uploaded to and managed by the Hyperscience Platform.
 
 ## System Architecture
 
-The `flows_sdk` enables you build Flows using a Python library in whatever environment/IDE you prefer. The resulting `.py` file must be packaged into a JSON artifact to be imported into the Hyperscience Platform.
+The `flows_sdk` enables you build flows using a Python library in whatever environment/IDE you prefer. The resulting `.py` file must be packaged into a JSON artifact to be imported into the Hyperscience Platform.
 
-Once uploaded to the Hyperscience Platform, this JSON artifact is kept in sync with any changes made in the Flow Studio. The Flow Studio provides a GUI for business users to manage the Flow's settings over time.
+Once uploaded to the Hyperscience Platform, this JSON artifact is kept in sync with any changes made in the Flow Studio. The Flow Studio provides a GUI for business users to manage the flow's settings over time.
 
 ![](../media/images/architecture.jpg)
 
 The only requirements to use the `flows_sdk` are:
-- Development: The only local requirement for development is `python 3.7+` and
+- **Development:** The only local requirement for development is `python 3.7+` and
 a link to this library, provided by your CX representative. Additional dependencies will later be pulled via `pip`.
-- Deployment: In order to deploy flows built using the `flows_sdk`, you need:
+- **Deployment:** In order to deploy flows built using the `flows_sdk`, you need:
     - A running instance of the Hyperscience Platform (`v32` and above)
-    - A user account with permissions to edit and import Flows
+    - A user account with permissions to edit and import flows
 
 ## Library Structure
 
-The `flows_sdk` library contains everything you need to build on the Hyperscience Platform. As illustrated below, it contains three top-level sublibraries, `flows`, `blocks`, and `implementations`. Documentation is split into into two sections, [Source Documentation](source-docs.rst) and the [IDP Library](idp_32.md).
+The `flows_sdk` library contains everything you need to build on the Hyperscience Platform. As illustrated below, it contains the following top-level sublibraries: `flows`, `blocks`, and `implementations`. Documentation is split into [Source Documentation](source-docs.rst) and the [IDP Library](idp_32.md).
 
 ![](../media/images/library-structure.jpg)
 
@@ -37,7 +37,7 @@ The [IDP Library](idp_32.md) includes the latest performant blocks for **intelli
 
 ### Flow
 
-A Flow is a sequences of business steps managed and executed by the Hyperscience Platform. Flows are composed of Blocks, such as IDP blocks (ex. Classification), Routing, Fork, Triggers, as well as other helper components.
+A flow is a sequence of business steps managed and executed by the Hyperscience Platform. Flows are composed of Blocks, such as IDP blocks (e.g., Classification), Routing, Fork, Triggers, as well as other helper components.
 
 Once uploaded to the Hyperscience Platform, flows are rendered and managed within the Flow Studio:
 
@@ -45,31 +45,31 @@ Once uploaded to the Hyperscience Platform, flows are rendered and managed withi
 
 ### Block
 
-A Block is a single step in a flow. Using the `flows_sdk`, blocks can be defined and ordered, and their inputs can be customized and passed statically (i.e. during Flow definition or via UI-exposed settings) or dynamically (i.e. the output of a previously executed Block).
+A block is a single step in a flow. Using the `flows_sdk`, blocks can be defined and ordered, and their inputs can be customized and passed statically (i.e., during flow definition or via UI-exposed settings) or dynamically (i.e., the output of a previously executed block).
 
 ### Routing
 
-A system Block that routes execution to one of its branches based on a condition (similar to a `switch..case` statement). Routing is viewable within the Flow Studio as a branching of logic:
+A system block that routes execution to one of its branches based on a condition (similar to a `switch..case` statement). Routing is viewable within the Flow Studio as a branching of logic:
 
 ![](../media/images/routing.jpg)
 
-Full definition is in the [Source Documentation](source-docs.md#Routing).
+A full definition is in the [Source Documentation](flows_sdk.blocks.Routing).
 
 ### Fork
 
-A system Block that schedules other Blocks for parallel execution. Full definition is in the [Source Documentation](source-docs.md#Fork).
+A system block that schedules other blocks for parallel execution. A full definition is in the [Source Documentation](flows_sdk.blocks.Fork).
 
 ### Triggers & Outputs
 
-Trigger Blocks initiate the execution of a Flow. Some examples are: watching a folder for new files; checking an inbox; listening to a message queue, etc. 
+Trigger Blocks initiate the execution of a flow. Some examples are: watching a folder for new files, checking an inbox, listening to a message queue, etc. 
 
-Output Blocks send information to external systems. Some of these blocks are generic (ex. `HTTP_EXPORT`) while others are integrations into specific systems (ex. `EXPORT_UIPATH`).
+Output Blocks send information to external systems. Some of these blocks are generic (e.g., `HTTP_EXPORT`) while others are integrations into specific systems (e.g., `EXPORT_UIPATH`).
 
-Full definitions are in the Block for [Trigger Blocks](idp_32.md#Trigger-Blocks) and [Output Blocks](idp_32.md#Output-Blocks).
+Full definitions are in the Block Library for [Trigger Blocks](idp_32.md#trigger-blocks) and [Output Blocks](idp_32.md#output-blocks).
 
 ### Submission Object
 
-Many block subclasses available within the [Block Library](idp_32.md) use a Submission object: a dictionary of extracted document information with the following basic structure:
+Many block subclasses available within the [Block Library](idp_32.md) use a Submission object, which is a dictionary of extracted document information with the following basic structure:
 
 ```
    {
@@ -107,4 +107,4 @@ As most blocks in the [Block Library](idp_32.md) require a Submission object for
 
 The exact state of the Submission object will depend on which processing blocks have been executed. Most blocks will also wrap the Submission object within additional flow-level metadata.
 
-Read our [Testing & Debugging](faq.md#Testing-&-Debugging) guide for how to inspect the current state of the Submission object in your flow. Or, download a full example here - this is the output of `ManualTranscriptionV2Block` from our [Tutorial](tutorial.md)).
+Read our [Testing & Debugging](faq.md#testing--debugging) guide for how to inspect the current state of the Submission object in your flow. Or, download a full example here - this is the output of `ManualTranscriptionV2Block` from our [Tutorial](tutorial.md)).

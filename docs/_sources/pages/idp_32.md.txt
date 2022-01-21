@@ -1,10 +1,10 @@
 # IDP Library
 
-This IDP Library (`flows_sdk.examples`) includes the latest performant blocks and functions for building **intelligent document processing (IDP)**. This library is specific to **Hyperscience Platform V32**.
+This IDP Library (`flows_sdk.implementations`) includes the latest performant blocks and functions for building **intelligent document processing (IDP)**. This library is specific to **Hyperscience Platform V32**.
 
 The IDP Library contains:
 - Processing Blocks are provided as convenient Python subclasses for plug-and-play use
-- Trigger and Output Blocks require use of the base `Block` class
+- Trigger and Output Blocks require use of [base classes](flows_sdk.blocks.IOBlock)
 - Helper functions for ease of development
 % Comment: need to add simple subclasses of Trigger and Output blocks
 
@@ -30,24 +30,41 @@ To simplify future development, most blocks include a "version" in the name, ex.
     revisioned in a future version.
 
 
-.. automodule:: flows_sdk.examples.idp_v32.idp_blocks
+.. automodule:: flows_sdk.implementations.idp_v32.idp_blocks
    :members:
    :undoc-members:
    :show-inheritance:
+   :exclude-members: IDPOutputsBlock
 ```
 
 ## Trigger Blocks
+```{eval-rst}
 
+.. note::
+   "Triggers" are referred to as "Input Blocks" in our `non-technical documentation <https://hyperscience.zendesk.com/hc/en-us/articles/4414734087821-Input-Blocks-and-Output-Blocks>`_.
 
-### FOLDER_TRIGGER
+.. warning::
+   Flows are built to allow full definition of triggers either in code or manually in the Flow Studio. **We recommend defining triggers manually in the Flow Studio**. Instructions on how to do so are in our `non-technical documentation <https://hyperscience.zendesk.com/hc/en-us/articles/4414734087821-Input-Blocks-and-Output-Blocks>`_. 
 
-name: Folder Listener
+To define your triggers in the Flow Studio, simply use the ``IDPTriggers()`` convenience class:
 
-uuid: 51b6ddee-3b57-4deb-a7b3-f4d102561635
+.. code-block::
+   
+   return Flow(
+      ...
+      triggers=IDPTriggers()
+   )
+```
 
-Inputs:
+If instead you wish to define specific triggers in Python, use the trigger definitions below.
 
-| name | type | default value | title | description |
+### Folder Listener
+
+Identifier: FOLDER_TRIGGER
+
+Parameters:
+
+| Name | Type | Default Value | Title | Description |
 | ---  | ---  | ---           | ---   | ---         |
 | folder | Path | N/A | Folder to scan for submissions | N/A|
 | file_extensions | string | N/A | File extensions | List of file extensions to monitor for (e.g.: 'png, jpg, pdf')|
@@ -56,18 +73,28 @@ Inputs:
 | warmup_interval | integer | 15 | Warm-up interval | Seconds to wait past document last modified time before processing it|
 | folder_cleanup_delay | integer | 86400 | Folder cleanup delay | Seconds to wait before cleaning up subfolders|
 | api_params | object | {} | API Parameters | N/A|
+```python
+folder_listener = IOBlock(
+    identifier='FOLDER_TRIGGER',
+    reference_name='folder_trigger',
+    title='Folder listener',
+    enabled=True,
+    input={
+        'folder': '/var/www/forms/forms/folder/',
+        'file_extensions': 'png, pdf, jpg',
+    },
+)
 
+triggers = IDPTriggers(blocks=[folder_listener])
+```
 
+### Kofax Folder Listener
 
-### KOFAX_FOLDER_TRIGGER
+Identifier: KOFAX_FOLDER_TRIGGER
 
-name: Kofax Folder Listener
+Parameters:
 
-uuid: 06dd55c7-0124-4403-9b8d-04b57e8afca2
-
-Inputs:
-
-| name | type | default value | title | description |
+| Name | Type | Default Value | Title | Description |
 | ---  | ---  | ---           | ---   | ---         |
 | folder | Path | N/A | Folder to scan for submissions | N/A|
 | file_extensions | string | N/A | File extensions | List of file extensions to monitor for (e.g.: 'png, jpg, pdf')|
@@ -75,18 +102,28 @@ Inputs:
 | warmup_interval | integer | 15 | Warm-up interval | Seconds to wait past document last modified time before processing it|
 | folder_cleanup_delay | integer | 86400 | Folder cleanup delay | Seconds to wait before cleaning up subfolders|
 | api_params | object | {} | API Parameters | N/A|
+```python
+kofax_folder_listener = IOBlock(
+    identifier='KOFAX_FOLDER_TRIGGER',
+    reference_name='kofax_folder_listener',
+    title='Kofax Folder listener',
+    enabled=True,
+    input={
+        'folder': '/var/www/forms/forms/kofax/',
+        'file_extensions': 'png, pdf, jpg',
+    },
+)
 
+triggers = IDPTriggers(blocks=[kofax_folder_listener])
+```
 
+### Email Listener (IMAP)
 
-### IMAP_TRIGGER
+Identifier: IMAP_TRIGGER
 
-name: Email Listener (IMAP)
+Parameters:
 
-uuid: 67056d96-b485-4005-aab2-c709df60933c
-
-Inputs:
-
-| name | type | default value | title | description |
+| Name | Type | Default Value | Title | Description |
 | ---  | ---  | ---           | ---   | ---         |
 | host | string | N/A | IMAP server address | N/A|
 | port | integer | 993 | Port Number | N/A|
@@ -99,18 +136,31 @@ Inputs:
 | post_process_action | string | "move" | Post process action | What to do with the email after it is processed|
 | post_process_move_folder | string | "" | Post process archive folder | Folder to move emails to once they are processed|
 | api_params | object | {} | API Parameters | N/A|
+```python
+imap_trigger = IOBlock(
+    identifier='IMAP_TRIGGER',
+    reference_name='imap_trigger',
+    title='IMAP trigger',
+    enabled=True,
+    input={
+        'host': 'example@mail.com',
+        'folder': '/var/www/forms/forms/imap/',
+        'username': 'admin',
+        'password': 'pass',
+    }
+)
+
+triggers = IDPTriggers(blocks=[imap_trigger])
+```
 
 
+### Box Folder Listener
 
-### BOX_FOLDER_TRIGGER
+Identifier: BOX_FOLDER_TRIGGER
 
-name: Box Folder Listener
+Parameters:
 
-uuid: 5ba19375-d8c2-4876-b666-a08e427d186f
-
-Inputs:
-
-| name | type | default value | title | description |
+| Name | Type | Default Value | Title | Description |
 | ---  | ---  | ---           | ---   | ---         |
 | source_folder_id | integer | N/A | Folder to scan for submissions | Use the Box Folder ID found in the URL|
 | target_folder_id | integer | N/A | Folder to move completed files | Use the Box Folder ID found in the URL|
@@ -125,36 +175,263 @@ Inputs:
 | client_secret | Password | N/A | Client Secret | Client Secret used for authentication with Box|
 | enterprise_id | string | N/A | Enterprise ID | Enterprise Id used for authentication with Box|
 | api_params | object | {} | API Parameters | N/A|
+```python
+box_folder_trigger = IOBlock(
+    identifier='BOX_FOLDER_TRIGGER',
+    reference_name='box_folder_trigger',
+    title='Box folder',
+    enabled=True,
+    input={
+        'file_extensions': ['png', 'pdf', 'jpg'],
+        'source_folder_id': 24,
+        'target_folder_id': 42,
+        'public_key_id': 'admin',
+        'private_key': 'secret',
+        'passphrase': 'password',
+        'client_id': 'admin',
+        'client_secret': 'secret',
+        'enterprise_id': 'admin',
+    }
+)
+
+triggers = IDPTriggers(blocks=[box_folder_trigger])
+```
 
 
+### Cron Listener
 
-### CRON_TRIGGER
-
-name: Cron Listener
-
-uuid: 798a30f3-06d7-49dd-8156-fe04b6cab2f2
+Identifier: CRON_TRIGGER
 
 Inputs:
 
-| name | type | default value | title | description |
+| Name | Type | Default Value | Title | Description |
 | ---  | ---  | ---           | ---   | ---         |
 | cron_spec | string | `"*/5 * * * *"` | Cron specification | N/A|
 | time_zone | string | "US/Eastern" | Time Zone | N/A|
 | api_params | object | {} | API Parameters | N/A|
+```python
+cron_trigger = IOBlock(
+    identifier='CRON_TRIGGER',
+    reference_name='cron_trigger',
+    title='Cron Trigger',
+    enabled=True,
+    input={
+        'cron_spec': '0 10 * * *', 
+        'time_zone': 'Europe/Sofia',
+    }
+)
+
+triggers = IDPTriggers(blocks=[cron_trigger])
+```
 
 
+### Message Queue Listener
 
-## Output Blocks
-
-### COB_BOX_NOTIFIER
-
-name: Box Notifier Output Block
-
-uuid: eb3cc3c6-32bf-4e8a-8b34-3ed13ccac295
+Identifier: `MQ_LISTENER`
 
 Inputs:
 
-| name | type | default value | title | description |
+| Name | Type | Default Value | Title | Description | 
+| ---  | ---  | ---           | ---   | ---         |
+| MQ_TYPE | string | "ACTIVE_MQ" | Message Queue type | Type of the message queue to connect with. Valid values are "ACTIVE_MQ", "AMAZON_SQS", "IBM_MQ" and "RABBIT_MQ" |
+| MQ_USERNAME | string | null | Username/Access Key ID | N/A |
+| MQ_PASSWORD | Password | null | Password/Secret Access Key | N/A |
+| MQ_QUEUE_NAME | string | null | Queue Name | Name of the queue (topic) to connect to. |
+| MQ_HOST | string | null | Host Name | N/A |
+| MQ_PORT | integer | 1415 | Port Number | N/A|
+| MQ_EXCHANGE | string | "" | Exchange | N/A |
+| MQ_ROUTING_KEY | string | null | Routing key | N/A |
+| api_params | object | {} | API Parameters | N/A |
+
+**Additional inputs** when `"ACTIVE_MQ"` is the selected `MQ_TYPE`:
+
+| Name | Type | Default Value | Title | Description | 
+| ---  | ---  | ---           | ---   | ---         |
+| MQ_REGION | string | null | AWS Region | N/A |
+| MQ_QUEUE_URL | string | null | Queue URL | N/A |
+| MQ_USE_EC2_INSTANCE_CREDENTIALS | boolean | True | Use AWS EC2 Instance IAM Role Credentials | If selected, credentials are obtained from the EC2 instance directly, and the AWS Access Key ID and Secret Key are not used.|
+
+
+**Additional inputs** when `"IBM_MQ"` is the selected `MQ_TYPE`:
+
+| Name | Type | Default Value | Title | Description | 
+| ---  | ---  | ---           | ---   | ---         |
+| MQ_QUEUE_MANAGER | string | null | Queue Manager (IBM MQ) | N/A |
+| MQ_SSL_CIPHER_SUITE [1] | string | null | SSL cipher suite | SSL cipher suite to use if SSL connection is used.|
+| MQ_CHANNEL | string | null | Channel | N/A |
+
+[1] one of:
+```
+"NULL_MD5"
+"NULL_SHA"
+"RC4_MD5_EXPORT"
+"RC4_MD5_US"
+"RC4_SHA_US"
+"RC2_MD5_EXPORT"
+"DES_SHA_EXPORT"
+"RC4_56_SHA_EXPORT1024"
+"DES_SHA_EXPORT1024"
+"TRIPLE_DES_SHA_US"
+"TLS_RSA_WITH_NULL_SHA256"
+"TLS_RSA_WITH_AES_128_CBC_SHA"
+"TLS_RSA_WITH_AES_128_CBC_SHA256"
+"TLS_RSA_WITH_AES_256_CBC_SHA"
+"TLS_RSA_WITH_AES_256_CBC_SHA256"
+"AES_SHA_US"
+"TLS_RSA_WITH_DES_CBC_SHA"
+"TLS_RSA_WITH_3DES_EDE_CBC_SHA"
+"TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"
+"FIPS_WITH_DES_CBC_SHA"
+"FIPS_WITH_3DES_EDE_CBC_SHA"
+```
+
+**Additional inputs** when `"RABBIT_MQ"` is the selected `MQ_TYPE`:
+
+| Name | Type | Default Value | Title | Description | 
+| ---  | ---  | ---           | ---   | ---         |
+| MQ_VIRTUAL_HOST | string | null | Virtual Host (RABBIT MQ) | N/A |
+
+```python
+rabbit_mq_listener = IOBlock(
+    identifier='MQ_LISTENER',
+    reference_name='mq_listener',
+    title='RabbitMQ Listener',
+    enabled=True,
+    input={
+        'MQ_TYPE': 'RABBIT_MQ', 
+        'MQ_QUEUE_NAME': 'some_queue_name',
+        'MQ_HOST': 'somehost.com',
+        'MQ_USERNAME': 'foo',
+        'MQ_PASSWORD': system_secret('rabbit_mq_1_password'),
+    }
+)
+
+triggers = IDPTriggers(blocks=[rabbit_mq_listener])
+```
+
+## Output Blocks
+
+```{eval-rst}
+.. warning::
+   Flows pass information to downstream systems using the IDPOutputsBlock. This block is specially built to allow full definition either in code or manually in the Flow Studio. **We recommend defining outputs manually in the Flow Studio**.
+
+   Instructions on how to do so are in our `non-technical documentation <https://hyperscience.zendesk.com/hc/en-us/articles/4414734087821-Input-Blocks-and-Output-Blocks>`_. Simply include an IDPOutputsBlock in your Python flow definition wherever you wish to send information to downstream systems.
+
+.. autoclass:: flows_sdk.implementations.idp_v32.idp_blocks.IDPOutputsBlock
+   :members:
+   :undoc-members:
+   :show-inheritance:
+```
+
+If instead you wish to define specific outputs in Python, use the outputs definitions below.
+
+### HTTP Notifier Output
+
+The HTTP Notifier (REST) output connection will POST results from the system to a specified HTTP endpoint.
+
+Identifier: COB_HTTP_EXPORT
+
+Parameters:
+
+| Name | Type | Default Value | Title | Description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | N/A|
+| enabled | boolean | True | Enabled | Enable or disable this output block|
+| api_version | string | N/A | API Version | API version to be used for rendering payload|
+| export_type | string | N/A | Export Type | Payload rendering choice. If "Flat" is chosen, a simplified version of the payload will be sent, as described in the "flat" parameter for submission retrieval API|
+| export_routing_filter | string | null | Routing Filter | By default, status change notifications are sent for each submission processed by the system. You can filter what notifications are received through this connection by specifying an expression like has_layout_tag('some_layout_tag') or has_source_routing_tag('some_source_routing_tag')|
+| endpoint | string | N/A | Endpoint URL | URL that output notifications will be posted to|
+| authorization_type | string | "none" | Authorization type | Type of authorization|
+| authorization_header | Password | null | Authorization header | Authorization header to be set in the notification request|
+| auth_url | string | null | OAuth2 authorization URL | The endpoint for the authorization server|
+| client_id | string | null | Client ID | The client identifier issued to the client during the application registration process|
+| client_secret | Password | null | Client Secret | The client secret issued to the client during the application registration process|
+| audience | string | null | Audience | Resource service URL where token will be valid|
+```python
+cob_http_export = IOBlock(
+    identifier='COB_HTTP_EXPORT',
+    reference_name='cob_http_export',
+    title='HTTP Notifier Output Block',
+    enabled=True,
+    input={
+        'submission': submission_bootstrap.output('result.submission'),
+        'enabled': True,
+        'api_version': 'v5',
+        'export_type': 'SUBMISSION',
+        'endpoint': 'example.com',
+        'authorization_type': 'none',
+    }
+)
+
+outputs = IDPOutputsBlock(
+    inputs={'submission': submission_bootstrap.output('result.submission')},
+    blocks=[cob_http_export],
+)
+```
+
+### Message Queue Notifier Output
+The Message Queue Notifier Output can configure connections to ActiveMQ, AmazonSQS, IBM MQ, and RabbitMQ message queues.
+
+Identifier: COB_MQ_NOTIFIER
+
+Parameters:
+
+| Name | Type | Default Value | Title | Description |
+| ---  | ---  | ---           | ---   | ---         |
+| submission | Submission | N/A | Submission Object | N/A|
+| enabled | boolean | True | Enabled | Enable or disable this output block|
+| api_version | string | N/A | API Version | API version to be used for rendering payload|
+| export_type | string | N/A | Export Type | Payload rendering choice. If "Flat" is chosen, a simplified version of the payload will be sent, as described in the "flat" parameter for submission retrieval API|
+| export_routing_filter | string | null | Routing Filter | By default, status change notifications are sent for each submission processed by the system. You can filter what notifications are received through this connection by specifying an expression like has_layout_tag('some_layout_tag') or has_source_routing_tag('some_source_routing_tag')|
+| MQ_TYPE | string | "ACTIVE_MQ" | Message Queue type | N/A|
+| MQ_NO_AUTH_REQUIRED | boolean | False | No auth credentials required | N/A|
+| MQ_USERNAME | string | null | Username | N/A|
+| MQ_PASSWORD | Password | null | Password | N/A|
+| MQ_QUEUE_NAME | string | null | Queue Name | N/A|
+| MQ_HOST | string | null | Host Name | N/A|
+| MQ_REGION | string | null | AWS Region | N/A|
+| MQ_QUEUE_URL | string | null | Queue URL | N/A|
+| MQ_MESSAGE_GROUP_ID | string | null | Group ID for FIFO queues | Group ID for FIFO queues|
+| MQ_USE_EC2_INSTANCE_CREDENTIALS | boolean | True | Use AWS EC2 Instance IAM Role Credentials | If selected, credentials are obtained from the EC2 instance directly, and the AWS Access Key ID and Secret Key are not used.|
+| MQ_PORT | integer | 1415 | Port Number | N/A|
+| MQ_QUEUE_MANAGER | string | null | Queue Manager | N/A|
+| MQ_CHANNEL | string | null | Channel | N/A|
+| MQ_SSL_CIPHER_SUITE | string | null | SSL cipher suite | SSL cipher suite to use if SSL connection is used|
+| MQ_VIRTUAL_HOST | string | null | Virtual Host | N/A|
+| MQ_EXCHANGE | string | "" | Exchange | N/A|
+| MQ_ROUTING_KEY | string | null | Routing key | N/A|
+```python
+mq_notifier = IOBlock(
+    identifier='COB_MQ_NOTIFIER',
+    reference_name='mq_notifier',
+    title='MQ Notifier Output Block',
+    enabled=True,
+    input={
+        'submission': submission_bootstrap.output('result.submission'),
+        'enabled': True,
+        'api_version': 'v5',
+        'export_type': 'SUBMISSION',
+        'MQ_USERNAME': 'admin',
+        'MQ_PASSWORD': 'pass',
+        'MQ_QUEUE_NAME': 'queue',
+        'MQ_HOST': 'host',
+    },
+)
+
+outputs = IDPOutputsBlock(
+    inputs={'submission': submission_bootstrap.output('result.submission')},
+    blocks=[mq_notifier],
+)
+```
+
+### Box Notifier Output
+Provides an out-of-the-box integration into Box systems.
+
+Identifier: COB_BOX_NOTIFIER
+
+Parameters:
+
+| Name | Type | Default Value | Title | Description |
 | ---  | ---  | ---           | ---   | ---         |
 | submission | Submission | N/A | Submission Object | N/A|
 | enabled | boolean | True | Enabled | Enable or disable this output block|
@@ -180,53 +457,39 @@ Inputs:
 | start_time | string | "" | Key for Mapping Start Time | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
 | complete_time | string | "" | Key for Mapping Complete Time | Specify a Box metadata field key from your chosen Box template.  The Hyperscience field will be stored in this specified field.|
 | document_fields_template_mappings | json | {} | JSON for Additional Metadata Fields | Specify additional metadata fields using their key value. Please consult Box Integration setup manual for JSON template and instructions.|
+```python
+box_notifier = IOBlock(
+    identifier='COB_BOX_NOTIFIER',
+    reference_name='box_notifier',
+    title='Box Notifier Output Block',
+    enabled=True,
+    input={
+        'submission': submission_bootstrap.output('result.submission'),
+        'enabled': True,
+        'private_key': 'password',
+        'passphrase': 'password',
+        'public_key_id': 'admin',
+        'client_id': 'admin',
+        'client_secret': 'secret',
+        'enterprise_id': 'admin',
+        'template_key': 'key',
+    },
+)
 
+outputs = IDPOutputsBlock(
+    inputs={'submission': submission_bootstrap.output('result.submission')},
+    blocks=[box_notifier],
+)
+```
 
+### UiPath Notifier Output
+Provides an out-of-the-box integration into UiPath systems.
 
-### COB_MQ_NOTIFIER
+Identifier: COB_EXPORT_UIPATH
 
-name: Message Queue Notifier Output Block
+Parameters:
 
-uuid: 28ec69fb-a2c0-41bd-8f7f-6059dce4dbb0
-
-Inputs:
-
-| name | type | default value | title | description |
-| ---  | ---  | ---           | ---   | ---         |
-| submission | Submission | N/A | Submission Object | N/A|
-| enabled | boolean | True | Enabled | Enable or disable this output block|
-| api_version | string | N/A | API Version | API version to be used for rendering payload|
-| export_type | string | N/A | Export Type | Payload rendering choice. If "Flat" is chosen, a simplified version of the payload will be sent, as described in the "flat" parameter for submission retrieval API|
-| export_routing_filter | string | null | Routing Filter | By default, status change notifications are sent for each submission processed by the system. You can filter what notifications are received through this connection by specifying an expression like has_layout_tag('some_layout_tag') or has_source_routing_tag('some_source_routing_tag')|
-| MQ_TYPE | string | "ACTIVE_MQ" | Message Queue type | N/A|
-| MQ_NO_AUTH_REQUIRED | boolean | False | No auth credentials required | N/A|
-| MQ_USERNAME | string | null | Username | N/A|
-| MQ_PASSWORD | Password | null | Password | N/A|
-| MQ_QUEUE_NAME | string | null | Queue Name | N/A|
-| MQ_HOST | string | null | Host Name | N/A|
-| MQ_REGION | string | null | AWS Region | N/A|
-| MQ_QUEUE_URL | string | null | Queue URL | N/A|
-| MQ_MESSAGE_GROUP_ID | string | null | Group ID for FIFO queues | Group ID for FIFO queues|
-| MQ_USE_EC2_INSTANCE_CREDENTIALS | boolean | True | Use AWS EC2 Instance IAM Role Credentials | If selected, credentials are obtained from the EC2 instance directly, and the AWS Access Key ID and Secret Key are not used.|
-| MQ_PORT | integer | 1415 | Port Number | N/A|
-| MQ_QUEUE_MANAGER | string | null | Queue Manager | N/A|
-| MQ_CHANNEL | string | null | Channel | N/A|
-| MQ_SSL_CIPHER_SUITE | string | null | SSL cipher suite | SSL cipher suite to use if SSL connection is used|
-| MQ_VIRTUAL_HOST | string | null | Virtual Host | N/A|
-| MQ_EXCHANGE | string | "" | Exchange | N/A|
-| MQ_ROUTING_KEY | string | null | Routing key | N/A|
-
-
-
-### COB_EXPORT_UIPATH
-
-name: UiPath Notifier Output Block
-
-uuid: 78008a6d-d17b-4351-a38f-e2e64f5bd8b5
-
-Inputs:
-
-| name | type | default value | title | description |
+| Name | Type | Default Value | Title | Description |
 | ---  | ---  | ---           | ---   | ---         |
 | submission | Submission | N/A | Submission Object | N/A|
 | enabled | boolean | True | Enabled | Enable or disable this output block|
@@ -239,32 +502,43 @@ Inputs:
 | username | string | N/A | Username | Username|
 | password | Password | N/A | Password | Password|
 | queue | string | N/A | Queue | Queue|
+```python
+cob_export_uipath = IOBlock(
+    identifier='COB_EXPORT_UIPATH',
+    reference_name='cob_export_uipath',
+    title='CCB Export UiPath',
+    enabled=True,
+    input={
+        'submission': submission_bootstrap.output('result.submission'),
+        'enabled': True,
+        'api_version': 'v5',
+        'export_type': 'FLAT_SUBMISSION',
+        'url': 'example.com',
+        'tenant': 'tenant',
+        'username': 'admin',
+        'password': 'pass',
+        'queue': 'queue',
+    }
+)
 
+outputs = IDPOutputsBlock(
+    inputs={'submission': submission_bootstrap.output('result.submission')},
+    blocks=[cob_export_uipath],
+)
+```
 
-### COB_HTTP_EXPORT
+## Helper Classes and Functions
 
-name: HTTP Notifier Output Block
+```{eval-rst}
 
-uuid: 815e1ce8-83a2-48fc-b3bb-53b37e8cc33a
+.. autofunction:: flows_sdk.implementations.idp_v32.idp_values.get_idp_wf_config
 
-Inputs:
+.. autofunction:: flows_sdk.implementations.idp_v32.idp_values.get_idp_wf_inputs
 
-| name | type | default value | title | description |
-| ---  | ---  | ---           | ---   | ---         |
-| submission | Submission | N/A | Submission Object | N/A|
-| enabled | boolean | True | Enabled | Enable or disable this output block|
-| api_version | string | N/A | API Version | API version to be used for rendering payload|
-| export_type | string | N/A | Export Type | Payload rendering choice. If "Flat" is chosen, a simplified version of the payload will be sent, as described in the "flat" parameter for submission retrieval API|
-| export_routing_filter | string | null | Routing Filter | By default, status change notifications are sent for each submission processed by the system. You can filter what notifications are received through this connection by specifying an expression like has_layout_tag('some_layout_tag') or has_source_routing_tag('some_source_routing_tag')|
-| endpoint | string | N/A | Endpoint URL | URL that output notifications will be posted to|
-| authorization_type | string | "none" | Authorization type | Type of authorization|
-| authorization_header | Password | null | Authorization header | Authorization header to be set in the notification request|
-| auth_url | string | null | OAuth2 authorization URL | The endpoint for the authorization server|
-| client_id | string | null | Client ID | The client identifier issued to the client during the application registration process|
-| client_secret | Password | null | Client Secret | The client secret issued to the client during the application registration process|
-| audience | string | null | Audience | Resource service URL where token will be valid|
+.. autoclass:: flows_sdk.implementations.idp_v32.idp_values.IdpWorkflowConfig
 
-## Helper Functions
+.. autoclass:: flows_sdk.implementations.idp_v32.idp_values.IDPTriggers
 
+.. autoclass:: flows_sdk.implementations.idp_v32.idp_values.IDPManifest
 
-
+```

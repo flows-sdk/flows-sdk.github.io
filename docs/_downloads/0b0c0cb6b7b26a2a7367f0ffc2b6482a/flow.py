@@ -2,20 +2,20 @@ from typing import Any
 from uuid import UUID
 
 from flows_sdk.blocks import CodeBlock
-from flows_sdk.examples.idp_v32.idp_blocks import (
-    CaseCollationV2Block,
+from flows_sdk.implementations.idp_v32.idp_blocks import (
+    CaseCollationBlock,
     FlexibleExtractionBlock,
     IDPOutputsBlock,
-    MachineClassificationV2Block,
-    MachineIdentificationV3Block,
-    MachineTranscriptionV3Block,
-    ManualClassificationV2Block,
-    ManualIdentificationV3Block,
-    ManualTranscriptionV2Block,
-    SubmissionBootstrapV2Block,
-    SubmissionCompleteV3Block,
+    MachineClassificationBlock,
+    MachineIdentificationBlock,
+    MachineTranscriptionBlock,
+    ManualClassificationBlock,
+    ManualIdentificationBlock,
+    ManualTranscriptionBlock,
+    SubmissionBootstrapBlock,
+    SubmissionCompleteBlock,
 )
-from flows_sdk.examples.idp_v32.idp_values import (
+from flows_sdk.implementations.idp_v32.idp_values import (
     IDPManifest,
     IDPTriggers,
     get_idp_wf_config,
@@ -38,12 +38,12 @@ def idp_workflow() -> Flow:
 
     # Submission bootstrap block initializes the submission object and prepares external images
     # or other submission data if needed
-    submission_bootstrap = SubmissionBootstrapV2Block(reference_name='submission_bootstrap')
+    submission_bootstrap = SubmissionBootstrapBlock(reference_name='submission_bootstrap')
 
     # Case collation block groups files, documents and pages (from the submission) into cases
     # In this example, case collation block receives the submission object and the cases
     # information from submission bootstrap block
-    case_collation = CaseCollationV2Block(
+    case_collation = CaseCollationBlock(
         reference_name='machine_collation',
         submission=submission_bootstrap.output('result.submission'),
         cases=submission_bootstrap.output('result.api_params.cases'),
@@ -53,7 +53,7 @@ def idp_workflow() -> Flow:
     # or additional layouts
     # In this example, machine classification block receives the submission object from
     # case collation block
-    machine_classification = MachineClassificationV2Block(
+    machine_classification = MachineClassificationBlock(
         reference_name='machine_classification',
         submission=case_collation.output('submission'),
         api_params=submission_bootstrap.output('result.api_params'),
@@ -66,7 +66,7 @@ def idp_workflow() -> Flow:
     # match a submission to a layout with high confidence
     # In this example, manual classification block receives the submission object from machine
     # classification block
-    manual_classification = ManualClassificationV2Block(
+    manual_classification = ManualClassificationBlock(
         reference_name='manual_classification',
         submission=machine_classification.output('submission'),
         api_params=submission_bootstrap.output('result.api_params'),
@@ -77,7 +77,7 @@ def idp_workflow() -> Flow:
     # Machine identification automatically identify fields and tables in the submission
     # In this example, machine identification block receives the submission object from manual
     # classification
-    machine_identification = MachineIdentificationV3Block(
+    machine_identification = MachineIdentificationBlock(
         reference_name='machine_identification',
         submission=manual_classification.output('submission'),
         api_params=submission_bootstrap.output('result.api_params'),
@@ -91,7 +91,7 @@ def idp_workflow() -> Flow:
     # transcribe the correct content in the upcoming transcription process
     # In this example, manual identification block receives the submission object from machine
     # identification
-    manual_identification = ManualIdentificationV3Block(
+    manual_identification = ManualIdentificationBlock(
         reference_name='manual_identification',
         submission=machine_identification.output('submission'),
         api_params=submission_bootstrap.output('result.api_params'),
@@ -102,7 +102,7 @@ def idp_workflow() -> Flow:
     # Machine transcription automatically transcribes the content of your submission
     # In this example, machine identification block receives the submission object from manual
     # identification
-    machine_transcription = MachineTranscriptionV3Block(
+    machine_transcription = MachineTranscriptionBlock(
         reference_name='machine_transcription',
         submission=manual_identification.output('submission'),
         api_params=submission_bootstrap.output('result.api_params'),
@@ -114,7 +114,7 @@ def idp_workflow() -> Flow:
     # that could not be automatically transcribed
     # In this example, manual transcription block receives the submission object from machine
     # transcription block
-    manual_transcription = ManualTranscriptionV2Block(
+    manual_transcription = ManualTranscriptionBlock(
         reference_name='manual_transcription',
         submission=machine_transcription.output('submission'),
         api_params=submission_bootstrap.output('result.api_params'),
@@ -173,16 +173,22 @@ def idp_workflow() -> Flow:
     # changes the submission's status to "Complete"
     # In this example, submission complete block receives the submission object from
     # marked_as_complete custom code block
-    submission_complete = SubmissionCompleteV3Block(
+    submission_complete = SubmissionCompleteBlock(
         reference_name='complete_submission', submission=custom_code.output('submission')
     )
 
     # Output block allows users to send data extracted by this idp flow to other systems
     # for downstream processing
-    # In this example, this is an empty output block that does not do anything by default
+    # In this example, no output block is instantiated (blocks=[])
+    # Setting up output blocks via UI and leaving this empty is recommended
     outputs = IDPOutputsBlock(
-        inputs={'submission': submission_bootstrap.output('result.submission')}
+        inputs={'submission': submission_bootstrap.output('result.submission')}, blocks=[]
     )
+
+    # Trigger block allows users to send data to idp flow via sources other than the User Interface
+    # In this example, no trigger block is instantiated (blocks=[])
+    # Setting up trigger blocks via UI and leaving this empty is recommended
+    triggers = IDPTriggers(blocks=[])
 
     return Flow(
         # Flows should have a deterministic UUID ensuring cross-system consistency
@@ -191,6 +197,7 @@ def idp_workflow() -> Flow:
         title='IDP with Custom Code Block Flow Example (V32)',
         # Flow identifiers are globally unique
         manifest=IDPManifest(flow_identifier='IDP_WITH_CUSTOM_CODE_V32_FLOW_EXAMPLE'),
+        triggers=triggers,
         # It is important to include all blocks that are instantiated here in the blocks
         # field and make sure they follow the order of the flow. For example, if machine
         # classification depends on the output of case collation, then case_collation must
@@ -211,7 +218,6 @@ def idp_workflow() -> Flow:
         ],
         input=get_idp_wf_inputs(idp_wf_config),
         description='Intelligent Document Processing with Custom Code Block Flow Example (V32)',
-        triggers=IDPTriggers(),
         output={'submission': submission_complete.output()},
     )
 

@@ -54,8 +54,7 @@ This example consists of a single Code block. It is the simplest possible execut
 
 :download:`Download hello_flow.py <../../../samples/hello_flow/flow.py>`
 
-.. 
-   image:: ../media/images/hello_world_flow_studio.png
+.. image:: ../media/images/hello_world_flow_studio.png
 
 .. include:: ../../../samples/hello_flow/flow.py
    :literal:
@@ -73,8 +72,7 @@ This example is a snapshot of our V32 Intelligent Document Processing (IDP) flow
 
 :download:`idp_starter.zip <../../../samples/idp_flow/idp-starter.zip>`
 
-.. 
-   image:: ../media/images/idp_example_flow_studio.png
+.. image:: ../media/images/tutorial/idp_example_flow_studio.png
 
 .. include:: ../../../samples/idp_flow/flow.py
    :literal:
@@ -87,8 +85,7 @@ This example is identical to the :ref:`pages/examples:IDP Starter` example, howe
 
 :download:`Download idp_custom.py <../../../samples/custom_idp_flow/flow.py>`
 
-.. 
-   image:: ../media/images/custom_idp_example_flow_studio.png
+.. image:: ../media/images/custom_idp_example_flow_studio.png
 
 .. include:: ../../../samples/custom_idp_flow/flow.py
    :literal:

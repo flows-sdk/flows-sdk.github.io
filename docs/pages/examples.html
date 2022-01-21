@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Examples &mdash; Flows SDK 0.4.1 documentation</title>
+  <title>Examples &mdash; Flows SDK 0.5.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> Flows SDK
           </a>
               <div class="version">
-                0.4.1
+                0.5.0
 
               </div>
 <div role="search">
@@ -152,6 +152,7 @@
 <h2>Hello Flow<a class="headerlink" href="#hello-flow" title="Permalink to this headline"></a></h2>
 <p>This example consists of a single Code block. It is the simplest possible executable flow.</p>
 <p><a class="reference download internal" download="" href="../_downloads/f42e3eecbffde899bc29d261f2ac86d0/flow.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">hello_flow.py</span></code></a></p>
+<img alt="../_images/hello_world_flow_studio.png" src="../_images/hello_world_flow_studio.png" />
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span>
 
 <span class="kn">from</span> <span class="nn">flows_sdk</span> <span class="kn">import</span> <span class="n">utils</span>
@@ -220,22 +221,23 @@
 <li><p>Output results to a downstream system</p></li>
 </ol>
 <p><a class="reference download internal" download="" href="../_downloads/2279a32bac9d45ac239eeb28370e1900/idp-starter.zip"><code class="xref download docutils literal notranslate"><span class="pre">idp_starter.zip</span></code></a></p>
+<img alt="../_images/idp_example_flow_studio.png" src="../_images/idp_example_flow_studio.png" />
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span>
 
-<span class="kn">from</span> <span class="nn">flows_sdk.examples.idp_v32.idp_blocks</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">CaseCollationV2Block</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.implementations.idp_v32.idp_blocks</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CaseCollationBlock</span><span class="p">,</span>
     <span class="n">FlexibleExtractionBlock</span><span class="p">,</span>
     <span class="n">IDPOutputsBlock</span><span class="p">,</span>
-    <span class="n">MachineClassificationV2Block</span><span class="p">,</span>
-    <span class="n">MachineIdentificationV3Block</span><span class="p">,</span>
-    <span class="n">MachineTranscriptionV3Block</span><span class="p">,</span>
-    <span class="n">ManualClassificationV2Block</span><span class="p">,</span>
-    <span class="n">ManualIdentificationV3Block</span><span class="p">,</span>
-    <span class="n">ManualTranscriptionV2Block</span><span class="p">,</span>
-    <span class="n">SubmissionBootstrapV2Block</span><span class="p">,</span>
-    <span class="n">SubmissionCompleteV3Block</span><span class="p">,</span>
+    <span class="n">MachineClassificationBlock</span><span class="p">,</span>
+    <span class="n">MachineIdentificationBlock</span><span class="p">,</span>
+    <span class="n">MachineTranscriptionBlock</span><span class="p">,</span>
+    <span class="n">ManualClassificationBlock</span><span class="p">,</span>
+    <span class="n">ManualIdentificationBlock</span><span class="p">,</span>
+    <span class="n">ManualTranscriptionBlock</span><span class="p">,</span>
+    <span class="n">SubmissionBootstrapBlock</span><span class="p">,</span>
+    <span class="n">SubmissionCompleteBlock</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">flows_sdk.examples.idp_v32.idp_values</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.implementations.idp_v32.idp_values</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">IDPManifest</span><span class="p">,</span>
     <span class="n">IDPTriggers</span><span class="p">,</span>
     <span class="n">get_idp_wf_config</span><span class="p">,</span>
@@ -258,12 +260,12 @@
 
     <span class="c1"># Submission bootstrap block initializes the submission object and prepares external images</span>
     <span class="c1"># or other submission data if needed</span>
-    <span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapV2Block</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
+    <span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapBlock</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
 
     <span class="c1"># Case collation block groups files, documents and pages (from the submission) into cases</span>
     <span class="c1"># In this example, case collation block receives the submission object and the cases</span>
     <span class="c1"># information from submission bootstrap block</span>
-    <span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationV2Block</span><span class="p">(</span>
+    <span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_collation&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">),</span>
         <span class="n">cases</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params.cases&#39;</span><span class="p">),</span>
@@ -273,7 +275,7 @@
     <span class="c1"># or additional layouts</span>
     <span class="c1"># In this example, machine classification block receives the submission object from</span>
     <span class="c1"># case collation block</span>
-    <span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationV2Block</span><span class="p">(</span>
+    <span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">case_collation</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -285,7 +287,7 @@
     <span class="c1"># match a submission to a layout with high confidence</span>
     <span class="c1"># In this example, manual classification block receives the submission object from machine</span>
     <span class="c1"># classification block</span>
-    <span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationV2Block</span><span class="p">(</span>
+    <span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -294,7 +296,7 @@
     <span class="c1"># Machine identification automatically identify fields and tables in the submission</span>
     <span class="c1"># In this example, machine identification block receives the submission object from manual</span>
     <span class="c1"># classification</span>
-    <span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationV3Block</span><span class="p">(</span>
+    <span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -306,7 +308,7 @@
     <span class="c1"># transcribe the correct content in the upcoming transcription process</span>
     <span class="c1"># In this example, manual identification block receives the submission object from machine</span>
     <span class="c1"># identification</span>
-    <span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationV3Block</span><span class="p">(</span>
+    <span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -316,7 +318,7 @@
     <span class="c1"># Machine transcription automatically transcribes the content of your submission</span>
     <span class="c1"># In this example, machine identification block receives the submission object from manual</span>
     <span class="c1"># identification</span>
-    <span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionV3Block</span><span class="p">(</span>
+    <span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -326,7 +328,7 @@
     <span class="c1"># that could not be automatically transcribed</span>
     <span class="c1"># In this example, manual transcription block receives the submission object from machine</span>
     <span class="c1"># transcription block</span>
-    <span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionV2Block</span><span class="p">(</span>
+    <span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -357,16 +359,22 @@
     <span class="c1"># changes the submission&#39;s status to &quot;Complete&quot;</span>
     <span class="c1"># In this example, submission complete block receives the submission object from</span>
     <span class="c1"># marked_as_complete custom code block</span>
-    <span class="n">submission_complete</span> <span class="o">=</span> <span class="n">SubmissionCompleteV3Block</span><span class="p">(</span>
+    <span class="n">submission_complete</span> <span class="o">=</span> <span class="n">SubmissionCompleteBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;complete_submission&#39;</span><span class="p">,</span> <span class="n">submission</span><span class="o">=</span><span class="n">flexible_extraction</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Output block allows users to send data extracted by this idp flow to other systems</span>
     <span class="c1"># for downstream processing</span>
-    <span class="c1"># In this example, this is an empty output block that does not do anything by default</span>
+    <span class="c1"># In this example, no output block is instantiated (blocks=[])</span>
+    <span class="c1"># Setting up output blocks via UI and leaving this empty is recommended</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">IDPOutputsBlock</span><span class="p">(</span>
-        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">)}</span>
+        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">)},</span> <span class="n">blocks</span><span class="o">=</span><span class="p">[]</span>
     <span class="p">)</span>
+
+    <span class="c1"># Trigger block allows users to send data to idp flow via sources other than the User Interface</span>
+    <span class="c1"># In this example, no trigger block is instantiated (blocks=[])</span>
+    <span class="c1"># Setting up trigger blocks via UI and leaving this empty is recommended</span>
+    <span class="n">triggers</span> <span class="o">=</span> <span class="n">IDPTriggers</span><span class="p">(</span><span class="n">blocks</span><span class="o">=</span><span class="p">[])</span>
 
     <span class="k">return</span> <span class="n">Flow</span><span class="p">(</span>
         <span class="c1"># Flows should have a deterministic UUID ensuring cross-system consistency</span>
@@ -375,6 +383,7 @@
         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;IDP Starter Example (V32)&#39;</span><span class="p">,</span>
         <span class="c1"># Flow identifiers are globally unique</span>
         <span class="n">manifest</span><span class="o">=</span><span class="n">IDPManifest</span><span class="p">(</span><span class="n">flow_identifier</span><span class="o">=</span><span class="s1">&#39;IDP_V32_FLOW_EXAMPLE&#39;</span><span class="p">),</span>
+        <span class="n">triggers</span><span class="o">=</span><span class="n">triggers</span><span class="p">,</span>
         <span class="c1"># It is important to include all blocks that are instantiated here in the blocks</span>
         <span class="c1"># field and make sure they follow the order of the flow. For example, if machine</span>
         <span class="c1"># classification depends on the output of case collation, then case_collation must</span>
@@ -394,7 +403,6 @@
         <span class="p">],</span>
         <span class="nb">input</span><span class="o">=</span><span class="n">get_idp_wf_inputs</span><span class="p">(</span><span class="n">idp_wf_config</span><span class="p">),</span>
         <span class="n">description</span><span class="o">=</span><span class="s1">&#39;A basic approach to extracting information from documents.&#39;</span><span class="p">,</span>
-        <span class="n">triggers</span><span class="o">=</span><span class="n">IDPTriggers</span><span class="p">(),</span>
         <span class="n">output</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_complete</span><span class="o">.</span><span class="n">output</span><span class="p">()},</span>
     <span class="p">)</span>
 
@@ -408,24 +416,25 @@
 <h2>IDP w/ Code Block<a class="headerlink" href="#idp-w-code-block" title="Permalink to this headline"></a></h2>
 <p>This example is identical to the <a class="reference internal" href="#idp-starter"><span class="std std-ref">IDP Starter</span></a> example, however it includes an additional Code block to add “time completed” metadata to each document in the submission. This is an example of how Code blocks can arbitrarily modify extracted data before outputting to downstream systems.</p>
 <p><a class="reference download internal" download="" href="../_downloads/0b0c0cb6b7b26a2a7367f0ffc2b6482a/flow.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">idp_custom.py</span></code></a></p>
+<img alt="../_images/custom_idp_example_flow_studio.png" src="../_images/custom_idp_example_flow_studio.png" />
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 <span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span>
 
 <span class="kn">from</span> <span class="nn">flows_sdk.blocks</span> <span class="kn">import</span> <span class="n">CodeBlock</span>
-<span class="kn">from</span> <span class="nn">flows_sdk.examples.idp_v32.idp_blocks</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">CaseCollationV2Block</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.implementations.idp_v32.idp_blocks</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CaseCollationBlock</span><span class="p">,</span>
     <span class="n">FlexibleExtractionBlock</span><span class="p">,</span>
     <span class="n">IDPOutputsBlock</span><span class="p">,</span>
-    <span class="n">MachineClassificationV2Block</span><span class="p">,</span>
-    <span class="n">MachineIdentificationV3Block</span><span class="p">,</span>
-    <span class="n">MachineTranscriptionV3Block</span><span class="p">,</span>
-    <span class="n">ManualClassificationV2Block</span><span class="p">,</span>
-    <span class="n">ManualIdentificationV3Block</span><span class="p">,</span>
-    <span class="n">ManualTranscriptionV2Block</span><span class="p">,</span>
-    <span class="n">SubmissionBootstrapV2Block</span><span class="p">,</span>
-    <span class="n">SubmissionCompleteV3Block</span><span class="p">,</span>
+    <span class="n">MachineClassificationBlock</span><span class="p">,</span>
+    <span class="n">MachineIdentificationBlock</span><span class="p">,</span>
+    <span class="n">MachineTranscriptionBlock</span><span class="p">,</span>
+    <span class="n">ManualClassificationBlock</span><span class="p">,</span>
+    <span class="n">ManualIdentificationBlock</span><span class="p">,</span>
+    <span class="n">ManualTranscriptionBlock</span><span class="p">,</span>
+    <span class="n">SubmissionBootstrapBlock</span><span class="p">,</span>
+    <span class="n">SubmissionCompleteBlock</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">flows_sdk.examples.idp_v32.idp_values</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.implementations.idp_v32.idp_values</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">IDPManifest</span><span class="p">,</span>
     <span class="n">IDPTriggers</span><span class="p">,</span>
     <span class="n">get_idp_wf_config</span><span class="p">,</span>
@@ -448,12 +457,12 @@
 
     <span class="c1"># Submission bootstrap block initializes the submission object and prepares external images</span>
     <span class="c1"># or other submission data if needed</span>
-    <span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapV2Block</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
+    <span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapBlock</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
 
     <span class="c1"># Case collation block groups files, documents and pages (from the submission) into cases</span>
     <span class="c1"># In this example, case collation block receives the submission object and the cases</span>
     <span class="c1"># information from submission bootstrap block</span>
-    <span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationV2Block</span><span class="p">(</span>
+    <span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_collation&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">),</span>
         <span class="n">cases</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params.cases&#39;</span><span class="p">),</span>
@@ -463,7 +472,7 @@
     <span class="c1"># or additional layouts</span>
     <span class="c1"># In this example, machine classification block receives the submission object from</span>
     <span class="c1"># case collation block</span>
-    <span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationV2Block</span><span class="p">(</span>
+    <span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">case_collation</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -476,7 +485,7 @@
     <span class="c1"># match a submission to a layout with high confidence</span>
     <span class="c1"># In this example, manual classification block receives the submission object from machine</span>
     <span class="c1"># classification block</span>
-    <span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationV2Block</span><span class="p">(</span>
+    <span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -487,7 +496,7 @@
     <span class="c1"># Machine identification automatically identify fields and tables in the submission</span>
     <span class="c1"># In this example, machine identification block receives the submission object from manual</span>
     <span class="c1"># classification</span>
-    <span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationV3Block</span><span class="p">(</span>
+    <span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -501,7 +510,7 @@
     <span class="c1"># transcribe the correct content in the upcoming transcription process</span>
     <span class="c1"># In this example, manual identification block receives the submission object from machine</span>
     <span class="c1"># identification</span>
-    <span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationV3Block</span><span class="p">(</span>
+    <span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -512,7 +521,7 @@
     <span class="c1"># Machine transcription automatically transcribes the content of your submission</span>
     <span class="c1"># In this example, machine identification block receives the submission object from manual</span>
     <span class="c1"># identification</span>
-    <span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionV3Block</span><span class="p">(</span>
+    <span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -524,7 +533,7 @@
     <span class="c1"># that could not be automatically transcribed</span>
     <span class="c1"># In this example, manual transcription block receives the submission object from machine</span>
     <span class="c1"># transcription block</span>
-    <span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionV2Block</span><span class="p">(</span>
+    <span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -583,16 +592,22 @@
     <span class="c1"># changes the submission&#39;s status to &quot;Complete&quot;</span>
     <span class="c1"># In this example, submission complete block receives the submission object from</span>
     <span class="c1"># marked_as_complete custom code block</span>
-    <span class="n">submission_complete</span> <span class="o">=</span> <span class="n">SubmissionCompleteV3Block</span><span class="p">(</span>
+    <span class="n">submission_complete</span> <span class="o">=</span> <span class="n">SubmissionCompleteBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;complete_submission&#39;</span><span class="p">,</span> <span class="n">submission</span><span class="o">=</span><span class="n">custom_code</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Output block allows users to send data extracted by this idp flow to other systems</span>
     <span class="c1"># for downstream processing</span>
-    <span class="c1"># In this example, this is an empty output block that does not do anything by default</span>
+    <span class="c1"># In this example, no output block is instantiated (blocks=[])</span>
+    <span class="c1"># Setting up output blocks via UI and leaving this empty is recommended</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">IDPOutputsBlock</span><span class="p">(</span>
-        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">)}</span>
+        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">)},</span> <span class="n">blocks</span><span class="o">=</span><span class="p">[]</span>
     <span class="p">)</span>
+
+    <span class="c1"># Trigger block allows users to send data to idp flow via sources other than the User Interface</span>
+    <span class="c1"># In this example, no trigger block is instantiated (blocks=[])</span>
+    <span class="c1"># Setting up trigger blocks via UI and leaving this empty is recommended</span>
+    <span class="n">triggers</span> <span class="o">=</span> <span class="n">IDPTriggers</span><span class="p">(</span><span class="n">blocks</span><span class="o">=</span><span class="p">[])</span>
 
     <span class="k">return</span> <span class="n">Flow</span><span class="p">(</span>
         <span class="c1"># Flows should have a deterministic UUID ensuring cross-system consistency</span>
@@ -601,6 +616,7 @@
         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;IDP with Custom Code Block Flow Example (V32)&#39;</span><span class="p">,</span>
         <span class="c1"># Flow identifiers are globally unique</span>
         <span class="n">manifest</span><span class="o">=</span><span class="n">IDPManifest</span><span class="p">(</span><span class="n">flow_identifier</span><span class="o">=</span><span class="s1">&#39;IDP_WITH_CUSTOM_CODE_V32_FLOW_EXAMPLE&#39;</span><span class="p">),</span>
+        <span class="n">triggers</span><span class="o">=</span><span class="n">triggers</span><span class="p">,</span>
         <span class="c1"># It is important to include all blocks that are instantiated here in the blocks</span>
         <span class="c1"># field and make sure they follow the order of the flow. For example, if machine</span>
         <span class="c1"># classification depends on the output of case collation, then case_collation must</span>
@@ -621,7 +637,6 @@
         <span class="p">],</span>
         <span class="nb">input</span><span class="o">=</span><span class="n">get_idp_wf_inputs</span><span class="p">(</span><span class="n">idp_wf_config</span><span class="p">),</span>
         <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Intelligent Document Processing with Custom Code Block Flow Example (V32)&#39;</span><span class="p">,</span>
-        <span class="n">triggers</span><span class="o">=</span><span class="n">IDPTriggers</span><span class="p">(),</span>
         <span class="n">output</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_complete</span><span class="o">.</span><span class="n">output</span><span class="p">()},</span>
     <span class="p">)</span>
 
@@ -641,20 +656,20 @@
 <span class="kn">from</span> <span class="nn">flows_sdk.utils</span> <span class="kn">import</span> <span class="n">workflow_input</span>
 
 <span class="kn">from</span> <span class="nn">flows_sdk.blocks</span> <span class="kn">import</span> <span class="n">Block</span><span class="p">,</span> <span class="n">CodeBlock</span>
-<span class="kn">from</span> <span class="nn">flows_sdk.examples.idp_v32.idp_blocks</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">CaseCollationV2Block</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.implementations.idp_v32.idp_blocks</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CaseCollationBlock</span><span class="p">,</span>
     <span class="n">FlexibleExtractionBlock</span><span class="p">,</span>
     <span class="n">IDPOutputsBlock</span><span class="p">,</span>
-    <span class="n">MachineClassificationV2Block</span><span class="p">,</span>
-    <span class="n">MachineIdentificationV3Block</span><span class="p">,</span>
-    <span class="n">MachineTranscriptionV3Block</span><span class="p">,</span>
-    <span class="n">ManualClassificationV2Block</span><span class="p">,</span>
-    <span class="n">ManualIdentificationV3Block</span><span class="p">,</span>
-    <span class="n">ManualTranscriptionV2Block</span><span class="p">,</span>
-    <span class="n">SubmissionBootstrapV2Block</span><span class="p">,</span>
-    <span class="n">SubmissionCompleteV3Block</span><span class="p">,</span>
+    <span class="n">MachineClassificationBlock</span><span class="p">,</span>
+    <span class="n">MachineIdentificationBlock</span><span class="p">,</span>
+    <span class="n">MachineTranscriptionBlock</span><span class="p">,</span>
+    <span class="n">ManualClassificationBlock</span><span class="p">,</span>
+    <span class="n">ManualIdentificationBlock</span><span class="p">,</span>
+    <span class="n">ManualTranscriptionBlock</span><span class="p">,</span>
+    <span class="n">SubmissionBootstrapBlock</span><span class="p">,</span>
+    <span class="n">SubmissionCompleteBlock</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">flows_sdk.examples.idp_v32.idp_values</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.implementations.idp_v32.idp_values</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">IDPManifest</span><span class="p">,</span>
     <span class="n">IDPTriggers</span><span class="p">,</span>
     <span class="n">get_idp_wf_config</span><span class="p">,</span>
@@ -704,12 +719,12 @@
 
     <span class="c1"># Submission bootstrap block initializes the submission object and prepares external images</span>
     <span class="c1"># or other submission data if needed</span>
-    <span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapV2Block</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
+    <span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapBlock</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
 
     <span class="c1"># Case collation block groups files, documents and pages (from the submission) into cases</span>
     <span class="c1"># In this example, case collation block receives the submission object and the cases</span>
     <span class="c1"># information from submission bootstrap block</span>
-    <span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationV2Block</span><span class="p">(</span>
+    <span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_collation&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">),</span>
         <span class="n">cases</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params.cases&#39;</span><span class="p">),</span>
@@ -719,7 +734,7 @@
     <span class="c1"># or additional layouts</span>
     <span class="c1"># In this example, machine classification block receives the submission object from</span>
     <span class="c1"># case collation block</span>
-    <span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationV2Block</span><span class="p">(</span>
+    <span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">case_collation</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -732,7 +747,7 @@
     <span class="c1"># match a submission to a layout with high confidence</span>
     <span class="c1"># In this example, manual classification block receives the submission object from machine</span>
     <span class="c1"># classification block</span>
-    <span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationV2Block</span><span class="p">(</span>
+    <span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -743,7 +758,7 @@
     <span class="c1"># Machine identification automatically identify fields and tables in the submission</span>
     <span class="c1"># In this example, machine identification block receives the submission object from manual</span>
     <span class="c1"># classification</span>
-    <span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationV3Block</span><span class="p">(</span>
+    <span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -757,7 +772,7 @@
     <span class="c1"># transcribe the correct content in the upcoming transcription process</span>
     <span class="c1"># In this example, manual identification block receives the submission object from machine</span>
     <span class="c1"># identification</span>
-    <span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationV3Block</span><span class="p">(</span>
+    <span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -768,7 +783,7 @@
     <span class="c1"># Machine transcription automatically transcribes the content of your submission</span>
     <span class="c1"># In this example, machine identification block receives the submission object from manual</span>
     <span class="c1"># identification</span>
-    <span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionV3Block</span><span class="p">(</span>
+    <span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -780,7 +795,7 @@
     <span class="c1"># that could not be automatically transcribed</span>
     <span class="c1"># In this example, manual transcription block receives the submission object from machine</span>
     <span class="c1"># transcription block</span>
-    <span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionV2Block</span><span class="p">(</span>
+    <span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -1525,7 +1540,7 @@
     <span class="c1"># changes the submission&#39;s status to &quot;Complete&quot;</span>
     <span class="c1"># In this example, submission complete block receives the submission object from</span>
     <span class="c1"># marked_as_complete custom code block</span>
-    <span class="n">submission_complete</span> <span class="o">=</span> <span class="n">SubmissionCompleteV3Block</span><span class="p">(</span>
+    <span class="n">submission_complete</span> <span class="o">=</span> <span class="n">SubmissionCompleteBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;complete_submission&#39;</span><span class="p">,</span>
         <span class="n">payload</span><span class="o">=</span><span class="n">mark_as_complete</span><span class="o">.</span><span class="n">output</span><span class="p">(),</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">mark_as_complete</span><span class="o">.</span><span class="n">output</span><span class="p">()</span>
@@ -1603,20 +1618,20 @@
 <span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span>
 
 <span class="kn">from</span> <span class="nn">flows_sdk.blocks</span> <span class="kn">import</span> <span class="n">CodeBlock</span>
-<span class="kn">from</span> <span class="nn">flows_sdk.examples.idp_v32.idp_blocks</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">CaseCollationV2Block</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.implementations.idp_v32.idp_blocks</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CaseCollationBlock</span><span class="p">,</span>
     <span class="n">FlexibleExtractionBlock</span><span class="p">,</span>
     <span class="n">IDPOutputsBlock</span><span class="p">,</span>
-    <span class="n">MachineClassificationV2Block</span><span class="p">,</span>
-    <span class="n">MachineIdentificationV3Block</span><span class="p">,</span>
-    <span class="n">MachineTranscriptionV3Block</span><span class="p">,</span>
-    <span class="n">ManualClassificationV2Block</span><span class="p">,</span>
-    <span class="n">ManualIdentificationV3Block</span><span class="p">,</span>
-    <span class="n">ManualTranscriptionV2Block</span><span class="p">,</span>
-    <span class="n">SubmissionBootstrapV2Block</span><span class="p">,</span>
-    <span class="n">SubmissionCompleteV3Block</span><span class="p">,</span>
+    <span class="n">MachineClassificationBlock</span><span class="p">,</span>
+    <span class="n">MachineIdentificationBlock</span><span class="p">,</span>
+    <span class="n">MachineTranscriptionBlock</span><span class="p">,</span>
+    <span class="n">ManualClassificationBlock</span><span class="p">,</span>
+    <span class="n">ManualIdentificationBlock</span><span class="p">,</span>
+    <span class="n">ManualTranscriptionBlock</span><span class="p">,</span>
+    <span class="n">SubmissionBootstrapBlock</span><span class="p">,</span>
+    <span class="n">SubmissionCompleteBlock</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">flows_sdk.examples.idp_v32.idp_values</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.implementations.idp_v32.idp_values</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">IDPManifest</span><span class="p">,</span>
     <span class="n">IDPTriggers</span><span class="p">,</span>
     <span class="n">get_idp_wf_config</span><span class="p">,</span>
@@ -1639,12 +1654,12 @@
 
     <span class="c1"># Submission bootstrap block initializes the submission object and prepares external images</span>
     <span class="c1"># or other submission data if needed</span>
-    <span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapV2Block</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
+    <span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapBlock</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
 
     <span class="c1"># Case collation block groups files, documents and pages (from the submission) into cases</span>
     <span class="c1"># In this example, case collation block receives the submission object and the cases</span>
     <span class="c1"># information from submission bootstrap block</span>
-    <span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationV2Block</span><span class="p">(</span>
+    <span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_collation&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">),</span>
         <span class="n">cases</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params.cases&#39;</span><span class="p">),</span>
@@ -1654,7 +1669,7 @@
     <span class="c1"># or additional layouts</span>
     <span class="c1"># In this example, machine classification block receives the submission object from</span>
     <span class="c1"># case collation block</span>
-    <span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationV2Block</span><span class="p">(</span>
+    <span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">case_collation</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -1667,7 +1682,7 @@
     <span class="c1"># match a submission to a layout with high confidence</span>
     <span class="c1"># In this example, manual classification block receives the submission object from machine</span>
     <span class="c1"># classification block</span>
-    <span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationV2Block</span><span class="p">(</span>
+    <span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -1678,7 +1693,7 @@
     <span class="c1"># Machine identification automatically identify fields and tables in the submission</span>
     <span class="c1"># In this example, machine identification block receives the submission object from manual</span>
     <span class="c1"># classification</span>
-    <span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationV3Block</span><span class="p">(</span>
+    <span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -1692,7 +1707,7 @@
     <span class="c1"># transcribe the correct content in the upcoming transcription process</span>
     <span class="c1"># In this example, manual identification block receives the submission object from machine</span>
     <span class="c1"># identification</span>
-    <span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationV3Block</span><span class="p">(</span>
+    <span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -1703,7 +1718,7 @@
     <span class="c1"># Machine transcription automatically transcribes the content of your submission</span>
     <span class="c1"># In this example, machine identification block receives the submission object from manual</span>
     <span class="c1"># identification</span>
-    <span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionV3Block</span><span class="p">(</span>
+    <span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -1715,7 +1730,7 @@
     <span class="c1"># that could not be automatically transcribed</span>
     <span class="c1"># In this example, manual transcription block receives the submission object from machine</span>
     <span class="c1"># transcription block</span>
-    <span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionV2Block</span><span class="p">(</span>
+    <span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
         <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
@@ -1940,7 +1955,7 @@
     <span class="c1"># changes the submission&#39;s status to &quot;Complete&quot;</span>
     <span class="c1"># In this example, submission complete block receives the submission object from</span>
     <span class="c1"># marked_as_complete custom code block</span>
-    <span class="n">submission_complete</span> <span class="o">=</span> <span class="n">SubmissionCompleteV3Block</span><span class="p">(</span>
+    <span class="n">submission_complete</span> <span class="o">=</span> <span class="n">SubmissionCompleteBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;complete_submission&#39;</span><span class="p">,</span>
         <span class="n">payload</span><span class="o">=</span><span class="n">mark_as_complete</span><span class="o">.</span><span class="n">output</span><span class="p">(),</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">mark_as_complete</span><span class="o">.</span><span class="n">output</span><span class="p">()</span>

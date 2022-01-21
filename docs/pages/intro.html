@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction to Flows SDK &mdash; Flows SDK 0.4.1 documentation</title>
+  <title>Introduction to Flows SDK &mdash; Flows SDK 0.5.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> Flows SDK
           </a>
               <div class="version">
-                0.4.1
+                0.5.0
 
               </div>
 <div role="search">
@@ -92,30 +92,30 @@
              
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-flows-sdk">
 <h1>Introduction to Flows SDK<a class="headerlink" href="#introduction-to-flows-sdk" title="Permalink to this headline"></a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> is a Python library for programmatically building flows: a sequences of business steps managed and executed by the Hyperscience Platform. We encourage you to complete the <a class="reference internal" href="tutorial.html"><span class="doc std std-doc">Tutorial</span></a> as the best way to get started.</p>
+<p><code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> is a Python library for programmatically building flows: sequences of business steps managed and executed by the Hyperscience Platform. We encourage you to complete the <a class="reference internal" href="tutorial.html"><span class="doc std std-doc">Tutorial</span></a> as the best way to get started.</p>
 <p>Flows are defined as Python files using classes from this library. They are then converted to an importable JSON format that can later be deployed on a Hyperscience instance.</p>
-<p>These definitions are like blueprints - they configure and wire together Triggers, Blocks, and other parameters, while the Hyperscience platform takes care of the execution and lifecycle during the actual runtime.</p>
-<p>Any code you build using the <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> is managed externally from the Hyperscience platform (e.g., in a separate git repository), while the produced artifacts can be uploaded to and managed by the Hyperscience platform.</p>
+<p>These definitions are like blueprints - they configure and wire together Triggers, Blocks, and other parameters, while the Hyperscience Platform takes care of the execution and lifecycle during the actual runtime.</p>
+<p>Any code you build using the <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> is managed externally from the Hyperscience Platform (e.g., in a separate git repository), while the produced artifacts can be uploaded to and managed by the Hyperscience Platform.</p>
 <section id="system-architecture">
 <h2>System Architecture<a class="headerlink" href="#system-architecture" title="Permalink to this headline"></a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> enables you build Flows using a Python library in whatever environment/IDE you prefer. The resulting <code class="docutils literal notranslate"><span class="pre">.py</span></code> file must be packaged into a JSON artifact to be imported into the Hyperscience Platform.</p>
-<p>Once uploaded to the Hyperscience Platform, this JSON artifact is kept in sync with any changes made in the Flow Studio. The Flow Studio provides a GUI for business users to manage the Flow’s settings over time.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> enables you build flows using a Python library in whatever environment/IDE you prefer. The resulting <code class="docutils literal notranslate"><span class="pre">.py</span></code> file must be packaged into a JSON artifact to be imported into the Hyperscience Platform.</p>
+<p>Once uploaded to the Hyperscience Platform, this JSON artifact is kept in sync with any changes made in the Flow Studio. The Flow Studio provides a GUI for business users to manage the flow’s settings over time.</p>
 <p><img alt="" src="../_images/architecture.jpg" /></p>
 <p>The only requirements to use the <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> are:</p>
 <ul class="simple">
-<li><p>Development: The only local requirement for development is <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">3.7+</span></code> and
+<li><p><strong>Development:</strong> The only local requirement for development is <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">3.7+</span></code> and
 a link to this library, provided by your CX representative. Additional dependencies will later be pulled via <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p></li>
-<li><p>Deployment: In order to deploy flows built using the <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code>, you need:</p>
+<li><p><strong>Deployment:</strong> In order to deploy flows built using the <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code>, you need:</p>
 <ul>
 <li><p>A running instance of the Hyperscience Platform (<code class="docutils literal notranslate"><span class="pre">v32</span></code> and above)</p></li>
-<li><p>A user account with permissions to edit and import Flows</p></li>
+<li><p>A user account with permissions to edit and import flows</p></li>
 </ul>
 </li>
 </ul>
 </section>
 <section id="library-structure">
 <h2>Library Structure<a class="headerlink" href="#library-structure" title="Permalink to this headline"></a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> library contains everything you need to build on the Hyperscience Platform. As illustrated below, it contains three top-level sublibraries, <code class="docutils literal notranslate"><span class="pre">flows</span></code>, <code class="docutils literal notranslate"><span class="pre">blocks</span></code>, and <code class="docutils literal notranslate"><span class="pre">implementations</span></code>. Documentation is split into into two sections, <a class="reference internal" href="source-docs.html"><span class="doc std std-doc">Source Documentation</span></a> and the <a class="reference internal" href="idp_32.html"><span class="doc std std-doc">IDP Library</span></a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> library contains everything you need to build on the Hyperscience Platform. As illustrated below, it contains the following top-level sublibraries: <code class="docutils literal notranslate"><span class="pre">flows</span></code>, <code class="docutils literal notranslate"><span class="pre">blocks</span></code>, and <code class="docutils literal notranslate"><span class="pre">implementations</span></code>. Documentation is split into <a class="reference internal" href="source-docs.html"><span class="doc std std-doc">Source Documentation</span></a> and the <a class="reference internal" href="idp_32.html"><span class="doc std std-doc">IDP Library</span></a>.</p>
 <p><img alt="" src="../_images/library-structure.jpg" /></p>
 <p><a class="reference internal" href="source-docs.html"><span class="doc std std-doc">Source Documentation</span></a> includes all of the underlying classes necessary for a flow to execute, such as <code class="docutils literal notranslate"><span class="pre">Flow</span></code>, <code class="docutils literal notranslate"><span class="pre">Block</span></code>, and <code class="docutils literal notranslate"><span class="pre">CodeBlock</span></code>. These classes are agnostic to the version of the Hyperscience Platform you are running.</p>
 <p>The <a class="reference internal" href="idp_32.html"><span class="doc std std-doc">IDP Library</span></a> includes the latest performant blocks for <strong>intelligent document processing</strong>. This library is specific to <strong>Hyperscience Platform V32</strong>. Additional IDP libraries will be released for subsequent versions of the Hyperscience Platform.</p>
@@ -124,33 +124,33 @@ a link to this library, provided by your CX representative. Additional dependenc
 <h2>Basic Concepts<a class="headerlink" href="#basic-concepts" title="Permalink to this headline"></a></h2>
 <section id="flow">
 <h3>Flow<a class="headerlink" href="#flow" title="Permalink to this headline"></a></h3>
-<p>A Flow is a sequences of business steps managed and executed by the Hyperscience Platform. Flows are composed of Blocks, such as IDP blocks (ex. Classification), Routing, Fork, Triggers, as well as other helper components.</p>
+<p>A flow is a sequence of business steps managed and executed by the Hyperscience Platform. Flows are composed of Blocks, such as IDP blocks (e.g., Classification), Routing, Fork, Triggers, as well as other helper components.</p>
 <p>Once uploaded to the Hyperscience Platform, flows are rendered and managed within the Flow Studio:</p>
 <p><img alt="" src="../_images/idp-starter-flow-studio.jpg" /></p>
 </section>
 <section id="block">
 <h3>Block<a class="headerlink" href="#block" title="Permalink to this headline"></a></h3>
-<p>A Block is a single step in a flow. Using the <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code>, blocks can be defined and ordered, and their inputs can be customized and passed statically (i.e. during Flow definition or via UI-exposed settings) or dynamically (i.e. the output of a previously executed Block).</p>
+<p>A block is a single step in a flow. Using the <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code>, blocks can be defined and ordered, and their inputs can be customized and passed statically (i.e., during flow definition or via UI-exposed settings) or dynamically (i.e., the output of a previously executed block).</p>
 </section>
 <section id="routing">
 <h3>Routing<a class="headerlink" href="#routing" title="Permalink to this headline"></a></h3>
-<p>A system Block that routes execution to one of its branches based on a condition (similar to a <code class="docutils literal notranslate"><span class="pre">switch..case</span></code> statement). Routing is viewable within the Flow Studio as a branching of logic:</p>
+<p>A system block that routes execution to one of its branches based on a condition (similar to a <code class="docutils literal notranslate"><span class="pre">switch..case</span></code> statement). Routing is viewable within the Flow Studio as a branching of logic:</p>
 <p><img alt="" src="../_images/routing.jpg" /></p>
-<p>Full definition is in the <a class="reference external" href="source-docs.md#Routing">Source Documentation</a>.</p>
+<p>A full definition is in the <a class="reference internal" href="source-docs.html#flows_sdk.blocks.Routing" title="flows_sdk.blocks.Routing"><span class="xref myst py py-class">Source Documentation</span></a>.</p>
 </section>
 <section id="fork">
 <h3>Fork<a class="headerlink" href="#fork" title="Permalink to this headline"></a></h3>
-<p>A system Block that schedules other Blocks for parallel execution. Full definition is in the <a class="reference external" href="source-docs.md#Fork">Source Documentation</a>.</p>
+<p>A system block that schedules other blocks for parallel execution. A full definition is in the <a class="reference internal" href="source-docs.html#flows_sdk.blocks.Fork" title="flows_sdk.blocks.Fork"><span class="xref myst py py-class">Source Documentation</span></a>.</p>
 </section>
 <section id="triggers-outputs">
 <h3>Triggers &amp; Outputs<a class="headerlink" href="#triggers-outputs" title="Permalink to this headline"></a></h3>
-<p>Trigger Blocks initiate the execution of a Flow. Some examples are: watching a folder for new files; checking an inbox; listening to a message queue, etc.</p>
-<p>Output Blocks send information to external systems. Some of these blocks are generic (ex. <code class="docutils literal notranslate"><span class="pre">HTTP_EXPORT</span></code>) while others are integrations into specific systems (ex. <code class="docutils literal notranslate"><span class="pre">EXPORT_UIPATH</span></code>).</p>
-<p>Full definitions are in the Block for <a class="reference external" href="idp_32.md#Trigger-Blocks">Trigger Blocks</a> and <a class="reference external" href="idp_32.md#Output-Blocks">Output Blocks</a>.</p>
+<p>Trigger Blocks initiate the execution of a flow. Some examples are: watching a folder for new files, checking an inbox, listening to a message queue, etc.</p>
+<p>Output Blocks send information to external systems. Some of these blocks are generic (e.g., <code class="docutils literal notranslate"><span class="pre">HTTP_EXPORT</span></code>) while others are integrations into specific systems (e.g., <code class="docutils literal notranslate"><span class="pre">EXPORT_UIPATH</span></code>).</p>
+<p>Full definitions are in the Block Library for <a class="reference internal" href="idp_32.html#trigger-blocks"><span class="std std-doc">Trigger Blocks</span></a> and <a class="reference internal" href="idp_32.html#output-blocks"><span class="std std-doc">Output Blocks</span></a>.</p>
 </section>
 <section id="submission-object">
 <h3>Submission Object<a class="headerlink" href="#submission-object" title="Permalink to this headline"></a></h3>
-<p>Many block subclasses available within the <a class="reference internal" href="idp_32.html"><span class="doc std std-doc">Block Library</span></a> use a Submission object: a dictionary of extracted document information with the following basic structure:</p>
+<p>Many block subclasses available within the <a class="reference internal" href="idp_32.html"><span class="doc std std-doc">Block Library</span></a> use a Submission object, which is a dictionary of extracted document information with the following basic structure:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="p">{</span>
       <span class="s2">&quot;submission&quot;</span><span class="p">:</span> <span class="p">{</span>
          <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;12345&quot;</span><span class="p">,</span>
@@ -183,7 +183,7 @@ a link to this library, provided by your CX representative. Additional dependenc
 </pre></div>
 </div>
 <p>The exact state of the Submission object will depend on which processing blocks have been executed. Most blocks will also wrap the Submission object within additional flow-level metadata.</p>
-<p>Read our <a class="reference external" href="faq.md#Testing-&amp;-Debugging">Testing &amp; Debugging</a> guide for how to inspect the current state of the Submission object in your flow. Or, download a full example here - this is the output of <code class="docutils literal notranslate"><span class="pre">ManualTranscriptionV2Block</span></code> from our <a class="reference internal" href="tutorial.html"><span class="doc std std-doc">Tutorial</span></a>).</p>
+<p>Read our <a class="reference internal" href="faq.html#testing-debugging"><span class="std std-doc">Testing &amp; Debugging</span></a> guide for how to inspect the current state of the Submission object in your flow. Or, download a full example here - this is the output of <code class="docutils literal notranslate"><span class="pre">ManualTranscriptionV2Block</span></code> from our <a class="reference internal" href="tutorial.html"><span class="doc std std-doc">Tutorial</span></a>).</p>
 </section>
 </section>
 </section>

@@ -5,7 +5,7 @@ This tutorial will walk you through building and deploying a flow, as well as be
 After completing this tutorial, you will:
 - Have a local environment with the `flows-sdk` library installed
 - Package an example "IDP Starter" flow into an artifact
-- Import that artifact into the Hyperscience platform
+- Import that artifact into the Hyperscience Platform
 - Be able to test and debug your flow
 
 The provided "[IDP Starter Example](/pages/examples)" is a basic approach to extracting text from documents. It's a good starting point for adding process logic, data validation, data formatting, etc. specific to your business's document extaction process.
@@ -31,7 +31,7 @@ The provided "[IDP Starter Example](/pages/examples)" is a basic approach to ext
     pip install https://build-storage.int.hyperscience.com/flows_sdk/v0.1.2/flows_sdk-0.1.2-py3-example.whl
     ```
 
-3. Download the [IDP Starter Example](/pages/examples) package, which includes...
+3. Download the [IDP Starter Example](/pages/examples) package, which includes:
 
     - `flow.py` file. This is the Python file, built using the Flows SDK, that defines all of the logic for IDP Starter Example flow
     - `release.zip`, which includes a layout for processing W-9 forms. Because W-9s are a structured document it is not necessary to train any models. To learn more about releases, visit our (non-technical) [user guide](https://hyperscience.zendesk.com/hc/en-us/sections/4414507191181-Releases)
@@ -44,7 +44,7 @@ The provided "[IDP Starter Example](/pages/examples)" is a basic approach to ext
     python flow.py > idp_starter_flow.json
     ```
 
-5. Upload the produced `idp_starter_flow.json` to a Hyperscience instance from `https://{hyperscience-url}/flows` -> Import Flow
+5. Upload the produced `idp_starter_flow.json` to a Hyperscience instance by going to `https://{hyperscience-url}/flows` and clicking **Import Flow**.
 
     ![](../media/images/tutorial/import_flow.png)
 
@@ -62,37 +62,37 @@ The Hyperscience Platform includes tools to help you test and debug your flows. 
 
     ![](../media/images/tutorial/idp-starter-live.jpg)
 
-7. Flows need an associated "Release" to process documents. Navigate to `https://{hyperscience-url}/layouts/releases` and click "Add Release." Select "Upload Existing" and choose the `release.zip` included in the IDP Starter Example package. After a moment you should see the release uploaded to the Hyperscience Platform.
+7. Flows need an associated "Release" to process documents. Go to `https://{hyperscience-url}/layouts/releases` and click **Add Release**. Select **Upload Existing** and choose the `release.zip` included in the IDP Starter Example package. After a moment you should see the release uploaded to the Hyperscience Platform.
 
     ![](../media/images/tutorial/add-release.jpg)
 
 
-8. Assign this release to your IDP Starter Flow by clicking into the release's page and then clicking "Assign to Flow." You're now ready to test your flow by submitting documents!
+8. Assign this release to your IDP Starter Flow by clicking into the release's page and then clicking **Assign to Flow**. You're now ready to test your flow by submitting documents!
 
     ![](../media/images/tutorial/assign-to-flow.jpg)
     ![](../media/images/tutorial/assign-to-flow-2.jpg)
 
-4. Navigate to `https://{hyperscience-url}/submissions` and click "Create Submission." Upload the `form-w9-sample.png` sample document. Finally, select "IDP Starter Flow" as the flow to submit to. You should see that the submission was created - it may take a few minutes to process.
+4. Go to `https://{hyperscience-url}/submissions` and click **Create Submission**. Upload the `form-w9-sample.png` sample document. Finally, select **IDP Starter Flow** as the flow to submit to. You should see that the submission was created - it may take a few minutes to process.
 
     ![](../media/images/tutorial/create-submission.jpg)
     ![](../media/images/tutorial/create-submission-2.jpg)
 
-5. Now we can use our testing and debugging tools to better understand how your flow processed those documents. Click on the completed submission's id, then click Actions > View Flow Execution. If you used the provided IDP Starter flow and sample document you should see that the document processed without error.
+5. Now we can use our testing and debugging tools to better understand how your flow processed those documents. Click on the completed submission's ID, then click **Actions** and select **View Flow Execution**. If you used the provided IDP Starter Flow and sample document, you should see that the document processed without error.
 
     ![](../media/images/tutorial/submission-processing.jpg)
     ![](../media/images/tutorial/flow_execution.png)
 
 The Flow Execution page has the following sections:
 
-<img src="../_images/red1.png" class="red-dot"> Overview: The left-hand sidebar shows metadata for the submission.
+<img src="../media/images/tutorial/red1.png" class="red-dot" alt="1"> Overview: The left-hand sidebar shows metadata for the submission.
 
-<img src="../_images/red2.png" class="red-dot"> Flow Run diagram: The upper-right panel shows a diagram of the flow. The processing status for an individual block is shown under the block, along with the time the block completed or failed processing (if applicable). If the block has no status underneath it, it has not processed the submission yet. Clicking on a block reveals its input, output, and logs in the Block Details panel below.
+<img src="../media/images/tutorial/red2.png" class="red-dot" alt="2"> Flow Run diagram: The upper-right panel shows a diagram of the flow. The processing status for an individual block is shown under the block, along with the time the block completed or failed processing (if applicable). If the block has no status underneath it, it has not processed the submission yet. Clicking on a block reveals its input, output, and logs in the Block Details panel below.
 
-<img src="../_images/red3.png" class="red-dot"> Block Details: The Block Details panel has three tabs:  
-- Input - Shows the input JSON arguments that the block used for processing.
-- Output - Shows the output JSON that the block produced as a result of processing (if applicable).
+<img src="../media/images/tutorial/red3.png" class="red-dot" alt="3"> Block Details: The Block Details panel has the following tabs:  
+- **Input** - Shows the input JSON arguments that the block used for processing.
+- **Output** - Shows the output JSON that the block produced as a result of processing (if applicable).
 Note that the Output JSON for the final block in a completed submission is not the same as the JSON output for the entire submission.
-- Logs: If the block failed to process the submission, shows error information for the block during processing.
+- **Logs** - If the block failed to process the submission, shows error information for the block during processing.
 
-You can copy any of the data shown in the Block Details panel by clicking Copy in the upper-right corner of the panel.
+You can copy any of the data shown in the Block Details panel by clicking **Copy** in the upper-right corner of the panel.
 
