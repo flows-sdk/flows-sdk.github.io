@@ -18,12 +18,10 @@ The IDP Library contains:
 ## Processing Blocks
 Core Blocks are powerful processing blocks necessary to build intelligent document processing solutions on Hyperscience. They include both manual and machine processing blocks.
 
-To simplify future development, most blocks include a "version" in the name, ex. `ManualTranscriptionV2Block`.
-
 ```{eval-rst}
 
 .. note::
-    Classes in the idp_v32 example have parameters with ambiguous typing.
+    Classes in the idp_v32 implementation have parameters with ambiguous typing.
     For example, a field of type `integer` could also be represented as a `string` reference
     (e.g. that integer gets provided at runtime).
     The types introduced in the example are therefore incomplete and are likely to be
@@ -530,10 +528,11 @@ outputs = IDPOutputsBlock(
 ## Helper Classes and Functions
 
 ```{eval-rst}
-
-.. autofunction:: flows_sdk.implementations.idp_v32.idp_values.get_idp_wf_config
+The following classes are used to easily instantiate and manage a flow's settings.
 
 .. autofunction:: flows_sdk.implementations.idp_v32.idp_values.get_idp_wf_inputs
+
+.. autofunction:: flows_sdk.implementations.idp_v32.idp_values.get_idp_wf_config
 
 .. autoclass:: flows_sdk.implementations.idp_v32.idp_values.IdpWorkflowConfig
 

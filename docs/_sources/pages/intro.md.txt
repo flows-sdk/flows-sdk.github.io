@@ -2,9 +2,9 @@
 
 `flows_sdk` is a Python library for programmatically building flows: sequences of business steps managed and executed by the Hyperscience Platform. We encourage you to complete the [Tutorial](tutorial.md) as the best way to get started.
 
-Flows are defined as Python files using classes from this library. They are then converted to an importable JSON format that can later be deployed on a Hyperscience instance.
-
 These definitions are like blueprints - they configure and wire together Triggers, Blocks, and other parameters, while the Hyperscience Platform takes care of the execution and lifecycle during the actual runtime.
+
+Flows are defined as Python files using classes from this library. They are then converted to an importable JSON format that can later be deployed on a Hyperscience instance.
 
 Any code you build using the `flows_sdk` is managed externally from the Hyperscience Platform (e.g., in a separate git repository), while the produced artifacts can be uploaded to and managed by the Hyperscience Platform.
 

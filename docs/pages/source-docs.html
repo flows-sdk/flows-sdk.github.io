@@ -506,7 +506,7 @@ to users in the Flow studio.</p></li>
 </section>
 <section id="module-flows_sdk.flows">
 <span id="flows-py"></span><h2>flows.py<a class="headerlink" href="#module-flows_sdk.flows" title="Permalink to this headline"></a></h2>
-<dl class="py class pydantic_model">
+<dl class="py pydantic_model">
 <dt class="sig sig-object py" id="flows_sdk.flows.Dependency">
 <em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">Dependency</span></span><a class="headerlink" href="#flows_sdk.flows.Dependency" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows._BaseModel</span></code></p>
@@ -518,19 +518,19 @@ to users in the Flow studio.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Dependency.condition">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">condition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Dependency.condition" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Dependency.override">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">override</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Dependency.override" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="py class pydantic_model">
+<dl class="py pydantic_model">
 <dt class="sig sig-object py" id="flows_sdk.flows.Parameter">
 <em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">Parameter</span></span><a class="headerlink" href="#flows_sdk.flows.Parameter" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows._BaseModel</span></code></p>
@@ -550,20 +550,20 @@ to users in the Flow studio.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Parameter.dependencies">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dependencies</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.flows.Dependency" title="flows_sdk.flows.Dependency"><span class="pre">flows_sdk.flows.Dependency</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.dependencies" title="Permalink to this definition"></a></dt>
 <dd><p>Internal mechanism for describing dependencies between fields (e.g. show A when B is checked,
 hide A when B is unchecked)</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Parameter.description">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.description" title="Permalink to this definition"></a></dt>
 <dd><p>UI-visible description of the field</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Parameter.json_schema">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">json_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><em class="property"> <span class="pre">(alias</span> <span class="pre">'schema')</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.json_schema" title="Permalink to this definition"></a></dt>
 <dd><p>Defines a format for the field using the JSON Schema specification
@@ -571,13 +571,13 @@ hide A when B is unchecked)</p>
 Field values will be validated against this format when a flow is imported or edited.</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Parameter.name">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.name" title="Permalink to this definition"></a></dt>
 <dd><p>Must be a valid Python identifier</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Parameter.optional">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">optional</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.optional" title="Permalink to this definition"></a></dt>
 <dd><p>True when the field can be omitted, False when it is mandatory.
@@ -585,20 +585,20 @@ The default value is False, i.e. if the <cite>optional</cite> flag is not specif
 the field will be considered mandatory.</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Parameter.secret">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">secret</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.secret" title="Permalink to this definition"></a></dt>
 <dd><p>UI-hint that the field should be presented as a secret (hidden symbols)
 rather than plain text.</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Parameter.title">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.title" title="Permalink to this definition"></a></dt>
 <dd><p>UI-visible representation of the field name</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Parameter.type">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.type" title="Permalink to this definition"></a></dt>
 <dd><p>Json-schema-like type (e.g. string, integer, number, array, object…)
@@ -612,13 +612,13 @@ Between Hyperscience platform versions there are also extensions like:</p>
 some of which allow for specific rendering in UI.</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Parameter.ui">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ui</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.ui" title="Permalink to this definition"></a></dt>
 <dd><p>Presentation-related customizations for the field</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Parameter.value">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.Parameter.value" title="Permalink to this definition"></a></dt>
 <dd><p>Optional default value of the field,
@@ -627,7 +627,7 @@ used when its value is not specified explicitly in the inputs</p>
 
 </dd></dl>
 
-<dl class="py class pydantic_model">
+<dl class="py pydantic_model">
 <dt class="sig sig-object py" id="flows_sdk.flows.InputDefinition">
 <em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">InputDefinition</span></span><a class="headerlink" href="#flows_sdk.flows.InputDefinition" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows._BaseModel</span></code></p>
@@ -645,7 +645,7 @@ used when its value is not specified explicitly in the inputs</p>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.InputDefinition.input">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">input</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.flows.Parameter" title="flows_sdk.flows.Parameter"><span class="pre">flows_sdk.flows.Parameter</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.InputDefinition.input" title="Permalink to this definition"></a></dt>
 <dd><p>All parameters that are part of this definition</p>
@@ -658,7 +658,7 @@ used when its value is not specified explicitly in the inputs</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.InputDefinition.ui">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ui</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.InputDefinition.ui" title="Permalink to this definition"></a></dt>
 <dd><p>Presentation-related customizations for how fields are grouped together.
@@ -688,7 +688,7 @@ group of non-nested fields.</p>
 
 </dd></dl>
 
-<dl class="py class pydantic_model">
+<dl class="py pydantic_model">
 <dt class="sig sig-object py" id="flows_sdk.flows.Manifest">
 <em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">Manifest</span></span><a class="headerlink" href="#flows_sdk.flows.Manifest" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#flows_sdk.flows.InputDefinition" title="flows_sdk.flows.InputDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows.InputDefinition</span></code></a></p>
@@ -753,7 +753,7 @@ defined as number in the manifest, the user will be prompted to</p>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Manifest.enable_overrides">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enable_overrides</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#flows_sdk.flows.Manifest.enable_overrides" title="Permalink to this definition"></a></dt>
 <dd><p>UI representation of overrides if present.
@@ -762,14 +762,14 @@ are defined
 Advanced functionality, contact Hyperscience if you think you need it!</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Manifest.identifier">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identifier</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Manifest.identifier" title="Permalink to this definition"></a></dt>
 <dd><p>Globally-unique identifier of the block/flow. By convention - all capital snake-case witn
 an optional numeric suffix (e.g., <code class="docutils literal notranslate"><span class="pre">HELLO_FLOW_2</span></code>)</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Manifest.output">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.flows.Parameter" title="flows_sdk.flows.Parameter"><span class="pre">flows_sdk.flows.Parameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#flows_sdk.flows.Manifest.output" title="Permalink to this definition"></a></dt>
 <dd><p>Documents the outputs of the block/flow. For the time being, used for documentation
@@ -783,7 +783,7 @@ purposes only.</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Manifest.roles">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">roles</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#flows_sdk.flows.Manifest.roles" title="Permalink to this definition"></a></dt>
 <dd><p>Allows for “tagging” blocks/flows, used by internal features.</p>
@@ -791,7 +791,7 @@ purposes only.</p>
 
 </dd></dl>
 
-<dl class="py class pydantic_model">
+<dl class="py pydantic_model">
 <dt class="sig sig-object py" id="flows_sdk.flows.Triggers">
 <em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">Triggers</span></span><a class="headerlink" href="#flows_sdk.flows.Triggers" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows._BaseModel</span></code></p>
@@ -813,39 +813,39 @@ purposes only.</p>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Triggers.api_params_manifest">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">api_params_manifest</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.flows.InputDefinition" title="flows_sdk.flows.InputDefinition"><span class="pre">flows_sdk.flows.InputDefinition</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.api_params_manifest" title="Permalink to this definition"></a></dt>
 <dd><p>[deprecated] Defines a shared inputs between all Triggers. Will be replaced in r33+</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Triggers.blocks">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">blocks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.blocks.IOBlock" title="flows_sdk.blocks.IOBlock"><span class="pre">flows_sdk.blocks.IOBlock</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.blocks" title="Permalink to this definition"></a></dt>
 <dd><p>List of trigger blocks used to initiate the Flow. Can be empty and is modifiable by the
 Flow studio.</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Triggers.description">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.description" title="Permalink to this definition"></a></dt>
 <dd><p>User-facing description</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Triggers.processing_block">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">processing_block</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><span class="pre">flows_sdk.blocks.Block</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.processing_block" title="Permalink to this definition"></a></dt>
 <dd><p>[deprecated] A block that is executed after the Flow is triggered, but before other
 blocks in the Flow. Instead, add a block in the Flow itself.</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Triggers.reference_name">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reference_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.reference_name" title="Permalink to this definition"></a></dt>
 <dd><p>unique reference on a per-Flow basis</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Triggers.role_filter">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">role_filter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.role_filter" title="Permalink to this definition"></a></dt>
 <dd><p>Lists the roles that blocks used within this triggers section should have.
@@ -853,7 +853,7 @@ Blocks should have all listed roles to be compatible. If empty, blocks with any 
 used.</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Triggers.title">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Triggers.title" title="Permalink to this definition"></a></dt>
 <dd><p>User-facing title</p>
@@ -861,7 +861,7 @@ used.</p>
 
 </dd></dl>
 
-<dl class="py class pydantic_model">
+<dl class="py pydantic_model">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow">
 <em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.flows.</span></span><span class="sig-name descname"><span class="pre">Flow</span></span><a class="headerlink" href="#flows_sdk.flows.Flow" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows._BaseModel</span></code></p>
@@ -899,54 +899,54 @@ used.</p>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.blocks">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">blocks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><span class="pre">flows_sdk.blocks.Block</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#flows_sdk.flows.Flow.blocks" title="Permalink to this definition"></a></dt>
 <dd><p>Sequence of Blocks to be scheduled for execution when the Flow is triggered.</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.description">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Flow.description" title="Permalink to this definition"></a></dt>
 <dd><p>User-editable description of what the Flow is used for.</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.input">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">input</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#flows_sdk.flows.Flow.input" title="Permalink to this definition"></a></dt>
 <dd><p>Key-value pairs for top-level inputs of the flow. Their types / UI representations are part
 of the Manifest.</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.manifest">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">manifest</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#flows_sdk.flows.Manifest" title="flows_sdk.flows.Manifest"><span class="pre">flows_sdk.flows.Manifest</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Flow.manifest" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.output">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Flow.output" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.owner_email">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">owner_email</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Flow.owner_email" title="Permalink to this definition"></a></dt>
 <dd><p>An email address where the creator of the Flow can be reached.</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.title">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Flow.title" title="Permalink to this definition"></a></dt>
 <dd><p>User-visible and editable title, does not have to be unique.</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.triggers">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">triggers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#flows_sdk.flows.Triggers" title="flows_sdk.flows.Triggers"><span class="pre">flows_sdk.flows.Triggers</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Flow.triggers" title="Permalink to this definition"></a></dt>
 <dd><p>Trigger blocks that initiate the Flow.</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.uuid">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uuid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">uuid.UUID</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Flow.uuid" title="Permalink to this definition"></a></dt>
 <dd><p>Unique identifier of the Flow. Should usually be a static value,
@@ -956,7 +956,7 @@ an easy way to generate one would be to run something like
 as UUID(‘&lt;the_uuid&gt;’)</p>
 </dd></dl>
 
-<dl class="py attribute pydantic_field">
+<dl class="py pydantic_field">
 <dt class="sig sig-object py" id="flows_sdk.flows.Flow.variables">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variables</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#flows_sdk.flows.Flow.variables" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>

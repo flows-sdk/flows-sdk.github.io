@@ -1,0 +1,121 @@
+=======================
+IDP V32 Starter Example
+=======================
+
+Trigger blocks
+==============
+
+
+### FOLDER_TRIGGER
+
+name: Folder Listener
+
+uuid: 51b6ddee-3b57-4deb-a7b3-f4d102561635
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| folder | Path | N/A | Folder to scan for submissions | N/A|
+| file_extensions | string | N/A | File extensions | List of file extensions to monitor for (e.g.: 'png, jpg, pdf')|
+| has_meta | boolean | False | Enable metadata | Select this if a metadata file is to be expected along with document files (in XXX_index.txt file)|
+| poll_interval | integer | 10 | Poll interval | Poll interval in seconds|
+| warmup_interval | integer | 15 | Warm-up interval | Seconds to wait past document last modified time before processing it|
+| folder_cleanup_delay | integer | 86400 | Folder cleanup delay | Seconds to wait before cleaning up subfolders|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+### KOFAX_FOLDER_TRIGGER
+
+name: Kofax Folder Listener
+
+uuid: 06dd55c7-0124-4403-9b8d-04b57e8afca2
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| folder | Path | N/A | Folder to scan for submissions | N/A|
+| file_extensions | string | N/A | File extensions | List of file extensions to monitor for (e.g.: 'png, jpg, pdf')|
+| poll_interval | integer | 10 | Poll interval in seconds | N/A|
+| warmup_interval | integer | 15 | Warm-up interval | Seconds to wait past document last modified time before processing it|
+| folder_cleanup_delay | integer | 86400 | Folder cleanup delay | Seconds to wait before cleaning up subfolders|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+### IMAP_TRIGGER
+
+name: Email Listener (IMAP)
+
+uuid: 67056d96-b485-4005-aab2-c709df60933c
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| host | string | N/A | IMAP server address | N/A|
+| port | integer | 993 | Port Number | N/A|
+| ssl | boolean | True | Use SSL connection | N/A|
+| username | string | N/A | Username | N/A|
+| password | Password | N/A | Password | N/A|
+| poll_interval | integer | 60 | Polling interval in seconds | N/A|
+| folder | Path | N/A | Folder to scan for emails | N/A|
+| email_body_treatment | string | "ignore" | Email body treatment | What to do with the body of an email that is ingested|
+| post_process_action | string | "move" | Post process action | What to do with the email after it is processed|
+| post_process_move_folder | string | "" | Post process archive folder | Folder to move emails to once they are processed|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+### BOX_FOLDER_TRIGGER
+
+name: Box Folder Listener
+
+uuid: 5ba19375-d8c2-4876-b666-a08e427d186f
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| source_folder_id | integer | N/A | Folder to scan for submissions | Use the Box Folder ID found in the URL|
+| target_folder_id | integer | N/A | Folder to move completed files | Use the Box Folder ID found in the URL|
+| file_extensions | array | [] | File extensions | Types of file extensions for which to monitor|
+| custom_file_extensions | string | N/A | Other file extension types | Comma separated list of file extensions for which to monitor (e.g. 'png, jpg, pdf')|
+| poll_interval | integer | 10 | Polling interval (in seconds) | How often the connector will check the base folder for submissions|
+| warmup_interval | integer | 15 | Warm-up interval (in seconds) | How long the connector will wait to process the document after it was last modified|
+| public_key_id | string | N/A | Public-Key ID | ID of the Public-key used for authentication with Box|
+| private_key | Password | N/A | Private-Key | Private key used for authentication with Box|
+| passphrase | Password | N/A | Passphrase | Passphrase used for authentication with Box|
+| client_id | string | N/A | Client ID | Client Id used for authentication with Box|
+| client_secret | Password | N/A | Client Secret | Client Secret used for authentication with Box|
+| enterprise_id | string | N/A | Enterprise ID | Enterprise Id used for authentication with Box|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+### CRON_TRIGGER
+
+name: Cron Listener
+
+uuid: 798a30f3-06d7-49dd-8156-fe04b6cab2f2
+
+Inputs:
+
+| name | type | default value | title | description |
+| ---  | ---  | ---           | ---   | ---         |
+| cron_spec | string | `"*/5 * * * *"` | Cron specification | N/A|
+| time_zone | string | "US/Eastern" | Time Zone | N/A|
+| api_params | object | {} | API Parameters | N/A|
+
+
+
+
+V32 Blocks
+===========
+
+.. automodule:: flows_sdk.examples.idp_v32.idp_blocks
+   :members:
+   :undoc-members:
+   :show-inheritance:
