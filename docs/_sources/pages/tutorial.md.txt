@@ -25,10 +25,10 @@ The provided "[IDP Starter Example](/pages/examples)" is a basic approach to ext
     source venv/bin/activate
     ```
 
-2. Install the `flows_sdk` Python package. The link below is used for illustrative purposes - contact your CX representative for an exact installable link.
+2. Install the `flows_sdk` Python package. Contact your CX representative to receive the `.whl` package. The command below should reflect the local path of your package.
 
     ```bash
-    pip install https://build-storage.int.hyperscience.com/flows_sdk/v0.1.2/flows_sdk-0.1.2-py3-example.whl
+    pip install ~/Downloads/flows_sdk/v0.5.1/flows_sdk-0.5.1-py3.whl
     ```
 
 3. Download the [IDP Starter Example](/pages/examples) package, which includes:

@@ -1,0 +1,9 @@
+*************
+Block Library
+*************
+
+A library of Blocks that are part of the Hyperscience platform.
+The blocks below are part of `v32`.
+Blocks from `v30` and `v31` will be included down the line as well.
+
+.. include:: block_library/r32.md

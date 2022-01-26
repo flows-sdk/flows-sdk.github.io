@@ -112,10 +112,9 @@
 <section id="processing-blocks">
 <h2>Processing Blocks<a class="headerlink" href="#processing-blocks" title="Permalink to this headline"></a></h2>
 <p>Core Blocks are powerful processing blocks necessary to build intelligent document processing solutions on Hyperscience. They include both manual and machine processing blocks.</p>
-<p>To simplify future development, most blocks include a “version” in the name, ex. <code class="docutils literal notranslate"><span class="pre">ManualTranscriptionV2Block</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Classes in the idp_v32 example have parameters with ambiguous typing.
+<p>Classes in the idp_v32 implementation have parameters with ambiguous typing.
 For example, a field of type <cite>integer</cite> could also be represented as a <cite>string</cite> reference
 (e.g. that integer gets provided at runtime).
 The types introduced in the example are therefore incomplete and are likely to be
@@ -127,10 +126,12 @@ revisioned in a future version.</p>
 <dd><p>Bases: <a class="reference internal" href="source-docs.html#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
 <p>Submission bootstrap block initializes the submission object and prepares external images
 or other submission data if needed.</p>
+<p><strong>This block should be called at the START of every flow</strong> that
+uses blocks included in the <code class="docutils literal notranslate"><span class="pre">flows_sdk.implementations.idp_v32</span></code> library.</p>
 <p>Mandatory parameters:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a Flow.</p>
+<dd class="field-odd"><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p>
 </dd>
 </dl>
 <p>Parameters with defaults:</p>
@@ -156,7 +157,7 @@ defaults to workflow_input(Inputs.WorkflowVersion)</p></li>
 </ul>
 </dd>
 </dl>
-<p>Usage in IDP:</p>
+<p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapBlock</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -171,7 +172,7 @@ defaults to workflow_input(Inputs.WorkflowVersion)</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a Flow.</p></li>
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
 <li><p><strong>submission</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – Submission object</p></li>
 <li><p><strong>cases</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – This parameter accepts an array of JSON objects that contain information on
 how Cases should be created. There are two ways to collate a case: by the filenames
@@ -180,7 +181,7 @@ in previous submissions.</p></li>
 </ul>
 </dd>
 </dl>
-<p>Usage in IDP:</p>
+<p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationBlock</span><span class="p">(</span>
     <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_collation&#39;</span><span class="p">,</span>
     <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">),</span>
@@ -200,7 +201,7 @@ semi-structured or additional layouts</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a Flow.</p></li>
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
 <li><p><strong>submission</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – Submission object</p></li>
 <li><p><strong>api_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
 </ul>
@@ -231,7 +232,7 @@ defaults to workflow_input(Settings.SemiDocGroupingLogic)</p></li>
 </ul>
 </dd>
 </dl>
-<p>Usage in IDP:</p>
+<p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationBlock</span><span class="p">(</span>
     <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_classification&#39;</span><span class="p">,</span>
     <span class="n">submission</span><span class="o">=</span><span class="n">case_collation</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
@@ -253,7 +254,7 @@ match a submission to a layout with high confidence</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a Flow.</p></li>
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
 <li><p><strong>submission</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – Submission object</p></li>
 <li><p><strong>api_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
 </ul>
@@ -276,7 +277,7 @@ defaults to IDP_SUBMISSION_NOTIFY_NAME</p></li>
 </ul>
 </dd>
 </dl>
-<p>Usage in IDP:</p>
+<p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationBlock</span><span class="p">(</span>
     <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_classification&#39;</span><span class="p">,</span>
     <span class="n">submission</span><span class="o">=</span><span class="n">machine_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
@@ -295,7 +296,7 @@ defaults to IDP_SUBMISSION_NOTIFY_NAME</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a Flow.</p></li>
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
 <li><p><strong>submission</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – Submission object</p></li>
 <li><p><strong>api_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
 </ul>
@@ -314,7 +315,7 @@ defaults to workflow_input(Settings.TableIdTargetAccuracy)</p></li>
 </ul>
 </dd>
 </dl>
-<p>Usage in IDP:</p>
+<p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationBlock</span><span class="p">(</span>
     <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_identification&#39;</span><span class="p">,</span>
     <span class="n">submission</span><span class="o">=</span><span class="n">manual_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
@@ -336,7 +337,7 @@ transcribe the correct content in the upcoming transcription process</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a Flow.</p></li>
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
 <li><p><strong>submission</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – Submission object</p></li>
 <li><p><strong>api_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
 </ul>
@@ -359,7 +360,7 @@ defaults to IDP_SUBMISSION_NOTIFY_NAME</p></li>
 </ul>
 </dd>
 </dl>
-<p>Usage in IDP:</p>
+<p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationBlock</span><span class="p">(</span>
     <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_identification&#39;</span><span class="p">,</span>
     <span class="n">submission</span><span class="o">=</span><span class="n">machine_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
@@ -379,7 +380,7 @@ defaults to IDP_SUBMISSION_NOTIFY_NAME</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a Flow.</p></li>
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
 <li><p><strong>submission</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – Submission object</p></li>
 <li><p><strong>api_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
 </ul>
@@ -416,7 +417,7 @@ defaults to workflow_input(Settings.SemiTranscriptionConfBoost)</p></li>
 </ul>
 </dd>
 </dl>
-<p>Usage in IDP:</p>
+<p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionBlock</span><span class="p">(</span>
     <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_transcription&#39;</span><span class="p">,</span>
     <span class="n">submission</span><span class="o">=</span><span class="n">manual_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
@@ -436,7 +437,7 @@ that could not be automatically transcribed</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a Flow.</p></li>
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
 <li><p><strong>submission</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – Submission object</p></li>
 <li><p><strong>api_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
 </ul>
@@ -464,7 +465,7 @@ defaults to IDP_SUBMISSION_NOTIFY_NAME</p></li>
 </ul>
 </dd>
 </dl>
-<p>Usage in IDP:</p>
+<p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionBlock</span><span class="p">(</span>
     <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_transcription&#39;</span><span class="p">,</span>
     <span class="n">submission</span><span class="o">=</span><span class="n">machine_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
@@ -490,7 +491,7 @@ defaults to IDP_SUBMISSION_NOTIFY_NAME</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a Flow.</p></li>
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
 <li><p><strong>submission</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – Submission object</p></li>
 <li><p><strong>api_params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
 </ul>
@@ -514,7 +515,7 @@ defaults to IDP_SUBMISSION_NOTIFY_NAME</p></li>
 </ul>
 </dd>
 </dl>
-<p>Usage in IDP:</p>
+<p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">flexible_extraction</span> <span class="o">=</span> <span class="n">FlexibleExtractionBlock</span><span class="p">(</span>
     <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;flexible_extraction&#39;</span><span class="p">,</span>
     <span class="n">submission</span><span class="o">=</span><span class="n">manual_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
@@ -532,13 +533,17 @@ defaults to IDP_SUBMISSION_NOTIFY_NAME</p></li>
 <dt class="sig sig-object py" id="flows_sdk.implementations.idp_v32.idp_blocks.SubmissionCompleteBlock">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.implementations.idp_v32.idp_blocks.</span></span><span class="sig-name descname"><span class="pre">SubmissionCompleteBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlc_qa_sampling_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.semi_qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id_qa_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.field_id_qa_enabled}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id_qa_sampling_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.field_id_qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_id_qa_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.table_id_qa_enabled}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_id_qa_sampling_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.table_id_qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transcription_qa_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.qa}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transcription_qa_sampling_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_cell_transcription_qa_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.table_cell_transcription_qa_enabled}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_cell_transcription_qa_sample_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'${workflow.input.table_cell_transcription_qa_sample_rate}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.implementations.idp_v32.idp_blocks.SubmissionCompleteBlock" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="source-docs.html#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
-<p>Submission complete block finalizes submission processing and updates reporting data</p>
+<p>Submission complete block finalizes submission processing and updates reporting data.</p>
+<p><strong>This block should be called at the END of every flow</strong> that
+uses blocks included in the <code class="docutils literal notranslate"><span class="pre">flows_sdk.implementations.idp_v32</span></code> library.
+The block requires both the <code class="docutils literal notranslate"><span class="pre">submission</span></code> object and a <code class="docutils literal notranslate"><span class="pre">payload</span></code> to be passed in.</p>
 <p>Mandatory parameters:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a Flow.</p></li>
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow.</p></li>
 <li><p><strong>submission</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Submission object</p></li>
+<li><p><strong>payload</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – Object to pass to downstream systems</p></li>
 </ul>
 </dd>
 </dl>
@@ -571,7 +576,7 @@ defaults to workflow_input(Settings.TableCellTranscriptionQaSampleRate)</p></li>
 </ul>
 </dd>
 </dl>
-<p>Usage in IDP:</p>
+<p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">submission_complete</span> <span class="o">=</span> <span class="n">SubmissionCompleteBlock</span><span class="p">(</span>
     <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;complete_submission&#39;</span><span class="p">,</span>
     <span class="n">submission</span><span class="o">=</span><span class="n">flexible_extraction</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)</span>
@@ -589,7 +594,7 @@ defaults to workflow_input(Settings.TableCellTranscriptionQaSampleRate)</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a Flow</p></li>
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
 <li><p><strong>db_type</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – database type (mssql, oracle, postgres)</p></li>
 <li><p><strong>host</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – URL/IP address of the server database is hosted on</p></li>
 <li><p><strong>database</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – database name</p></li>
@@ -610,7 +615,7 @@ defaults to workflow_input(Settings.TableCellTranscriptionQaSampleRate)</p></li>
 </ul>
 </dd>
 </dl>
-<p>EXAMPLES:</p>
+<p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># minimum viable instantiation, the rest of the fields can later be added in the UI</span>
 <span class="n">db_lookup</span> <span class="o">=</span> <span class="n">DatabaseAccessBlock</span><span class="p">(</span>
     <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;db_lookup&#39;</span><span class="p">,</span>
@@ -619,7 +624,7 @@ defaults to workflow_input(Settings.TableCellTranscriptionQaSampleRate)</p></li>
 <span class="p">)</span>
 
 <span class="c1"># note that storing password in plain text form is not recommended</span>
-<span class="c1"># password can later be entered in the UI or defined as a Flow secret.</span>
+<span class="c1"># password can later be entered in the UI or defined as a flow secret.</span>
 <span class="n">db_lookup</span> <span class="o">=</span> <span class="n">DatabaseAccessBlock</span><span class="p">(</span>
     <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;db_lookup&#39;</span><span class="p">,</span>
     <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Database Lookup&#39;</span><span class="p">,</span>
@@ -671,7 +676,7 @@ defaults to workflow_input(Settings.TableCellTranscriptionQaSampleRate)</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a Flow</p></li>
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
 <li><p><strong>method</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – HTTP method to use</p></li>
 <li><p><strong>endpoint</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – absolute url including schema to HTTP endpoint for this request</p></li>
 </ul>
@@ -694,7 +699,7 @@ the task, allowing for wildcards with the ‘x’ char. Example: [400, “5xx”
 </ul>
 </dd>
 </dl>
-<p>EXAMPLES:</p>
+<p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># minimum viable instantiation, the rest of the fields can later be added in the UI</span>
 <span class="n">http_rest_block</span> <span class="o">=</span> <span class="n">HttpRestBlock</span><span class="p">(</span>
     <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;http_request&#39;</span><span class="p">,</span>
@@ -728,7 +733,7 @@ the task, allowing for wildcards with the ‘x’ char. Example: [400, “5xx”
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a Flow</p></li>
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
 <li><p><strong>method</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – SOAP method to invoke</p></li>
 <li><p><strong>endpoint</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – absolute url including schema to HTTP endpoint for this request</p></li>
 </ul>
@@ -746,7 +751,7 @@ inserted as SOAP body</p></li>
 </ul>
 </dd>
 </dl>
-<p>EXAMPLES:</p>
+<p>Example usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># minimum viable instantiation, the rest of the fields can later be added in the UI</span>
 <span class="n">soap_block</span> <span class="o">=</span> <span class="n">SoapRequestBlock</span><span class="p">(</span>
     <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;soap_request&#39;</span><span class="p">,</span>
@@ -2002,32 +2007,11 @@ to visualize an enabled/disabled trigger that is controllable via Flow Studio.</
 </section>
 <section id="helper-classes-and-functions">
 <h2>Helper Classes and Functions<a class="headerlink" href="#helper-classes-and-functions" title="Permalink to this headline"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="flows_sdk.implementations.idp_v32.idp_values.get_idp_wf_config">
-<span class="sig-prename descclassname"><span class="pre">flows_sdk.implementations.idp_v32.idp_values.</span></span><span class="sig-name descname"><span class="pre">get_idp_wf_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.implementations.idp_v32.idp_values.get_idp_wf_config" title="Permalink to this definition"></a></dt>
-<dd><p>A helper function that instantiates an IdpWorkflowConfig - container class for defining
-Flow-level settings - pre-filled with default values.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#flows_sdk.implementations.idp_v32.idp_values.IdpWorkflowConfig" title="flows_sdk.implementations.idp_v32.idp_values.IdpWorkflowConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">IdpWorkflowConfig</span></code></a></p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a valid, fully constructed IdpWorkflowConfig instance</p>
-</dd>
-</dl>
-<p>Example usage when instantiating an IDP Flow:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">flow</span> <span class="o">=</span> <span class="n">Flow</span><span class="p">(</span>
-    <span class="nb">input</span><span class="o">=</span><span class="n">get_idp_wf_inputs</span><span class="p">(</span><span class="n">get_idp_wf_config</span><span class="p">()),</span>
-    <span class="o">...</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
+<p>The following classes are used to easily instantiate and manage a flow’s settings.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="flows_sdk.implementations.idp_v32.idp_values.get_idp_wf_inputs">
 <span class="sig-prename descclassname"><span class="pre">flows_sdk.implementations.idp_v32.idp_values.</span></span><span class="sig-name descname"><span class="pre">get_idp_wf_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idp_wf_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.implementations.idp_v32.idp_values.get_idp_wf_inputs" title="Permalink to this definition"></a></dt>
-<dd><p>A helper function that maps the values provided by an IdpWorkflowConfig to their
+<dd><p>A helper function that maps the values provided by an <code class="docutils literal notranslate"><span class="pre">IdpWorkflowConfig</span></code> to their
 corresponding IDP keys.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2037,11 +2021,18 @@ corresponding IDP keys.</p>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
 </dd>
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a dictionary with filled static values, compatible with IDP Flows.</p>
+<dd class="field-odd"><p>a dictionary with filled static values, compatible with IDP flows.</p>
 </dd>
 </dl>
+<p>Example usage with default values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">flow</span> <span class="o">=</span> <span class="n">Flow</span><span class="p">(</span>
+    <span class="nb">input</span><span class="o">=</span><span class="n">get_idp_wf_inputs</span><span class="p">(</span><span class="n">get_idp_wf_config</span><span class="p">()),</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 <p>Example usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Example</span> <span class="n">usage</span> <span class="n">when</span> <span class="n">instantiating</span> <span class="n">an</span> <span class="n">IDP</span> <span class="n">Flow</span><span class="p">::</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Example</span> <span class="n">usage</span> <span class="n">when</span> <span class="n">instantiating</span> <span class="n">an</span> <span class="n">IDP</span> <span class="n">flow</span> <span class="k">with</span> <span class="n">custom</span> <span class="n">parameters</span><span class="p">::</span>
 
 <span class="n">flow</span> <span class="o">=</span> <span class="n">Flow</span><span class="p">(</span>
     <span class="nb">input</span><span class="o">=</span><span class="n">get_idp_wf_inputs</span><span class="p">({</span><span class="n">an</span> <span class="n">instance</span> <span class="n">of</span> <span class="n">IdpWorkflowConfig</span><span class="p">}),</span>
@@ -2051,10 +2042,32 @@ corresponding IDP keys.</p>
 </div>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="flows_sdk.implementations.idp_v32.idp_values.get_idp_wf_config">
+<span class="sig-prename descclassname"><span class="pre">flows_sdk.implementations.idp_v32.idp_values.</span></span><span class="sig-name descname"><span class="pre">get_idp_wf_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.implementations.idp_v32.idp_values.get_idp_wf_config" title="Permalink to this definition"></a></dt>
+<dd><p>A helper function that instantiates an <code class="docutils literal notranslate"><span class="pre">IdpWorkflowConfig</span></code> pre-filled with default values.
+<code class="docutils literal notranslate"><span class="pre">IdpWorkflowConfig</span></code> is the container class for defining flow-level settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#flows_sdk.implementations.idp_v32.idp_values.IdpWorkflowConfig" title="flows_sdk.implementations.idp_v32.idp_values.IdpWorkflowConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">IdpWorkflowConfig</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a valid, fully constructed IdpWorkflowConfig instance</p>
+</dd>
+</dl>
+<p>Example usage when instantiating an IDP flow:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">flow</span> <span class="o">=</span> <span class="n">Flow</span><span class="p">(</span>
+    <span class="nb">input</span><span class="o">=</span><span class="n">get_idp_wf_inputs</span><span class="p">(</span><span class="n">get_idp_wf_config</span><span class="p">()),</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="flows_sdk.implementations.idp_v32.idp_values.IdpWorkflowConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.implementations.idp_v32.idp_values.</span></span><span class="sig-name descname"><span class="pre">IdpWorkflowConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rotation_correction_enabled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_grouping_logic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qa_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manual_document_organization_enabled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transcription_automation_training</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transcription_training_legibility_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transcription_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manual_transcription_enabled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finetuning_only_trained_layouts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flex_confidence_boosting_enabled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">improved_transcription_threshold_accuracy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structured_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">semi_structured_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structured_checkbox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structured_signature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">semi_structured_checkbox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id_target_accuracy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_id_target_accuracy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manual_field_id_enabled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">machine_classification_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manual_transcription_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manual_identification_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flexible_extraction_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.implementations.idp_v32.idp_values.IdpWorkflowConfig" title="Permalink to this definition"></a></dt>
-<dd><p>Convenience dataclass outlining all Flow-level config values for IDP.</p>
+<dd><p>Convenience dataclass outlining all flow-level config values for IDP.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -2071,7 +2084,7 @@ an IDP Flow.
 Optional, defaults to an empty list.</p>
 </dd>
 </dl>
-<p>Example usage when instantiating an IDP Flow:</p>
+<p>Example usage when instantiating an IDP flow:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">folder_listener</span> <span class="o">=</span> <span class="n">IOBlock</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="n">flow</span> <span class="o">=</span> <span class="n">Flow</span><span class="p">(</span>
     <span class="n">triggers</span><span class="o">=</span><span class="n">IDPTriggers</span><span class="p">([</span><span class="n">folder_listener</span><span class="p">]),</span>
@@ -2094,7 +2107,7 @@ Flow inputs and their UI representation (left-hand side menu in Flow studio).</p
 <dd class="field-odd"><p><strong>flow_identifier</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – A system-wide unique identifier for <a class="reference internal" href="source-docs.html#flows_sdk.flows.Flow" title="flows_sdk.flows.Flow"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.flows.Flow</span></code></a></p>
 </dd>
 </dl>
-<p>Example usage when instantiating an IDP Flow:</p>
+<p>Example usage when instantiating an IDP flow:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">flow</span> <span class="o">=</span> <span class="n">Flow</span><span class="p">(</span>
     <span class="n">manifest</span><span class="o">=</span><span class="n">IDPManifest</span><span class="p">(</span><span class="n">flow_identifier</span><span class="o">=</span><span class="s1">&#39;FLOW_IDENTIFIER&#39;</span><span class="p">),</span>
     <span class="o">...</span>
