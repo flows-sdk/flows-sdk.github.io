@@ -142,9 +142,7 @@ def idp_workflow() -> Flow:
     # Output block allows users to send data extracted by this idp flow to other systems
     # for downstream processing
     # In this example, this is an empty output block that does not do anything by default
-    outputs = IDPOutputs(
-        inputs={'submission': submission_bootstrap.output('result.submission')}
-    )
+    outputs = IDPOutputs(inputs={'submission': submission_bootstrap.output('result.submission')})
 
     return Flow(
         # Flows should have a deterministic UUID ensuring cross-system consistency
