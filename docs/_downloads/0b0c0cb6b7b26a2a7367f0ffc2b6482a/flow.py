@@ -2,6 +2,7 @@ from typing import Any
 from uuid import UUID
 
 from flows_sdk.blocks import CodeBlock
+from flows_sdk.flows import Flow
 from flows_sdk.implementations.idp_v32.idp_blocks import (
     CaseCollationBlock,
     FlexibleExtractionBlock,
@@ -21,7 +22,6 @@ from flows_sdk.implementations.idp_v32.idp_values import (
     get_idp_wf_config,
     get_idp_wf_inputs,
 )
-from flows_sdk.flows import Flow
 from flows_sdk.package_utils import export_flow
 
 

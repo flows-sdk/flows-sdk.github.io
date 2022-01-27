@@ -70,7 +70,7 @@ This example is a snapshot of our V32 Intelligent Document Processing (IDP) flow
 3. Additional manual transcription for any fields marked for review 
 4. Output results to a downstream system
 
-:download:`idp_starter.zip <../../../samples/idp_flow/idp-starter.zip>`
+:download:`Download idp_starter.zip <../../../samples/idp_flow/idp-starter.zip>`
 
 .. image:: ../media/images/tutorial/idp_example_flow_studio.png
 
