@@ -46,6 +46,18 @@ Most examples marked contain a release and/or sample documents necessary to exec
      - .. image:: ../media/images/checkmark.png 
          :class: checkmark
      - :download:`pdf_redaction.zip <../../../samples/pdf_redaction/pdf_redaction_v32.zip>`
+   * - :ref:`pages/examples:Full Page Transcription`
+     - Transcribes text from documents.
+     -
+     -
+     - :download:`idp_fpt.py <../../../samples/idp_fpt_flow/flow.py>`
+   * - :ref:`pages/examples:IDP Custom Supervision`
+     - Sends all fields from the submission to custom supervision.
+     - .. image:: ../media/images/checkmark.png 
+         :class: checkmark
+     - .. image:: ../media/images/checkmark.png 
+         :class: checkmark
+     - :download:`custom_supervision_v32.zip <../../../samples/custom_supervision/custom_supervision_v32.zip>`
 
 Hello Flow
 ###########
@@ -110,6 +122,32 @@ This example allows redaction of fields in a PDF by performing REGEX on fields/s
 :download:`Download pdf_redaction.zip <../../../samples/pdf_redaction/pdf_redaction_v32.zip>`
 
 .. include:: ../../../samples/pdf_redaction/pdf_redaction_v32/pdf_redaction.py
+   :literal:
+
+
+Full Page Transcription
+###########################
+
+This example transcribes text from documents.
+
+:download:`Download idp_fpt.py <../../../samples/idp_fpt_flow/flow.py>`
+
+.. image:: ../media/images/idp_fpt.png
+
+.. include:: ../../../samples/idp_fpt_flow/flow.py
+   :literal:
+
+
+IDP Custom Supervision
+###########################
+
+This example sends all fields in the submission to Custom Supervision.
+
+:download:`Download custom_supervision_v32.zip <../../../samples/custom_supervision/custom_supervision_v32.zip>`
+
+.. image:: ../media/images/idp_fpt.png
+
+.. include:: ../../../samples/custom_supervision/custom_supervision_v32/flow.py
    :literal:
 
 

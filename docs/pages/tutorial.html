@@ -4,11 +4,12 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial &mdash; Flows SDK 0.5.1 documentation</title>
+  <title>Tutorial &mdash; Flows SDK 0.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom_supervision.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -33,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> Flows SDK
           </a>
               <div class="version">
-                0.5.1
+                0.7.0
 
               </div>
 <div role="search">
@@ -57,6 +58,7 @@
 <li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="idp_32.html">IDP Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_supervision.html">Custom Supervision</a></li>
 </ul>
 
         </div>
@@ -97,8 +99,12 @@
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Python 3.7+</p></li>
-<li><p>Unix shell or similar terminal</p></li>
 </ul>
+<blockquote>
+<div><p>the example below assumes that you are using <strong>bash</strong> or <strong>zsh</strong> for Unix and <strong>cmd</strong> or
+<strong>PowerShell</strong> for Windows. For other terminals, check out
+<a class="reference external" href="https://docs.python.org/3/library/venv.html">the official venv documentation</a></p>
+</div></blockquote>
 </section>
 <section id="building-deploying">
 <h2>Building &amp; Deploying<a class="headerlink" href="#building-deploying" title="Permalink to this headline"></a></h2>
@@ -108,11 +114,30 @@
 <span class="nb">source</span> venv/bin/activate
 </pre></div>
 </div>
+<details>
+<summary><b>For Windows</b></summary>
+<div><b>cmd.exe</b></div>
+<div class="highlight"><pre>
+python -m venv venv
+venv\Scripts\activate.bat</pre>
+</div>
+<div><b>PowerShell</b></div>
+<div class="highlight"><pre>
+python -m venv venv
+venv\Scripts\Activate.ps1</pre>
+</div>
+</details>
 </li>
 <li><p>Install the <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> Python package. Contact your CX representative to receive the <code class="docutils literal notranslate"><span class="pre">.whl</span></code> package. The command below should reflect the local path of your package.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install ~/Downloads/flows_sdk/v0.5.1/flows_sdk-0.5.1-py3.whl
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install <span class="s2">&quot;~/Downloads/flows_sdk-0.5.1-py3.whl&quot;</span>
 </pre></div>
 </div>
+<details>
+<summary><b>For Windows</b></summary>
+ <div class="highlight"><pre>
+pip install <span class="s2">"C:\Downloads\flows_sdk-0.5.1-py3-none-any.whl"</span></pre>
+ </div>
+</details>
 </li>
 <li><p>Download the <a class="reference internal" href="examples.html"><span class="doc std std-doc">IDP Starter Example</span></a> package, which includes:</p>
 <ul class="simple">

@@ -4,11 +4,12 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Source Documentation &mdash; Flows SDK 0.5.1 documentation</title>
+  <title>Source Documentation &mdash; Flows SDK 0.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom_supervision.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -33,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> Flows SDK
           </a>
               <div class="version">
-                0.5.1
+                0.7.0
 
               </div>
 <div role="search">
@@ -56,6 +57,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="idp_32.html">IDP Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_supervision.html">Custom Supervision</a></li>
 </ul>
 
         </div>
@@ -196,33 +198,37 @@ Code functions are executed in a dedicated container (more overhead, can scale h
 <dl class="py method">
 <dt class="sig sig-object py" id="flows_sdk.blocks.CodeBlock.output">
 <span class="sig-name descname"><span class="pre">output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.blocks.CodeBlock.output" title="Permalink to this definition"></a></dt>
-<dd><p>Used to reference the output of a block that has already been executed.
-For example, if we have a Flow with two blocks, the second can reference
-the output of the first as part of its inputs.</p>
+<dd><p>CodeBlock nests the actual result returned from the provided function under
+the ‘result’ key. This method overrides the default output, removing the need
+to always prepend ‘result’ when calling CodeBlock.output(…)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>key</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – When not provided, the entire output of the referenced block will be
-passed along. When provided, will pass a concrete key from the output
-(e.g. for an output like <code class="docutils literal notranslate"><span class="pre">{&quot;a&quot;:</span> <span class="pre">42}</span></code>, calling <code class="docutils literal notranslate"><span class="pre">output()</span></code> will pass it
-as a dictionary, while calling <code class="docutils literal notranslate"><span class="pre">output(&quot;a&quot;)</span></code> will pass <code class="docutils literal notranslate"><span class="pre">42</span></code>.)</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a string-formatted reference that will be unpacked to a value during runtime.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-<p>For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">Block</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">Block</span><span class="p">(</span>
-    <span class="o">...</span><span class="p">,</span>
-    <span class="nb">input</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<dd class="field-odd"><p><strong>key</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – <p>Optionally provide a key to directly get a nested property.
+When not provided, the entire ‘result’ will be returned.</p>
+<p>For example, we have:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">42</span>
+        <span class="p">}</span>
     <span class="p">}</span>
-<span class="p">)</span>
+<span class="p">}</span>
 </pre></div>
 </div>
+<ul class="simple">
+<li><p>skipping the key <code class="docutils literal notranslate"><span class="pre">output()`</span> <span class="pre">will</span> <span class="pre">return</span> <span class="pre">``{&quot;a&quot;:</span> <span class="pre">{&quot;b&quot;:</span> <span class="pre">42}}</span></code></p></li>
+<li><p>calling with <code class="docutils literal notranslate"><span class="pre">output(&quot;a&quot;)</span></code> will result in <code class="docutils literal notranslate"><span class="pre">{&quot;b&quot;:</span> <span class="pre">42}</span></code></p></li>
+<li><p>calling with <code class="docutils literal notranslate"><span class="pre">output(&quot;a.b&quot;)</span></code> will return <code class="docutils literal notranslate"><span class="pre">42</span></code></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the value under the provided key</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
