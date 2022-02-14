@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; Flows SDK 0.5.1 documentation</title>
+  <title>Index &mdash; Flows SDK 0.7.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/autodoc_pydantic.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom_supervision.css" type="text/css" />
     <link rel="shortcut icon" href="_static/favicon.png"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -30,7 +31,7 @@
             <a href="index.html" class="icon icon-home"> Flows SDK
           </a>
               <div class="version">
-                0.5.1
+                0.7.0
 
               </div>
 <div role="search">
@@ -49,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="pages/faq.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/source-docs.html">Source Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/idp_32.html">IDP Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/custom_supervision.html">Custom Supervision</a></li>
 </ul>
 
         </div>
@@ -128,11 +130,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pages/idp_32.html#flows_sdk.implementations.idp_v32.idp_blocks.CaseCollationBlock">CaseCollationBlock (class in flows_sdk.implementations.idp_v32.idp_blocks)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pages/source-docs.html#flows_sdk.blocks.CodeBlock">CodeBlock (class in flows_sdk.blocks)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pages/source-docs.html#flows_sdk.flows.Dependency.condition">condition (flows_sdk.flows.Dependency attribute)</a>
+</li>
+      <li><a href="pages/idp_32.html#flows_sdk.implementations.idp_v32.idp_blocks.CustomSupervisionBlock">CustomSupervisionBlock (class in flows_sdk.implementations.idp_v32.idp_blocks)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -197,6 +201,8 @@
 </li>
       <li><a href="pages/source-docs.html#flows_sdk.blocks.Fork.Branch">Fork.Branch (class in flows_sdk.blocks)</a>
 </li>
+      <li><a href="pages/idp_32.html#flows_sdk.implementations.idp_v32.idp_blocks.FullPageTranscriptionBlock">FullPageTranscriptionBlock (class in flows_sdk.implementations.idp_v32.idp_blocks)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -225,15 +231,23 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pages/source-docs.html#flows_sdk.flows.Manifest.identifier">identifier (flows_sdk.flows.Manifest attribute)</a>
 </li>
+      <li><a href="pages/idp_32.html#flows_sdk.implementations.idp_v32.idp_blocks.IdpCustomSupervisionBlock">IdpCustomSupervisionBlock (class in flows_sdk.implementations.idp_v32.idp_blocks)</a>
+</li>
+      <li><a href="pages/idp_32.html#flows_sdk.implementations.idp_v32.idp_blocks.IDPFullPageTranscriptionBlock">IDPFullPageTranscriptionBlock (class in flows_sdk.implementations.idp_v32.idp_blocks)</a>
+</li>
+      <li><a href="pages/idp_32.html#flows_sdk.implementations.idp_v32.idp_blocks.IDPImageCorrectionBlock">IDPImageCorrectionBlock (class in flows_sdk.implementations.idp_v32.idp_blocks)</a>
+</li>
       <li><a href="pages/idp_32.html#flows_sdk.implementations.idp_v32.idp_values.IDPManifest">IDPManifest (class in flows_sdk.implementations.idp_v32.idp_values)</a>
 </li>
       <li><a href="pages/idp_32.html#flows_sdk.implementations.idp_v32.idp_blocks.IDPOutputsBlock">IDPOutputsBlock (class in flows_sdk.implementations.idp_v32.idp_blocks)</a>
 </li>
-      <li><a href="pages/idp_32.html#flows_sdk.implementations.idp_v32.idp_values.IDPTriggers">IDPTriggers (class in flows_sdk.implementations.idp_v32.idp_values)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pages/idp_32.html#flows_sdk.implementations.idp_v32.idp_values.IDPTriggers">IDPTriggers (class in flows_sdk.implementations.idp_v32.idp_values)</a>
+</li>
       <li><a href="pages/idp_32.html#flows_sdk.implementations.idp_v32.idp_values.IdpWorkflowConfig">IdpWorkflowConfig (class in flows_sdk.implementations.idp_v32.idp_values)</a>
+</li>
+      <li><a href="pages/idp_32.html#flows_sdk.implementations.idp_v32.idp_blocks.ImageCorrectionBlock">ImageCorrectionBlock (class in flows_sdk.implementations.idp_v32.idp_blocks)</a>
 </li>
       <li><a href="pages/source-docs.html#flows_sdk.flows.Flow.input">input (flows_sdk.flows.Flow attribute)</a>
 
@@ -310,6 +324,8 @@
 
       <ul>
         <li><a href="pages/source-docs.html#flows_sdk.blocks.CodeBlock.output">(flows_sdk.blocks.CodeBlock method)</a>
+</li>
+        <li><a href="pages/idp_32.html#flows_sdk.implementations.idp_v32.idp_blocks.SubmissionBootstrapBlock.output">(flows_sdk.implementations.idp_v32.idp_blocks.SubmissionBootstrapBlock method)</a>
 </li>
       </ul></li>
   </ul></td>

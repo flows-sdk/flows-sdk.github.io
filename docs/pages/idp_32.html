@@ -4,11 +4,12 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IDP Library &mdash; Flows SDK 0.5.1 documentation</title>
+  <title>IDP Library &mdash; Flows SDK 0.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom_supervision.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -21,6 +22,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Custom Supervision" href="custom_supervision.html" />
     <link rel="prev" title="Source Documentation" href="source-docs.html" /> 
 </head>
 
@@ -32,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> Flows SDK
           </a>
               <div class="version">
-                0.5.1
+                0.7.0
 
               </div>
 <div role="search">
@@ -71,6 +73,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#helper-classes-and-functions">Helper Classes and Functions</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="custom_supervision.html">Custom Supervision</a></li>
 </ul>
 
         </div>
@@ -161,6 +164,42 @@ defaults to workflow_input(Inputs.WorkflowVersion)</p></li>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapBlock</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<dl class="py method">
+<dt class="sig sig-object py" id="flows_sdk.implementations.idp_v32.idp_blocks.SubmissionBootstrapBlock.output">
+<span class="sig-name descname"><span class="pre">output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.implementations.idp_v32.idp_blocks.SubmissionBootstrapBlock.output" title="Permalink to this definition"></a></dt>
+<dd><p>Submission bootstrap ends with a CodeBlock, which nests the actual outputs under
+the ‘result’ key. This method overrides the default output in the same manner that
+<code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Routing.CodeBlock</span></code> does for convenience.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – <p>Optionally provide a key to directly get a nested property.
+When not provided, the entire ‘result’ will be returned.</p>
+<p>For example, we have:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">42</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>skipping the key <code class="docutils literal notranslate"><span class="pre">output()`</span> <span class="pre">will</span> <span class="pre">return</span> <span class="pre">``{&quot;a&quot;:</span> <span class="pre">{&quot;b&quot;:</span> <span class="pre">42}}</span></code></p></li>
+<li><p>calling with <code class="docutils literal notranslate"><span class="pre">output(&quot;a&quot;)</span></code> will result in <code class="docutils literal notranslate"><span class="pre">{&quot;b&quot;:</span> <span class="pre">42}</span></code></p></li>
+<li><p>calling with <code class="docutils literal notranslate"><span class="pre">output(&quot;a.b&quot;)</span></code> will return <code class="docutils literal notranslate"><span class="pre">42</span></code></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the value under the provided key</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -775,6 +814,365 @@ inserted as SOAP body</p></li>
 <span class="c1"># for more information on output() and output references, please take a look at class Block</span>
 <span class="c1"># and its output() method</span>
 <span class="n">output_ref</span> <span class="o">=</span> <span class="n">soap_block</span><span class="o">.</span><span class="n">output</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flows_sdk.implementations.idp_v32.idp_blocks.CustomSupervisionBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.implementations.idp_v32.idp_blocks.</span></span><span class="sig-name descname"><span class="pre">CustomSupervisionBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_purpose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">supervision_template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">supervision_transcription_masking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_restrictions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.implementations.idp_v32.idp_blocks.CustomSupervisionBlock" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="source-docs.html#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
+<p>The CustomSupervisionBlock uses a JSON schema as a form builder to create customer-driven
+UIs for Supervision tasks.</p>
+<p>Mandatory parameters:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
+<li><p><strong>submission</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – Submission object</p></li>
+<li><p><strong>task_purpose</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – the custom task name that’s given to all supervision tasks that run
+through a particular instance of a custom supervision block. This can be used to filter
+tasks in the task queue.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – JSON structure that supplies the data used to populated the supervision_template</p></li>
+<li><p><strong>supervision_template</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – JSON used for configuration of the Custom Supervision Task.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Parameters with defaults:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>supervision_transcription_masking</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Prevents users from inputting invalid
+characters during the Custom Supervision task,
+defaults to True</p></li>
+<li><p><strong>task_restrictions</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – Defines what users can access Supervision tasks created
+by this block,
+defaults to []</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">custom_supervision</span> <span class="o">=</span> <span class="n">CustomSupervisionBlock</span><span class="p">(</span>
+    <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;custom_supervision&#39;</span><span class="p">,</span>
+    <span class="n">submission</span><span class="o">=</span><span class="n">manual_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+    <span class="n">task_purpose</span><span class="o">=</span><span class="s1">&#39;make_custom_decision&#39;</span><span class="p">,</span>
+    <span class="n">supervision_template</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;three_column_template&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;thumbnail&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;group_by_document&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s1">&#39;group_by_case&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;my_tab&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;SSN Info&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ssn_field&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;transcription&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;layout_field_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2afd7a67-ddee-484f-ab6b-2d292752e5ee&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;SSN&#39;</span><span class="p">,</span>
+                        <span class="p">},</span>
+                    <span class="p">],</span>
+                    <span class="s1">&#39;ui&#39;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;groups&#39;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;My Group&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;ssn_field&#39;</span><span class="p">],</span>
+                            <span class="p">},</span>
+                        <span class="p">],</span>
+                    <span class="p">},</span>
+                <span class="p">},</span>
+            <span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">],</span>
+    <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">967</span><span class="p">,</span>
+                <span class="s1">&#39;uuid&#39;</span><span class="p">:</span> <span class="s1">&#39;fe8d4e7a-a82c-448c-85a1-0a3cbbe53b61&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;111-22-3333&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;page_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s1">&#39;layout_field_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2afd7a67-ddee-484f-ab6b-2d292752e5ee&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;validation_overridden&#39;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+                <span class="s1">&#39;bounding_box&#39;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="mf">0.09360783305186686</span><span class="p">,</span>
+                    <span class="mf">0.25792617589433436</span><span class="p">,</span>
+                    <span class="mf">0.6358913805295097</span><span class="p">,</span>
+                    <span class="mf">0.28862414740388187</span><span class="p">,</span>
+                <span class="p">],</span>
+                <span class="s1">&#39;occurence_index&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;template_fields&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;uuid&#39;</span><span class="p">:</span> <span class="s1">&#39;2afd7a67-ddee-484f-ab6b-2d292752e5ee&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;notes&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;entry&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;data_type_uuid&#39;</span><span class="p">:</span> <span class="s1">&#39;b600a4e4-758f-4c4b-a2f4-cbb5dd870a0c&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;SSN&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;n_occurences&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;pages&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+                <span class="s1">&#39;file_page_number&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s1">&#39;document_page_number&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  <span class="o">//</span> <span class="n">Optional</span>
+                <span class="s1">&#39;image_url&#39;</span><span class="p">:</span> <span class="s1">&#39;/image/6e55fa86-a36b-4178-8db1-3a514621d4c1&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;form_id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">&#39;submission_id&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                <span class="s1">&#39;external_case_ids&#39;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s1">&#39;HS-27&#39;</span><span class="p">,</span>
+                <span class="p">],</span>
+                <span class="s1">&#39;read_only&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="s1">&#39;filename.pdf&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;documents&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">&#39;layout_uuid&#39;</span><span class="p">:</span> <span class="s1">&#39;e31c3cbf-dcea-44fd-a052-902463c6040f&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;layout_name&#39;</span><span class="p">:</span> <span class="s1">&#39;layout_name&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;page_count&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">&#39;read_only&#39;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;cases&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;selected_choices&#39;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="p">},</span>
+    <span class="n">supervision_transcription_masking</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flows_sdk.implementations.idp_v32.idp_blocks.IdpCustomSupervisionBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.implementations.idp_v32.idp_blocks.</span></span><span class="sig-name descname"><span class="pre">IdpCustomSupervisionBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_purpose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">supervision_template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">supervision_transcription_masking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_restrictions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.implementations.idp_v32.idp_blocks.IdpCustomSupervisionBlock" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="source-docs.html#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
+<p>An IDP wrapper for the Custom Supervision block. It has the same functionality,
+but handles reading/writing data from the IDP database.</p>
+<p>Mandatory parameters:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
+<li><p><strong>submission</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – Submission object</p></li>
+<li><p><strong>task_purpose</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – the custom task name that’s given to all supervision tasks that run
+through a particular instance of a custom supervision block. This can be used to filter
+tasks in the task queue.</p></li>
+<li><p><strong>supervision_template</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – JSON used for configuration of the Custom Supervision Task.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Parameters with defaults:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>supervision_transcription_masking</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Prevents users from inputting invalid
+characters during the Custom Supervision task,
+defaults to True</p></li>
+<li><p><strong>task_restrictions</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]) – Defines what users can access Supervision tasks created
+by this block,
+defaults to []</p></li>
+<li><p><strong>page_ids</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]) – A list of page ids to include. This should not be used. The IDP wrapper should
+handle pulling in all pages in the submission.
+defaults to []</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">idp_custom_supervision</span> <span class="o">=</span> <span class="n">IdpCustomSupervisionBlock</span><span class="p">(</span>
+    <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;idp_custom_supervision&#39;</span><span class="p">,</span>
+    <span class="n">submission</span><span class="o">=</span><span class="n">manual_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+    <span class="n">task_purpose</span><span class="o">=</span><span class="s1">&#39;make_custom_decision&#39;</span><span class="p">,</span>
+    <span class="n">supervision_template</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;three_column_template&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;thumbnail&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;group_by_document&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s1">&#39;group_by_case&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;my_tab&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;SSN Info&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ssn_field&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;transcription&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;layout_field_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2afd7a67-ddee-484f-ab6b-2d292752e5ee&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;SSN&#39;</span><span class="p">,</span>
+                        <span class="p">},</span>
+                    <span class="p">],</span>
+                    <span class="s1">&#39;ui&#39;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;groups&#39;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;My Group&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;ssn_field&#39;</span><span class="p">],</span>
+                            <span class="p">},</span>
+                        <span class="p">],</span>
+                    <span class="p">},</span>
+                <span class="p">},</span>
+            <span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">],</span>
+    <span class="n">supervision_transcription_masking</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flows_sdk.implementations.idp_v32.idp_blocks.IDPFullPageTranscriptionBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.implementations.idp_v32.idp_blocks.</span></span><span class="sig-name descname"><span class="pre">IDPFullPageTranscriptionBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Full</span> <span class="pre">Page</span> <span class="pre">Transcription</span> <span class="pre">(Submission)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Transcribes</span> <span class="pre">the</span> <span class="pre">documents</span> <span class="pre">included</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">submission'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.implementations.idp_v32.idp_blocks.IDPFullPageTranscriptionBlock" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="source-docs.html#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
+<p>IDP Full Page Transcription Block machine-transcribes the documents contained in a submission</p>
+<p>Mandatory parameters:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
+<li><p><strong>submission</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – submission object that includes the raw documents that need to be transcribed</p></li>
+</ul>
+</dd>
+</dl>
+<p>Optional Parameters:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app_metadata</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]) – used for capturing information about the flow</p>
+</dd>
+</dl>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is one way to obtain the submission object (using SUbmissionBootstrapBlock)</span>
+<span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapBlock</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
+<span class="c1"># IDPFullPageTranscriptionBlock transcribes the documents contained in the submission object</span>
+<span class="n">idp_fpt_block</span> <span class="o">=</span> <span class="n">IDPFullPageTranscriptionBlock</span><span class="p">(</span>
+    <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;idp_fpt&#39;</span><span class="p">,</span>
+    <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="c1"># reference to the output of IDPFullPageTranscriptionBlock which can be passed as input to</span>
+<span class="c1"># the next block. For more information on output() and output references, please take a</span>
+<span class="c1"># look at class Block and its output() method</span>
+<span class="n">output_ref</span> <span class="o">=</span> <span class="n">idp_fpt_block</span><span class="o">.</span><span class="n">output</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flows_sdk.implementations.idp_v32.idp_blocks.IDPImageCorrectionBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.implementations.idp_v32.idp_blocks.</span></span><span class="sig-name descname"><span class="pre">IDPImageCorrectionBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation_correction_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mobile_processing_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Image</span> <span class="pre">Correction</span> <span class="pre">(Submission)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Rotate</span> <span class="pre">and</span> <span class="pre">de-skew</span> <span class="pre">documents</span> <span class="pre">included</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">submission'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.implementations.idp_v32.idp_blocks.IDPImageCorrectionBlock" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="source-docs.html#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
+<p>IDP Image Correction Block rotates and de-skews tilted/skewed images so that they are more
+transcription-friendly</p>
+<p>Mandatory parameters:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
+<li><p><strong>submission</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – submission object that includes the raw documents that need to be
+image-corrected</p></li>
+</ul>
+</dd>
+</dl>
+<p>Optional Parameters:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app_metadata</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]) – used for capturing information about the flow</p>
+</dd>
+</dl>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is one way to obtain the submission object (using SubmissionBootstrapBlock)</span>
+<span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapBlock</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
+<span class="c1"># IDPImageCorrectionBlock takes in the submission object and outputs in the same format with</span>
+<span class="c1"># its images</span>
+<span class="n">idp_image_correct_block</span> <span class="o">=</span> <span class="n">IDPImageCorrectionBlock</span><span class="p">(</span>
+    <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;idp_image_correct&#39;</span><span class="p">,</span>
+    <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="c1"># reference to the output of IDPImageCorrectionBlock which can be passed as input to the</span>
+<span class="c1"># next block. For more information on output() and output references, please take a look at</span>
+<span class="c1"># class Block and its output() method</span>
+<span class="n">output_ref</span> <span class="o">=</span> <span class="n">idp_image_correct_block</span><span class="o">.</span><span class="n">output</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flows_sdk.implementations.idp_v32.idp_blocks.FullPageTranscriptionBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.implementations.idp_v32.idp_blocks.</span></span><span class="sig-name descname"><span class="pre">FullPageTranscriptionBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Full</span> <span class="pre">Page</span> <span class="pre">Transcription</span> <span class="pre">(Pages)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Transcribes</span> <span class="pre">documents'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.implementations.idp_v32.idp_blocks.FullPageTranscriptionBlock" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="source-docs.html#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
+<p>Full Page Transcription Block machine-transcribes the documents contained in a submission</p>
+<p>Mandatory parameters:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
+<li><p><strong>pages</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – list of pages that includes the raw documents that need to be transcribed</p></li>
+</ul>
+</dd>
+</dl>
+<p>Optional Parameters:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app_metadata</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]) – used for capturing information about the flow</p>
+</dd>
+</dl>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is one way to obtain the submission object (using SubmissionBootstrapBlock)</span>
+<span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapBlock</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
+<span class="c1"># FullPageTranscriptionBlock transcribes the documents contained in the submission object</span>
+<span class="n">fpt_block</span> <span class="o">=</span> <span class="n">FullPageTranscriptionBlock</span><span class="p">(</span>
+    <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;fpt&#39;</span><span class="p">,</span>
+    <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="c1"># reference to the output of FullPageTranscriptionBlock which can be passed as input to the</span>
+<span class="c1"># next block. For more information on output() and output references, please take a look at</span>
+<span class="c1"># class Block and its output() method</span>
+<span class="n">output_ref</span> <span class="o">=</span> <span class="n">fpt_block</span><span class="o">.</span><span class="n">output</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="flows_sdk.implementations.idp_v32.idp_blocks.ImageCorrectionBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flows_sdk.implementations.idp_v32.idp_blocks.</span></span><span class="sig-name descname"><span class="pre">ImageCorrectionBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation_correction_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mobile_processing_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Image</span> <span class="pre">Correction</span> <span class="pre">(Pages)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Rotate</span> <span class="pre">and</span> <span class="pre">de-skew</span> <span class="pre">documents'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#flows_sdk.implementations.idp_v32.idp_blocks.ImageCorrectionBlock" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="source-docs.html#flows_sdk.blocks.Block" title="flows_sdk.blocks.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">flows_sdk.blocks.Block</span></code></a></p>
+<p>Image Correction Block rotates and de-skews tilted/skewed images so that they are more
+transcription-friendly</p>
+<p>Mandatory parameters:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reference_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – unique identifier within a flow</p></li>
+<li><p><strong>pages</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – list of page object that includes the raw documents that need to be
+image-corrected</p></li>
+</ul>
+</dd>
+</dl>
+<p>Optional Parameters:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app_metadata</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]) – used for capturing information about the flow</p>
+</dd>
+</dl>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is one way to obtain the submission object (using SubmissionBootstrapBlock)</span>
+<span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapBlock</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
+<span class="c1"># ImageCorrectionBlock takes in the submission object and outputs in the same format with</span>
+<span class="c1"># its images</span>
+<span class="n">image_correct_block</span> <span class="o">=</span> <span class="n">ImageCorrectionBlock</span><span class="p">(</span>
+    <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;image_correct&#39;</span><span class="p">,</span>
+    <span class="n">pages</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">submission</span><span class="o">.</span><span class="n">unassigned_pages</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="c1"># reference to the output of IDPImageCorrectionBlock which can be passed as input to the</span>
+<span class="c1"># next block. For more information on output() and output references, please take a look</span>
+<span class="c1"># at class Block and its output() method</span>
+<span class="n">output_ref</span> <span class="o">=</span> <span class="n">image_correct_block</span><span class="o">.</span><span class="n">output</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2124,6 +2522,7 @@ Flow inputs and their UI representation (left-hand side menu in Flow studio).</p
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="source-docs.html" class="btn btn-neutral float-left" title="Source Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="custom_supervision.html" class="btn btn-neutral float-right" title="Custom Supervision" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

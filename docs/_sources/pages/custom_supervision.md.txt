@@ -1,0 +1,1440 @@
+# Custom Supervision
+
+Using JSON Schema Form as a form builder to create customer-driven UIs for Supervision tasks.
+
+A Custom Supervision task’s interface is configured directly in the JSON that defines the custom flow. Each custom flow can have its own Custom Supervision task logic, name, and interface. You can find more details about how to configure a Custom Supervision task’s interface and what the customization options are in the sections below.
+
+> &#x26a0;&#xfe0f; Keep in mind that Custom Supervision was designed to be as flexible as possible, but there are still recommended best practices to maximize the potential of the feature. Most of what is defined in this article is to outline those recommended practices.
+
+> Additionally, please note that:
+> * This article is intended to inform developers using the IDP Custom Supervision Block, which is a modified version of the more generic Custom Supervision Block and includes an IDP wrapper to handle reading/writing data from the IDP database. 
+> * For the purpose of illustration, JSON examples in this article reference what may appear to be hardcoded identifiers (ex: `layout_field_id: '2afd7a67-ddee-484f-ab6b-2d292752e5ee'`), but it is possible to dynamically reference entities using a Custom Code Block. This enables the Custom Supervision task interface to be completely dynamic in which transcription fields, pages, decisions, text blocks, etc that are presented to a user during the execution of a particular flow. 
+
+## JSON Configuration
+
+### Custom Supervision Block Basics
+
+The base of the custom portion of the Custom Supervision Block is the `supervision_template`. Defining the Supervision template and its version is the first step of configuring the Custom Supervision task’s interface. 
+
+> &#x26a0;&#xfe0f; There is currently only a single template built for Custom Supervision - `three_column_template`. Details of this template are defined below.
+
+#### Property Definitions
+
+A template will always have a base with two properties:
+
+| Property | Description |
+| --- | --- |
+| name | Name of the Supervision template that should be tied to the UI. Valid names are currently limited to the amount of development done by the Hyperscience team. As of v32.0.1, the only valid name is `three_column_template`.|
+| version | The Supervision template’s version. This property is for future use to handle version control as Custom Supervision evolves. Currently, the only available version for `three_column_template` is `1.0`.|
+
+```
+{
+  supervision_template: [
+    {
+      name: 'three_column_template',
+      version: '1.0'
+    }
+  ]
+}
+```
+
+> &#x26a0;&#xfe0f; While in the future you will be able to list multiple templates in the top-level list, currently only one is supported.
+
+### Three Column Template - Basics
+
+For v32.0.1, there is a single template that can be used with Custom Supervision, which is the `three_column_template`. There are three sections of this template: a thumbnail panel (left panel), an image panel (middle panel), and an actions panel (right panel). The thumbnail and actions panels are customizable, while the middle panel is not customizable and shows a full-page view of the document pages that are sent to Custom Supervision. 
+
+#### Property Definitions
+
+| Property | Description |
+| --- | --- |
+| thumbnail | Configurable options for the thumbnail panel.</br>`group_by_document` - boolean - Group pages at the document level.</br>`group_by_case` - boolean - Group pages/documents at the case level. |
+| actions | List of tabs to be included in the action panel. Representative of the structure used in JSON Schema Form. |
+
+```
+{
+  supervision_template: [
+    {
+      name: 'three_column_template',
+      version: '1.0',
+      thumbnail: {
+        group_by_document: true,
+        group_by_case: true
+      },
+      action: [
+        {
+          name: 'my_tab',
+          display: 'SSN Info',
+          input: [
+            {
+              name: 'ssn_field',
+              type: 'transcription',
+              layout_field_id: '2afd7a67-ddee-484f-ab6b-2d292752e5ee',
+              title: 'SSN'
+            }
+          ],
+          ui: {
+            groups: [
+              {
+                title: 'My Group',
+                fields: ['ssn_field']
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Three Column Template - Thumbnail
+
+There are two options available for configuration of the left thumbnail panel. Both options are independent boolean values, which makes four different combinations possible:
+* Pages are listed individually and are not grouped (both options set to `false`)
+* Group by documents
+* Group by cases
+* Group by both documents and cases (both options set to `true`)
+
+Each screenshot is from the same set of pages, documents, and cases, but with different configurations.
+
+-----
+```
+thumbnail: {
+  group_by_document: false,
+  group_by_case: false
+}
+```
+
+![document_false_case_false](../media/images/custom_supervision/document_false_case_false.png)
+
+-----
+```
+thumbnail: {
+  group_by_document: true,
+  group_by_case: false
+}
+```
+
+![document_true_case_false](../media/images/custom_supervision/document_true_case_false.png)
+
+-----
+```
+thumbnail: {
+  group_by_document: false,
+  group_by_case: true
+}
+```
+
+![document_false_case_true](../media/images/custom_supervision/document_false_case_true.png)
+
+-----
+```
+thumbnail: {
+  group_by_document: true,
+  group_by_case: true
+}
+```
+
+![document_true_case_true](../media/images/custom_supervision/document_true_case_true.gif)
+
+### Three Column Template - Actions
+
+The `action` property will be a list of Tab objects. Each Tab in the `action` property corresponds to a tab in the Custom Supervision task’s right panel. 
+
+> &#x26a0;&#xfe0f; You can have a maximum of 3 tabs. If you configure more than 3, they will be automatically truncated in the UI.
+
+#### Property Definitions
+
+> &#x26a0;&#xfe0f; The `name` property must be unique.
+
+| Property | Description |
+| --- | --- |
+| name | Internal name of the tab; only used for internal navigation and not displayed in the UI. |
+| display | Text to display on the tab in the UI. Users will see this text as the name of tab. |
+| input | List of Input Fields as defined below. This list contains the bulk of the definition of what the Action pane is going to look like. |
+| ui | Contains the `groups` property, which defines where the fields will appear and in what order. |
+
+#### Input Field Types
+
+There are several different types of fields that can be rendered in the first version of Custom Supervision. These fields are specifically defined by the `type` property of each of the inputs.
+
+The following types of Input Fields are supported:
+
+* Title fields
+* Text block fields
+* Transcription fields
+* Decision fields
+* Case fields
+
+##### Title Fields
+
+There are two title field subtypes:
+
+* `document_title` - Designed to be used as a header when displaying document-related data. It will display information for the currently selected document, including document ID and layout name.
+* `case_title` - Designed to be used as a header when displaying case-related data. It will display the case ID for the currently selected case.
+
+###### Document Title
+
+
+> &#x26a0;&#xfe0f; The `name` property must be unique.
+
+The `name` of the `document_title` input is needed for rendering, but it is not shown in the UI.
+
+When defining a `document_title` field, set the `type` to `document_title`.
+
+```
+{
+  action: [
+    {
+      name: 'document_tab',
+      display: 'Document Data',
+      input: [
+        {
+          name: 'doc_title',
+          type: 'document_title'
+        },
+        ...
+      ]
+    }
+  ]
+}
+```
+
+![document_title](../media/images/custom_supervision/document_title.png)
+
+###### Case Title
+
+> &#x26a0;&#xfe0f; The `name` property must be unique.
+
+The `name` of the `case_title` input is needed for rendering, but it is not shown in the UI.
+
+When defining a `case_title` field, set the `type` to `case_title`.
+
+```
+{
+  action: [
+    {
+      name: 'case_tab',
+      display: 'Case Data',
+      input: [
+        {
+          name: 'case_title',
+          type: 'case_title'
+        },
+        ...
+      ]
+    }
+  ]
+}
+```
+
+![case_title](../media/images/custom_supervision/case_title.png)
+
+##### Text Block Fields
+
+Text block fields show static text on a tab. Text block fields have a single subtype called `text_block`. 
+
+
+> &#x26a0;&#xfe0f; The `name` property must be unique.
+
+| Property | Description |
+| --- | --- |
+|`name` | The text block fields’s internal name. It is needed for rendering, but it is not shown in the UI. |
+| `type` | The text block field's subtype. Currently, `text_block` is the only valid value. |
+| `title` | The text block field's title that is displayed on the tab. |
+| `description` | Static text displayed on the tab. You can use `\n` to move text to the next line. |
+
+```
+{
+  action: [
+    {
+      name: 'case_tab',
+      display: 'Case Data',
+      input: [
+        ...
+        {
+          name: 'instructions',
+          type: 'text_block,
+          title: '',
+          description: 'Instructions:\n$100 Processing fee\n$50 optional fee for expediting case'
+        }
+        ...
+      ]
+    }
+  ]
+}
+```
+
+![text_block_field](../media/images/custom_supervision/text_block_field.png)
+
+##### Transcription Fields
+
+Transcription fields will be one of the more common fields used with the current version of Custom Supervision. They show the transcription of fields that have been processed earlier in the custom flow. 
+
+Transcription fields respect the Custom Supervision Block’s Custom Supervision Transcription Masking setting. Once the `data` is matched with the field, we take advantage of the `data_type_uuid` associated with the data piece to include masking and validation based on this block setting.
+
+###### Property Definitions
+
+> &#x26a0;&#xfe0f; The `name` property must be unique. If you use the `field_name`, for example, it might not be unique and could cause issues when the Custom Supervision task is displayed.
+
+| Property | Description |
+| --- | --- |
+| name | The transcription field's internal name. It is needed for rendering, but it is not shown in the UI. |
+| type | The transcription field's subtype. Currently, `transcription` is the only valid value. |
+| layout_field_id | UUID of the layout field that the transcription field is linked to. This UUID will match up with what is provided in the `data` portion of the payload. |
+
+```
+{
+  action: [
+    {
+      name: 'document_tab',
+      display: 'Document Data',
+      input: [
+        ...
+        {
+          name: 'courtesy_amount',
+          type: 'transcription,
+          layout_field_id: 'd82c1d10-45ff-4a66-b4a1-f300a0ff0a07',
+          title: 'Courtesy Amount'
+        },
+        {
+          name: 'legal_amount',
+          type: 'transcription',
+          layout_field_id: 'b31c2239-d184-4914-8f17-d281c4df493b',
+          title: 'Legal Amount'
+        },
+        ...
+      ]
+    }
+  ]
+}
+```
+
+![currency_not_highlighted](../media/images/custom_supervision/currency_not_highlighted.png)
+
+-----
+
+Transcription field when selected, showing masking and validation.
+
+![currency_highlighted](../media/images/custom_supervision/currency_highlighted.png)
+
+The Courtesy Amount will only allow numeric inputs and will have the currency format.
+
+-----
+
+The *Mark Illegible* button, when clicked, will clear the field, and users will no longer be able to interact with the text box. Fields marked as illegible will have `null` as their values on submit.
+
+![currency_illegible](../media/images/custom_supervision/currency_illegible.png)
+
+-----
+
+Checkboxes have their own rendering component, but they have the same features as text box fields.
+
+![checkbox](../media/images/custom_supervision/checkbox.png)
+
+-----
+
+##### Decision Fields
+
+Unique to Custom Supervision is the ability to make decisions on different entities. Decisions, or decision fields, are drop-down menus with options from a predetermined set of choices set in the JSON configuration. A decision field can be tied to a document, case, page, or field.
+
+To add a decision field, you need to define the properties described in the sections below.
+
+###### title
+
+The display header, or name, for the decision field
+
+###### relation 
+
+A nested object containing a required type property. If the decision applies to a field, you need to define another required property called `match`.
+
+* `type` - string - Type of entity you want to associate with the decision field. The possible values for the `type` property are the following:
+   * `case` - Associates the decision with the currently selected case.
+   * `document` - Associates the decision with the currently selected document.
+   * `page` - Associates the decision with the currently selected page.
+   * `field` - Associates the decision with a predefined field.
+* `match` - string - Only used for `field` type decisions. This value is the same as the field’s `layout_field_uuid` property. The `relation` object uses this `match` property to associate the decision with a predefined field.
+
+> &#x26a0;&#xfe0f; Even though we use `layout_field_id` to match the decision for fields, we still save it back to the specific Field ID when a decision is made.
+
+###### schema
+
+A nested object containing an array. You need to define one of the following arrays:
+
+* `oneOf` - array - Selection type for a single-select decision. 
+* `anyOf` - array - Selection type for multi-select decision.
+
+Regardless of the array type, it contains a list of choices with these properties:
+
+```
+{
+  const: 'my_internal_choice_name',
+  title: 'Display Choice Name'
+}
+```
+
+The `title` is the option's name that will be displayed in the UI. 
+
+The `const` is the option's internal name. It is used if there is a need to define an internal value that will be passed along in the workflow and eventually stored in the database.
+
+-----
+
+Single-select document decision
+
+```
+{
+  action: [
+    {
+      name: 'document_tab',
+      display: 'Document Data',
+      input: [
+        ...
+        {
+          name: 'check_decision',
+          type: 'decision',
+          title: 'Decision',
+          relation: {
+            type: 'document'
+          },
+          schema: {
+            oneOf: [
+              {
+                const: 'accept',
+                title: 'Accept Check'
+              },
+              {
+                const: 'reject',
+                title: 'Reject Check'
+              },
+              {
+                const: 'return',
+                title: 'Return overpaid fees'
+              }
+            ]
+          }
+        },  
+        ...
+      ]
+    }
+  ]
+}
+```
+
+Default state - No option previously selected
+
+![decision_default](../media/images/custom_supervision/decision_default.png)
+
+The default state of the decision field is “None selected”. When the `type` property is `case`, `document`, or `page`, a footer label appears below the decision field to provide context.
+
+Open state:
+
+![decision_open](../media/images/custom_supervision/decision_open.png)
+
+When opened, the decision field displays the available options.
+
+-----
+
+Single-select field decision - includes the transcription field that the decision is tied to for context. Note the `match` and `layout_field_id` are the same UUID.
+
+```
+{
+  action: [
+    {
+      name: 'document_tab',
+      display: 'Document Data',
+      input: [
+        {
+          name: 'first_name',
+          type: 'transcription,
+          layout_field_id: '29e7ff35-a085-415e-9fe2-9dd464a24971',
+          title: 'First Name'
+        },
+        {
+          name: 'first_name_single_decision',
+          type: 'decision,
+          title: 'My Decision',
+          relation: {
+            type: 'field',
+            match: '29e7ff35-a085-415e-9fe2-9dd464a24971'
+          },
+          schema: {
+            oneOf: [
+              {
+                const: 'first_choice',
+                title: 'My First Choice'
+              },
+              {
+                const: 'second_choice',
+                title: 'My Second Choice'
+              }
+            ]
+          }
+        },
+        ...
+      ]
+    }
+  ]
+}
+```
+
+The default state of the decision field is pre-populated from an existing decision in the database. Here, the default state is for *My First Choice* to be selected.
+
+![decision_from_database](../media/images/custom_supervision/decision_from_database.png)
+
+When the `type` property’s value is `field`, a footer label appears below the decision field displaying the value of the `title` property of the input field.
+
+> &#x26a0;&#xfe0f; There is also an indented state with a visual indicator to try to help the user associate the decision with the field. You need to order the inputs properly, though, to get this effect. They do NOT order themselves automatically. See UI Groups. 
+
+Open state:
+
+![decision_from_database_open](../media/images/custom_supervision/decision_from_database_open.png)
+
+When opened, the decision field displays the available options.
+
+-----
+
+Multi-select field decision 
+
+```
+{
+  action: [
+    {
+      name: 'document_tab',
+      display: 'Document Data',
+      input: [
+        {
+          name: 'first_name',
+          type: 'transcription,
+          layout_field_id: '29e7ff35-a085-415e-9fe2-9dd464a24971',
+          title: 'First Name'
+        },
+        ...
+        {
+          name: 'first_name_multiple_decision',
+          type: 'decision',
+          title: 'Multi Decision',
+          relation: {
+            type: 'field',
+            match: '29e7ff35-a085-415e-9fe2-9dd464a24971'
+          },
+          schema: {
+            anyOf: [
+              {
+                const: 'one',
+                title: 'One Fish'
+              },
+              {
+                const: 'two',
+                title: 'Two Fish'
+              },
+              {
+                const: 'red',
+                title: 'Red Fish'
+              },
+              {
+                const: 'blue',
+                title: 'Blue Fish'
+              }
+            ]
+          }
+        },
+        ...
+      ]
+    }
+  ]
+}
+```
+
+The default state of the decision field is pre-populated from existing decisions in the database. Here, the default state is for both *One Fish* and *Two Fish* to be selected.
+
+![default_multi](../media/images/custom_supervision/default_multi.png)
+
+*My Decision* is the same single-select decision from above, but *Multi Decision* is the rendering of the JSON we have defined on the left.
+
+The same notes from above about how the footer label and indentation behave apply here, as well.
+
+Open state:
+
+![open_multi](../media/images/custom_supervision/open_multi.png)
+
+When opened, the decision field displays the available options.
+
+##### Add to Case Fields
+
+This field is rather unique and allows users to add a document to an existing case or add a document to a newly created case. You can also edit the case assignment of documents that already belong to cases.
+
+Note that in order for the case assignments to be saved in the database, a Machine Collation Block must follow the Custom Supervision Block.
+
+```
+{
+  action: [
+    {
+      name: 'document_tab',
+      display: 'Document Data',
+      input: [
+        ...
+        {
+          name: 'assign_to_case',
+          type: 'case_dropdown',
+          title: ''
+        },
+        ...
+      ]
+    }
+  ]
+}
+```
+
+> &#x26a0;&#xfe0f; The `name` property must be unique.
+
+The `name` and `title` properties are not shown in the UI, but are still included in the JSON.
+
+The only valid value for `type` in Add to Case fields is `case_dropdown`.
+
+Default state when document is not assigned to a case:
+
+![case_default](../media/images/custom_supervision/case_default.png)
+
+The default value of the decision field is *None*. To assign a document to a case, click the pencil ("Edit") button, and an “Add to case” dialog box will appear. This dialog box is very similar to the one used when assigning a submission to a case during Submission Upload.
+
+![case_edit](../media/images/custom_supervision/case_edit.png)
+
+Assigning to an existing case
+
+![case_existing](../media/images/custom_supervision/case_existing.png)
+
+Lazy-loaded case lookup. When you type in the search bar, a list of matching cases appears. You can search only by case ID. 
+
+Assigning to a new case
+
+![case_new](../media/images/custom_supervision/case_new.png)
+
+To assign to a new case, click the *Create a new case* link and enter a custom case ID.
+
+State when case is assigned
+
+![case_assigned](../media/images/custom_supervision/case_assigned.png)
+
+Nothing is assigned until the entire task is submitted, so you can freely edit this multiselect as much as you want. 
+* To cancel the addition of a document to a case, click the case’s “X” button.
+* You can assign a document to multiple cases at once.
+
+##### Generic Input Configuration
+
+There is some additional configuration that can be applied to any of the fields defined above. These are features supported by our more encompassing form builder know as JSON Schema Form. Here are a couple useful features that can be used for Custom Supervision:
+
+* UI settings - Allows you to hide fields and disable input.
+* Dependencies settings - Sets conditions under which the values of the UI settings parameters can be automatically changed.
+
+###### UI Settings
+
+UI settings allow you to hide fields and disable input. To define a UI setting for an input field, you need to add one or both of the following options:
+* `hidden` - boolean - Prevents the field from being shown in the action pane; defaults to `false`.
+* `disabled` - boolean - Disables input for a field; defaults to `false`.
+
+Example
+
+```
+{
+  action: [
+    {
+      name: 'document_tab',
+      display: 'Document Data',
+      input: [
+        ...
+        {
+          name: 'example_disabled_field',
+          type: 'transcription',
+          layout_field_id: 'be2fe4f4-a073-484c-a4b7-3579c3c6fc3b',
+          title: 'Example Disabled Field',
+          ui: {
+            disabled: true
+          }
+        },
+        {
+          name: 'example_hidden_field',
+          type: 'transcription',
+          layout_field_id: 'b18cb177-106a-44db-b395-03905ddf722a',
+          title: 'Example Hidden Field',
+          ui: {
+            hidden: true
+          }
+        },
+        {
+          name: 'example_both_field',
+          type: 'transcription',
+          layout_field_id: '9b6a1694-193f-4c87-a685-243572ab7779',
+          title: 'Example Both Field',
+          ui: {
+            hidden: true,
+            disabled: true
+          }
+        },
+        ...
+      ]
+    }
+  ]
+}
+```
+
+###### Dependencies Settings
+
+This is the most dynamic piece of Custom Supervision that takes some time to understand what makes sense to set up. The idea of `dependencies` in their initial iteration is to set conditions, which, when met, will be able to change the `ui` settings as defined above.
+
+The most common predicted use case of this feature is to dynamically show and hide fields by toggling the `ui.hidden` flag when a certain document or case is selected. Since submissions can contain several different layout variations, you may want to hide fields that are irrelevant to the user. With `dependencies`, you can control which fields show up when. Similarly, you can use the same approach to disable input for specific fields. 
+
+Because `depenedencies` settings directly interact with the `ui` settings, you can also dynamically `ui.disable` fields, as well.
+
+There is a lot of room for growth in this area. We are using the Ajv Library and are currently focused on using the `const` property in Ajv's JSON schema validator to test equivalence. To learn more, see Ajv's [JSON Schema](https://ajv.js.org/json-schema.html) and [`const`](https://ajv.js.org/json-schema.html#const) documentation. 
+
+This feature requires a larger JSON configuration to really show the benefit. The example below contains parts of some of the field types defined above, since it is a full working use case of how these fields can be configured. It also uses mock UUIDs, just to be a little more clear what matches to what.
+
+```
+{
+  "action": [
+    {
+      "name": "review_data",
+      "display": "Review Data",
+      "input": [
+        {
+          "name": "tab_1_document_title",
+          "type": "document_title",
+          "title": "Document Title"
+        },
+        {
+          "name": "participant_account_number",
+          "layout_field_id": "<participant_account_number_uuid>",
+          "type": "transcription",
+          "ui": {
+            "hidden": true
+          },
+          "dependencies": [
+            {
+              "condition": {
+                "properties": {
+                  "layoutId": {
+                    "const": "<beneficiary_change_layout_uuid>"
+                  }
+                }
+              },
+              "override": {
+                "ui": {
+                  "hidden": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "participant_name",
+          "layout_field_id": "<participant_name_uuid>",
+          "type": "transcription",
+          "ui": {
+            "hidden": true
+          },
+          "dependencies": [
+            {
+              "condition": {
+                "properties": {
+                  "layoutId": {
+                    "const": "<beneficiary_change_layout_uuid>"
+                  }
+                }
+              },
+              "override": {
+                "ui": {
+                  "hidden": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "current_beneficiary_name",
+          "layout_field_id": "<current_beneficiary_name_uuid>",
+          "type": "transcription",
+          "ui": {
+            "hidden": true
+          },
+          "dependencies": [
+            {
+              "condition": {
+                "properties": {
+                  "layoutId": {
+                    "const": "<beneficiary_change_layout_uuid>"
+                  }
+                }
+              },
+              "override": {
+                "ui": {
+                  "hidden": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "check_number",
+          "layout_field_id": "<check_number_uuid>",
+          "type": "transcription",
+          "ui": {
+            "hidden": true
+          },
+          "dependencies": [
+            {
+              "condition": {
+                "properties": {
+                  "layoutId": {
+                    "const": "<check_layout_uuid>"
+                  }
+                }
+              },
+              "override": {
+                "ui": {
+                  "hidden": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "payer_name",
+          "layout_field_id": "<payer_name_uuid>",
+          "type": "transcription",
+          "ui": {
+            "hidden": true
+          },
+          "dependencies": [
+            {
+              "condition": {
+                "properties": {
+                  "layoutId": {
+                    "const": "<check_layout_uuid>"
+                  }
+                }
+              },
+              "override": {
+                "ui": {
+                  "hidden": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "payer_address",
+          "layout_field_id": "<payer_address_uuid>",
+          "type": "transcription",
+          "ui": {
+            "hidden": true
+          },
+          "dependencies": [
+            {
+              "condition": {
+                "properties": {
+                  "layoutId": {
+                    "const": "<check_layout_uuid>"
+                  }
+                }
+              },
+              "override": {
+                "ui": {
+                  "hidden": false
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+First, here is a GIF of what this code produces. Below, there is a more in-depth description and breakdown of the JSON to help clarify.
+
+![dependencies](../media/images/custom_supervision/dependencies.gif)
+
+_Note: The sample JSON above is trimmed to just a few fields for each document compared to the fields seen in the GIF. Also, the documents and transcribed fields use mock data with mock images._
+
+* Notice the `document_title` field stays the same across both documents. This is because there are no `dependencies` and it will always default to `ui.hidden: false`.
+
+* Looking at the first input defined, we have the `ui.hidden` property set to `true`. If you want to achieve the dynamic rendering shown in the example, this setting is required.
+
+```
+        {
+          "name": "participant_account_number",
+          "layout_field_id": "<participant_account_number_uuid>",
+          "type": "transcription",
+          "ui": {
+            "hidden": true
+          },
+          "dependencies": [
+            {
+              "condition": {
+                "properties": {
+                  "layoutId": {
+                    "const": "<beneficiary_change_layout_uuid>"
+                  }
+                }
+              },
+              "override": {
+                "ui": {
+                  "hidden": false
+                }
+              }
+            }
+          ]
+        }
+```
+
+* Each `dependencies` contains an array of conditions. Thus, you can configure multiple conditions under which a specific field to be displayed, hidden, or disabled.
+* Each dependency has a condition that needs to be met, and then an override that will take place. Again, the only overrides that make sense at this point are the ones that affect the `ui` settings.
+* In this specific example for `participant_account_number`, the nesting of `condition.properties` is standard syntax when using Ajv.
+* We have configurability around the next nesting, though:
+   * `layoutId` - Used when you want to match to the currently selected layout.
+   * `pageId` - Used when you want to match to the currently selected page.
+   * `documentId` - Used when you want to match to the currently selected document.
+   * `caseId` - Used when you want to match to the currently selected case.
+* In this example, we use the `layoutId` to match against.
+* The `const` is the Ajv syntax for checking equivalence, as mentioned above.
+* Putting all these elementes together, this condition is saying, "When the currently selected Layout ID is `<beneficiary_change_layout_uuid>`, … "
+* When this condition is true, the `override` will toggle the `ui.hidden` flag to `false`.
+   * "When the currently selected Layout ID is `<beneficiary_change_layout_uuid>`, show this field."
+* Looking back at the GIF, you can see that the *Participant Account Number* field only appears when the *Beneficiary Change* document is selected.
+
+You can review the rest of the sample JSON, but these points are the core of what is going on behind the scenes. There are some assumptions here that the data coming in for these documents, separate from what is defined in this input, have the layout UUIDs that match up (`<beneficiary_change_layout_uuid>` and `<check_layout_uuid>`).
+
+##### UI Groups
+
+UI groups determine how fields should be grouped within a tab. 
+
+Adding a UI group is optional. If you do not add a UI group, all input fields will be included in a single section in the order they are defined. 
+
+If you do include a UI group, the string defined within each `fields` list needs to correspond to a field `name` in the input section.
+
+To add a UI group, you need to define the following properties:
+
+* `fields` - List that contains the `name` properties of the input fields you want to add to the UI group. 
+* (optional) `title` - Text displayed at the top of a UI group. If you do not define a `title` property for a group, the listed fields will still be grouped together, but no text will be displayed at the top of the UI group.
+
+Multiple groups are separated by a single horizontal line. The order in which input fields are displayed on a tab matches the order of the input fields in the `fields` list.
+
+No Titles
+
+```
+{
+  ui: {
+    groups: [
+      {
+        fields: ['ssn_field']
+      },
+      {
+        fields: [
+          'check_amount_field',
+          'account_number'
+        ],
+      },
+    ]
+  }
+}
+```
+
+![no_titles](../media/images/custom_supervision/no_titles.png)
+
+Light horizontal divider between the two groups
+
+-----
+
+With Titles
+
+```
+{
+  ui: {
+    groups: [
+      {
+        title: 'My Group',
+        fields: ['ssn_field']
+      },
+      {
+        title: 'Check Info',
+        fields: ['check_amount_field', 'account_number']
+      }
+    ]
+  }
+}
+```
+
+![with_titles](../media/images/custom_supervision/with_titles.png)
+
+-----
+
+Missing Fields
+
+```
+{
+  ui: {
+    groups: [
+      {
+        title: 'My Group',
+        fields: ['ssn_field']
+      },
+      {
+        title: 'Check Info',
+        fields: ['check_amount_field']
+      }
+    ]
+  }
+}
+```
+
+![missing_fields](../media/images/custom_supervision/missing_fields.png)
+
+Input fields that are not added to any UI group appear at the top of the tab. Here, *Account Number* is not defined within `groups`, so it is shown at the top.
+
+## External Sources
+
+In addition to customizing the three-panel interface, you can also display pages that come from submissions that the Custom Supervision Block is not currently processing ("external submissions"). Users can compare these pages with the documents and pages being processing through the Custom Supervision Block. 
+
+To display pages from external submissions, you need to define their respective page IDs at the same level as `supervision_template`. Here is an example of defining page IDs:
+
+```
+{
+  page_ids: [1, 2, 3, 15],
+  supervision_template: [
+    {
+      name: 'three_column_template',
+      version: '1.0'
+    }
+  ]
+}
+```
+> &#x26a0;&#xfe0f; There are restrictions that come with this added flexibility. Since these fields are not in the current submission and thus may have already gone through transcription and other Supervision tasks, all fields that are displayed for these pages will be uneditable.
+
+## Examples
+
+Here is a full example of a two-tab setup. Again, we used mock UUIDs for readability.
+
+```
+{
+  supervision_template: [
+    {
+      name: 'three_column_template',
+      version: '1.0',
+      thumbnail: {
+        group_by_document: true,
+        group_by_case: true,
+      },
+      action: [
+        {
+          name: 'document_tab',
+          display: 'Document Data',
+          input: [
+            {
+              name: 'doc_title',
+              type: 'document_title',
+            },
+            {
+              name: 'check_amount',
+              type: 'transcription',
+              layout_field_id: '<check_amount_uuid>',
+              title: 'Check Amount',
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: {
+                    properties: { layoutId: { const: '<check_layout_uuid>' } },
+                  },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'check_pay_to_the_order_of',
+              type: 'transcription',
+              layout_field_id: '<check_pay_to_the_order_of_uuid>',
+              title: 'Pay to the Order of',
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: {
+                    properties: { layoutId: { const: '<check_layout_uuid>' } },
+                  },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'check_date',
+              type: 'transcription',
+              layout_field_id: '<check_date_uuid>',
+              title: 'Name',
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: {
+                    properties: { layoutId: { const: '<check_layout_uuid>' } },
+                  },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'check_decision',
+              type: 'decision',
+              layout_field_id: '<check_name_uuid>',
+              title: 'Decision',
+              relation: {
+                type: 'document',
+              },
+              schema: {
+                oneOf: [
+                  {
+                    const: 'accept',
+                    title: 'Accept Check',
+                  },
+                  {
+                    const: 'reject',
+                    title: 'Reject Check',
+                  },
+                  {
+                    const: 'return',
+                    title: 'Return overpaid fees',
+                  },
+                ],
+              },
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: {
+                    properties: { layoutId: { const: '<check_layout_uuid>' } },
+                  },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'change_of_bene_name',
+              type: 'transcription',
+              layout_field_id: '<change_of_bene_name_uuid>',
+              title: 'Name',
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: {
+                    properties: {
+                      layoutId: { const: '<account_application_layout_uuid>' },
+                    },
+                  },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'change_of_bene_dob',
+              type: 'transcription',
+              layout_field_id: '<change_of_bene_dob_uuid>',
+              title: 'Date of Birth',
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: {
+                    properties: {
+                      layoutId: { const: '<account_application_layout_uuid>' },
+                    },
+                  },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'change_of_bene_ssn',
+              type: 'transcription',
+              layout_field_id: '<change_of_bene_ssn_uuid>',
+              title: 'SSN',
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: {
+                    properties: {
+                      layoutId: { const: '<account_application_layout_uuid>' },
+                    },
+                  },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'change_of_bene_phone_number',
+              type: 'transcription',
+              layout_field_id: '<change_of_bene_phone_number_uuid>',
+              title: 'Phone Number',
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: {
+                    properties: {
+                      layoutId: { const: '<account_application_layout_uuid>' },
+                    },
+                  },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'change_of_bene_trustees_ssn',
+              type: 'transcription',
+              layout_field_id: '<change_of_bene_trustees_ssn_uuid>',
+              title: "Participant's/Trustee's SSN",
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: {
+                    properties: {
+                      layoutId: { const: '<change_of_bene_layout_uuid>' },
+                    },
+                  },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'change_of_bene_new_bene_ssn',
+              type: 'transcription',
+              layout_field_id: '<change_of_bene_new_bene_ssn_uuid>',
+              title: "New Beneficiary's SSN",
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: {
+                    properties: {
+                      layoutId: { const: '<change_of_bene_layout_uuid>' },
+                    },
+                  },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'change_of_bene_descendant',
+              type: 'transcription',
+              layout_field_id: '<change_of_bene_descendant_uuid>',
+              title: 'Son/Daughter/Descendant',
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: {
+                    properties: {
+                      layoutId: { const: '<change_of_bene_layout_uuid>' },
+                    },
+                  },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'change_of_bene_partial_account_xfer',
+              type: 'transcription',
+              layout_field_id: '<change_of_bene_partial_account_xfer_uuid>',
+              title: 'Partial Account Transfer',
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: {
+                    properties: {
+                      layoutId: { const: '<change_of_bene_layout_uuid>' },
+                    },
+                  },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'change_of_bene_partial_account_xfer_amount',
+              type: 'transcription',
+              layout_field_id: '<change_of_bene_partial_account_xfer_amount_uuid>',
+              title: 'Partial Account Transfer Amount',
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: {
+                    properties: {
+                      layoutId: { const: '<change_of_bene_layout_uuid>' },
+                    },
+                  },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+          ],
+          ui: {
+            groups: [
+              {
+                fields: ['doc_title'],
+              },
+              {
+                fields: [
+                  'check_amount',
+                  'check_pay_to_the_order_of',
+                  'check_date',
+                  'check_decision',
+                  'change_of_bene_name',
+                  'change_of_bene_dob',
+                  'change_of_bene_ssn',
+                  'change_of_bene_phone_number',
+                  'change_of_bene_trustees_ssn',
+                  'change_of_bene_new_bene_ssn',
+                  'change_of_bene_descendant',
+                  'change_of_bene_partial_account_xfer',
+                  'change_of_bene_partial_account_xfer_amount',
+                ],
+              },
+            ],
+          },
+        },
+        {
+          name: 'case_tab',
+          display: 'Case Data',
+          input: [
+            {
+              name: 'case_title',
+              type: 'case_title',
+            },
+            {
+              name: 'instructions',
+              type: 'text_block',
+              title: '',
+              description:
+                'Instructions:\n$100 Processing fee\n$50 optional fee for expediting case',
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: { properties: { caseId: { const: '99021' } } },
+                  override: { ui: { hidden: false } },
+                },
+                {
+                  condition: { properties: { caseId: { const: '100034' } } },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'region',
+              type: 'decision',
+              title: 'Region',
+              relation: {
+                type: 'case',
+              },
+              schema: {
+                oneOf: [
+                  {
+                    const: 'new_york',
+                    title: 'New York',
+                  },
+                  {
+                    const: 'boston',
+                    title: 'Boston',
+                  },
+                  {
+                    const: 'philadelphia',
+                    title: 'Philadelphia',
+                  },
+                ],
+              },
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: { properties: { caseId: { const: '99021' } } },
+                  override: { ui: { hidden: false } },
+                },
+                {
+                  condition: { properties: { caseId: { const: '100034' } } },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+            {
+              name: 'flag',
+              type: 'decision',
+              title: 'Flag',
+              relation: {
+                type: 'case',
+              },
+              schema: {
+                oneOf: [
+                  {
+                    const: 'yes',
+                    title: 'Yes, flag case',
+                  },
+                  {
+                    const: 'no',
+                    title: 'No, case clear',
+                  },
+                ],
+              },
+              ui: {
+                hidden: true,
+              },
+              dependencies: [
+                {
+                  condition: { properties: { caseId: { const: '99021' } } },
+                  override: { ui: { hidden: false } },
+                },
+                {
+                  condition: { properties: { caseId: { const: '100034' } } },
+                  override: { ui: { hidden: false } },
+                },
+              ],
+            },
+          ],
+          ui: {
+            groups: [
+              {
+                fields: ['case_title'],
+              },
+              {
+                fields: ['instructions', 'region', 'flag'],
+              },
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+Images and data are all mocked (and often repeated), but hopefully, you now have an idea of what can be done with Custom Supervision.
+
+![](../media/images/custom_supervision/example.gif)

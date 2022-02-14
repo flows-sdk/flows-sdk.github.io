@@ -14,7 +14,9 @@ The provided "[IDP Starter Example](/pages/examples)" is a basic approach to ext
 ## Prerequisites
 
 - Python 3.7+
-- Unix shell or similar terminal
+> the example below assumes that you are using **bash** or **zsh** for Unix and **cmd** or 
+> **PowerShell** for Windows. For other terminals, check out 
+> [the official venv documentation](https://docs.python.org/3/library/venv.html)
 
 ## Building & Deploying
 
@@ -24,12 +26,38 @@ The provided "[IDP Starter Example](/pages/examples)" is a basic approach to ext
     python3 -m venv venv
     source venv/bin/activate
     ```
+   
+
+
+   <details>
+   <summary><b>For Windows</b></summary>
+   <div><b>cmd.exe</b></div>
+   <div class="highlight"><pre>
+   python -m venv venv
+   venv\Scripts\activate.bat</pre>
+   </div>
+
+   <div><b>PowerShell</b></div>
+   <div class="highlight"><pre>
+   python -m venv venv
+   venv\Scripts\Activate.ps1</pre>
+   </div>
+   </details>
+
 
 2. Install the `flows_sdk` Python package. Contact your CX representative to receive the `.whl` package. The command below should reflect the local path of your package.
 
     ```bash
-    pip install ~/Downloads/flows_sdk/v0.5.1/flows_sdk-0.5.1-py3.whl
+    pip install "~/Downloads/flows_sdk-0.5.1-py3.whl"
     ```
+
+   <details>
+   <summary><b>For Windows</b></summary>
+      
+    <div class="highlight"><pre>
+   pip install <span class="s2">"C:\Downloads\flows_sdk-0.5.1-py3-none-any.whl"</span></pre>
+    </div>
+   </details>
 
 3. Download the [IDP Starter Example](/pages/examples) package, which includes:
 

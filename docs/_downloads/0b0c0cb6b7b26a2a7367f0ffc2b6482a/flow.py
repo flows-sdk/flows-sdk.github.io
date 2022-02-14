@@ -45,8 +45,8 @@ def idp_workflow() -> Flow:
     # information from submission bootstrap block
     case_collation = CaseCollationBlock(
         reference_name='machine_collation',
-        submission=submission_bootstrap.output('result.submission'),
-        cases=submission_bootstrap.output('result.api_params.cases'),
+        submission=submission_bootstrap.output('submission'),
+        cases=submission_bootstrap.output('api_params.cases'),
     )
 
     # Machine classification block automatically matches documents to structured, semi-structured
@@ -56,7 +56,7 @@ def idp_workflow() -> Flow:
     machine_classification = MachineClassificationBlock(
         reference_name='machine_classification',
         submission=case_collation.output('submission'),
-        api_params=submission_bootstrap.output('result.api_params'),
+        api_params=submission_bootstrap.output('api_params'),
         # api_params is some submission processing settings obtained from submission bootstrap
         # that users do not have to worry about
     )
@@ -69,7 +69,7 @@ def idp_workflow() -> Flow:
     manual_classification = ManualClassificationBlock(
         reference_name='manual_classification',
         submission=machine_classification.output('submission'),
-        api_params=submission_bootstrap.output('result.api_params'),
+        api_params=submission_bootstrap.output('api_params'),
         # api_params is some submission processing settings obtained from submission bootstrap
         # that users do not have to worry about
     )
@@ -80,7 +80,7 @@ def idp_workflow() -> Flow:
     machine_identification = MachineIdentificationBlock(
         reference_name='machine_identification',
         submission=manual_classification.output('submission'),
-        api_params=submission_bootstrap.output('result.api_params'),
+        api_params=submission_bootstrap.output('api_params'),
         # api_params is some submission processing settings obtained from submission bootstrap
         # that users do not have to worry about
     )
@@ -94,7 +94,7 @@ def idp_workflow() -> Flow:
     manual_identification = ManualIdentificationBlock(
         reference_name='manual_identification',
         submission=machine_identification.output('submission'),
-        api_params=submission_bootstrap.output('result.api_params'),
+        api_params=submission_bootstrap.output('api_params'),
         # api_params is some submission processing settings obtained from submission bootstrap
         # that users do not have to worry about
     )
@@ -105,7 +105,7 @@ def idp_workflow() -> Flow:
     machine_transcription = MachineTranscriptionBlock(
         reference_name='machine_transcription',
         submission=manual_identification.output('submission'),
-        api_params=submission_bootstrap.output('result.api_params'),
+        api_params=submission_bootstrap.output('api_params'),
         # api_params is some submission processing settings obtained from submission bootstrap
         # that users do not have to worry about
     )
@@ -117,7 +117,7 @@ def idp_workflow() -> Flow:
     manual_transcription = ManualTranscriptionBlock(
         reference_name='manual_transcription',
         submission=machine_transcription.output('submission'),
-        api_params=submission_bootstrap.output('result.api_params'),
+        api_params=submission_bootstrap.output('api_params'),
         # api_params is some submission processing settings obtained from submission bootstrap
         # that users do not have to worry about
     )
@@ -128,7 +128,7 @@ def idp_workflow() -> Flow:
     flexible_extraction = FlexibleExtractionBlock(
         reference_name='flexible_extraction',
         submission=manual_transcription.output('submission'),
-        api_params=submission_bootstrap.output('result.api_params'),
+        api_params=submission_bootstrap.output('api_params'),
         # api_params is some submission processing settings obtained from submission bootstrap
         # that users do not have to worry about
     )
@@ -182,7 +182,7 @@ def idp_workflow() -> Flow:
     # In this example, no output block is instantiated (blocks=[])
     # Setting up output blocks via UI and leaving this empty is recommended
     outputs = IDPOutputsBlock(
-        inputs={'submission': submission_bootstrap.output('result.submission')}, blocks=[]
+        inputs={'submission': submission_bootstrap.output('submission')}, blocks=[]
     )
 
     # Trigger block allows users to send data to idp flow via sources other than the User Interface

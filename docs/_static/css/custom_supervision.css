@@ -1,0 +1,26 @@
+/* Image sizes for Custom Supervision */
+img[alt=document_false_case_false] { width: 200px; }
+img[alt=document_true_case_false] { width: 200px; }
+img[alt=document_false_case_true] { width: 200px; }
+img[alt=document_true_case_true] { width: 200px; }
+img[alt=document_title] { width: 200px; }
+img[alt=case_title] { width: 200px; }
+img[alt=text_block_field] { width: 200px; }
+img[alt=currency_not_highlighted] { width: 200px; }
+img[alt=currency_highlighted] { width: 200px; }
+img[alt=currency_illegible] { width: 200px; }
+img[alt=checkbox] { width: 200px; }
+img[alt=decision_default] { width: 200px; }
+img[alt=decision_open] { width: 200px; }
+img[alt=decision_from_database] { width: 200px; }
+img[alt=decision_from_database_open] { width: 200px; }
+img[alt=default_multi] { width: 200px; }
+img[alt=open_multi] { width: 200px; }
+img[alt=case_default] { width: 300px; }
+img[alt=case_edit] { width: 300px; }
+img[alt=case_existing] { width: 300px; }
+img[alt=case_new] { width: 300px; }
+img[alt=case_assigned] { width: 300px; }
+img[alt=with_titles] { width: 200px; }
+img[alt=no_titles] { width: 200px; }
+img[alt=missing_fields] { width: 200px; }

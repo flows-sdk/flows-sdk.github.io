@@ -4,11 +4,12 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Examples &mdash; Flows SDK 0.5.1 documentation</title>
+  <title>Examples &mdash; Flows SDK 0.7.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom_supervision.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -33,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> Flows SDK
           </a>
               <div class="version">
-                0.5.1
+                0.7.0
 
               </div>
 <div role="search">
@@ -54,6 +55,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#idp-w-code-block">IDP w/ Code Block</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#invoice-validation">Invoice Validation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pdf-redaction">PDF Redaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#full-page-transcription">Full Page Transcription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#idp-custom-supervision">IDP Custom Supervision</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#code-snippets">Code Snippets</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#how-do-i-iterate-over-multiple-documents-in-a-submission">How do I iterate over multiple documents in a submission?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#how-do-i-compare-fields-across-different-documents">How do I compare fields across different documents?</a></li>
@@ -64,6 +67,7 @@
 <li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="idp_32.html">IDP Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_supervision.html">Custom Supervision</a></li>
 </ul>
 
         </div>
@@ -145,6 +149,20 @@
 <td><img alt="../_images/checkmark.png" class="checkmark" src="../_images/checkmark.png" />
 </td>
 <td><p><a class="reference download internal" download="" href="../_downloads/eff71ec3b851e59f841e9a7789327f57/pdf_redaction_v32.zip"><code class="xref download docutils literal notranslate"><span class="pre">pdf_redaction.zip</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#full-page-transcription"><span class="std std-ref">Full Page Transcription</span></a></p></td>
+<td><p>Transcribes text from documents.</p></td>
+<td></td>
+<td></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/4eb03934793259d549143f6785d087eb/flow.py"><code class="xref download docutils literal notranslate"><span class="pre">idp_fpt.py</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#idp-custom-supervision"><span class="std std-ref">IDP Custom Supervision</span></a></p></td>
+<td><p>Sends all fields from the submission to custom supervision.</p></td>
+<td><img alt="../_images/checkmark.png" class="checkmark" src="../_images/checkmark.png" />
+</td>
+<td><img alt="../_images/checkmark.png" class="checkmark" src="../_images/checkmark.png" />
+</td>
+<td><p><a class="reference download internal" download="" href="../_downloads/f31ee5661d0b27225378adf5d7fe9e51/custom_supervision_v32.zip"><code class="xref download docutils literal notranslate"><span class="pre">custom_supervision_v32.zip</span></code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -267,8 +285,8 @@
     <span class="c1"># information from submission bootstrap block</span>
     <span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_collation&#39;</span><span class="p">,</span>
-        <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">),</span>
-        <span class="n">cases</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params.cases&#39;</span><span class="p">),</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">cases</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params.cases&#39;</span><span class="p">),</span>
     <span class="p">)</span>
 
     <span class="c1"># Machine classification block automatically matches documents to structured, semi-structured</span>
@@ -278,7 +296,7 @@
     <span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">case_collation</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="n">rotation_correction_enabled</span><span class="o">=</span><span class="n">idp_wf_config</span><span class="o">.</span><span class="n">rotation_correction_enabled</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -290,7 +308,7 @@
     <span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
     <span class="p">)</span>
 
     <span class="c1"># Machine identification automatically identify fields and tables in the submission</span>
@@ -299,7 +317,7 @@
     <span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
     <span class="p">)</span>
 
     <span class="c1"># Manual identification allows keyers to complete field identification or table identification</span>
@@ -311,7 +329,7 @@
     <span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="n">task_restrictions</span><span class="o">=</span><span class="n">idp_wf_config</span><span class="o">.</span><span class="n">manual_identification_config</span><span class="o">.</span><span class="n">task_restrictions</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -321,7 +339,7 @@
     <span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
     <span class="p">)</span>
 
     <span class="c1"># Manual transcription lets your keyers manually enter the text found in fields or tables</span>
@@ -331,7 +349,7 @@
     <span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="n">supervision_transcription_masking</span><span class="o">=</span><span class="p">(</span>
             <span class="n">idp_wf_config</span><span class="o">.</span><span class="n">manual_transcription_config</span><span class="o">.</span><span class="n">supervision_transcription_masking</span>
         <span class="p">),</span>
@@ -347,7 +365,7 @@
     <span class="n">flexible_extraction</span> <span class="o">=</span> <span class="n">FlexibleExtractionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;flexible_extraction&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="n">supervision_transcription_masking</span><span class="o">=</span><span class="p">(</span>
             <span class="n">idp_wf_config</span><span class="o">.</span><span class="n">flexible_extraction_config</span><span class="o">.</span><span class="n">supervision_transcription_masking</span>
         <span class="p">),</span>
@@ -367,7 +385,7 @@
     <span class="c1"># for downstream processing</span>
     <span class="c1"># In this example, this is an empty output block that does not do anything by default</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">IDPOutputsBlock</span><span class="p">(</span>
-        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">)}</span>
+        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)}</span>
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Flow</span><span class="p">(</span>
@@ -458,8 +476,8 @@
     <span class="c1"># information from submission bootstrap block</span>
     <span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_collation&#39;</span><span class="p">,</span>
-        <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">),</span>
-        <span class="n">cases</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params.cases&#39;</span><span class="p">),</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">cases</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params.cases&#39;</span><span class="p">),</span>
     <span class="p">)</span>
 
     <span class="c1"># Machine classification block automatically matches documents to structured, semi-structured</span>
@@ -469,7 +487,7 @@
     <span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">case_collation</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -482,7 +500,7 @@
     <span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -493,7 +511,7 @@
     <span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -507,7 +525,7 @@
     <span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -518,7 +536,7 @@
     <span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -530,7 +548,7 @@
     <span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -541,7 +559,7 @@
     <span class="n">flexible_extraction</span> <span class="o">=</span> <span class="n">FlexibleExtractionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;flexible_extraction&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -595,7 +613,7 @@
     <span class="c1"># In this example, no output block is instantiated (blocks=[])</span>
     <span class="c1"># Setting up output blocks via UI and leaving this empty is recommended</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">IDPOutputsBlock</span><span class="p">(</span>
-        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">)},</span> <span class="n">blocks</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)},</span> <span class="n">blocks</span><span class="o">=</span><span class="p">[]</span>
     <span class="p">)</span>
 
     <span class="c1"># Trigger block allows users to send data to idp flow via sources other than the User Interface</span>
@@ -719,8 +737,8 @@
     <span class="c1"># information from submission bootstrap block</span>
     <span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_collation&#39;</span><span class="p">,</span>
-        <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">),</span>
-        <span class="n">cases</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params.cases&#39;</span><span class="p">),</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">cases</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params.cases&#39;</span><span class="p">),</span>
     <span class="p">)</span>
 
     <span class="c1"># Machine classification block automatically matches documents to structured, semi-structured</span>
@@ -730,7 +748,7 @@
     <span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">case_collation</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -743,7 +761,7 @@
     <span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -754,7 +772,7 @@
     <span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -768,7 +786,7 @@
     <span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -779,7 +797,7 @@
     <span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -791,7 +809,7 @@
     <span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -823,7 +841,7 @@
 
         <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
 
-        <span class="kn">import</span> <span class="nn">numpy</span>
+        <span class="kn">import</span> <span class="nn">numpy</span>  <span class="c1"># type: ignore</span>
         <span class="kn">import</span> <span class="nn">logging</span>
 
         <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -1437,7 +1455,7 @@
         <span class="n">code</span><span class="o">=</span><span class="n">_perform_line_item_validations</span><span class="p">,</span>
         <span class="n">code_input</span><span class="o">=</span><span class="p">{</span>
             <span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">manual_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-            <span class="s1">&#39;api_params_ref&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;api_params_ref&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
             <span class="s1">&#39;wf_param_skip_fleex&#39;</span><span class="p">:</span> <span class="n">workflow_input</span><span class="p">(</span><span class="n">CustomSettings</span><span class="o">.</span><span class="n">SkipFlexibleExtraction</span><span class="p">),</span>
             <span class="s1">&#39;wf_param_ignore_transcribed&#39;</span><span class="p">:</span> <span class="n">workflow_input</span><span class="p">(</span>
                 <span class="n">CustomSettings</span><span class="o">.</span><span class="n">IgnoreLineItemTranscription</span>
@@ -1453,7 +1471,7 @@
     <span class="n">flexible_extraction</span> <span class="o">=</span> <span class="n">FlexibleExtractionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;flexible_extraction&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">line_item_validation</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -1543,7 +1561,7 @@
     <span class="c1"># for downstream processing</span>
     <span class="c1"># In this example, this is an empty output block that does not do anything by default</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">IDPOutputsBlock</span><span class="p">(</span>
-        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">)}</span>
+        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)}</span>
     <span class="p">)</span>
 
     <span class="n">invoice_flow</span> <span class="o">=</span> <span class="n">Flow</span><span class="p">(</span>
@@ -1654,8 +1672,8 @@
     <span class="c1"># information from submission bootstrap block</span>
     <span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_collation&#39;</span><span class="p">,</span>
-        <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">),</span>
-        <span class="n">cases</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params.cases&#39;</span><span class="p">),</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">cases</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params.cases&#39;</span><span class="p">),</span>
     <span class="p">)</span>
 
     <span class="c1"># Machine classification block automatically matches documents to structured, semi-structured</span>
@@ -1665,7 +1683,7 @@
     <span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">case_collation</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -1678,7 +1696,7 @@
     <span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_classification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -1689,7 +1707,7 @@
     <span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -1703,7 +1721,7 @@
     <span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_identification&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -1714,7 +1732,7 @@
     <span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -1726,7 +1744,7 @@
     <span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_transcription&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">machine_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -1737,7 +1755,7 @@
     <span class="n">flexible_extraction</span> <span class="o">=</span> <span class="n">FlexibleExtractionBlock</span><span class="p">(</span>
         <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;flexible_extraction&#39;</span><span class="p">,</span>
         <span class="n">submission</span><span class="o">=</span><span class="n">manual_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
-        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.api_params&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
         <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
         <span class="c1"># that users do not have to worry about</span>
     <span class="p">)</span>
@@ -1760,7 +1778,7 @@
 
     <span class="k">def</span> <span class="nf">_redact_pdf</span><span class="p">(</span><span class="n">submission</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">inspect</span>
-        <span class="kn">import</span> <span class="nn">cv2</span>
+        <span class="kn">import</span> <span class="nn">cv2</span>  <span class="c1"># type: ignore</span>
         <span class="kn">import</span> <span class="nn">tempfile</span>
         <span class="kn">import</span> <span class="nn">os</span>
         <span class="kn">import</span> <span class="nn">subprocess</span>
@@ -1958,7 +1976,7 @@
     <span class="c1"># for downstream processing</span>
     <span class="c1"># In this example, this is an empty output block that does not do anything by default</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">IDPOutputsBlock</span><span class="p">(</span>
-        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;result.submission&#39;</span><span class="p">)}</span>
+        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)}</span>
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Flow</span><span class="p">(</span>
@@ -1991,6 +2009,400 @@
         <span class="nb">input</span><span class="o">=</span><span class="n">get_idp_wf_inputs</span><span class="p">(</span><span class="n">idp_wf_config</span><span class="p">),</span>
         <span class="n">description</span><span class="o">=</span><span class="s1">&#39;PDF Redaction based on Field Configuration&#39;</span><span class="p">,</span>
         <span class="n">triggers</span><span class="o">=</span><span class="n">IDPTriggers</span><span class="p">(),</span>
+        <span class="n">output</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_complete</span><span class="o">.</span><span class="n">output</span><span class="p">()},</span>
+    <span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">export_flow</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span><span class="n">entry_point_flow</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="full-page-transcription">
+<h2>Full Page Transcription<a class="headerlink" href="#full-page-transcription" title="Permalink to this headline"></a></h2>
+<p>This example transcribes text from documents.</p>
+<p><a class="reference download internal" download="" href="../_downloads/4eb03934793259d549143f6785d087eb/flow.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">idp_fpt.py</span></code></a></p>
+<img alt="../_images/idp_fpt.png" src="../_images/idp_fpt.png" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span>
+
+<span class="kn">from</span> <span class="nn">flows_sdk.flows</span> <span class="kn">import</span> <span class="n">Flow</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.implementations.idp_v32.idp_blocks</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">IDPFullPageTranscriptionBlock</span><span class="p">,</span>
+    <span class="n">IDPImageCorrectionBlock</span><span class="p">,</span>
+    <span class="n">IDPOutputsBlock</span><span class="p">,</span>
+    <span class="n">SubmissionBootstrapBlock</span><span class="p">,</span>
+    <span class="n">SubmissionCompleteBlock</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.implementations.idp_v32.idp_values</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">IDPManifest</span><span class="p">,</span>
+    <span class="n">IDPTriggers</span><span class="p">,</span>
+    <span class="n">get_idp_wf_config</span><span class="p">,</span>
+    <span class="n">get_idp_wf_inputs</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.package_utils</span> <span class="kn">import</span> <span class="n">export_flow</span>
+
+
+<span class="k">def</span> <span class="nf">entry_point_flow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Flow</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">idp_fpt_workflow</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">idp_fpt_workflow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Flow</span><span class="p">:</span>
+    <span class="n">idp_wf_config</span> <span class="o">=</span> <span class="n">get_idp_wf_config</span><span class="p">()</span>
+
+    <span class="c1"># The idp flow basically processes, modifies and propagates the submission object from</span>
+    <span class="c1"># block to block</span>
+    <span class="c1"># Each block&#39;s processing result is usually included in the submission object</span>
+
+    <span class="c1"># Submission bootstrap block initializes the submission object and prepares external images</span>
+    <span class="c1"># or other submission data if needed</span>
+    <span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapBlock</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
+
+    <span class="n">image_correction</span> <span class="o">=</span> <span class="n">IDPImageCorrectionBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;image_correction&#39;</span><span class="p">,</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">full_page_transcription</span> <span class="o">=</span> <span class="n">IDPFullPageTranscriptionBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;full_page_transcription&#39;</span><span class="p">,</span> <span class="n">submission</span><span class="o">=</span><span class="n">image_correction</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Submission complete block finalizes submission processing and updates reporting data</span>
+    <span class="c1"># Every flow needs a complete block because it initiates Quality Assurance tasks and</span>
+    <span class="c1"># changes the submission&#39;s status to &quot;Complete&quot;</span>
+    <span class="c1"># In this example, submission complete block receives the submission object from</span>
+    <span class="c1"># marked_as_complete custom code block</span>
+    <span class="n">submission_complete</span> <span class="o">=</span> <span class="n">SubmissionCompleteBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;complete_submission&#39;</span><span class="p">,</span>
+        <span class="n">payload</span><span class="o">=</span><span class="n">full_page_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">full_page_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Output block allows users to send data extracted by this idp flow to other systems</span>
+    <span class="c1"># for downstream processing</span>
+    <span class="c1"># In this example, no output block is instantiated (blocks=[])</span>
+    <span class="c1"># Setting up output blocks via UI and leaving this empty is recommended</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">IDPOutputsBlock</span><span class="p">(</span>
+        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)},</span> <span class="n">blocks</span><span class="o">=</span><span class="p">[]</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Trigger block allows users to send data to idp flow via sources other than the User Interface</span>
+    <span class="c1"># In this example, no trigger block is instantiated (blocks=[])</span>
+    <span class="c1"># Setting up trigger blocks via UI and leaving this empty is recommended</span>
+    <span class="n">triggers</span> <span class="o">=</span> <span class="n">IDPTriggers</span><span class="p">(</span><span class="n">blocks</span><span class="o">=</span><span class="p">[])</span>
+
+    <span class="k">return</span> <span class="n">Flow</span><span class="p">(</span>
+        <span class="c1"># Flows should have a deterministic UUID ensuring cross-system consistency</span>
+        <span class="n">uuid</span><span class="o">=</span><span class="n">UUID</span><span class="p">(</span><span class="s1">&#39;0dd837ae-44da-425a-b4be-9ffa3fc40eab&#39;</span><span class="p">),</span>
+        <span class="n">owner_email</span><span class="o">=</span><span class="s1">&#39;harry.yu@hyperscience.com&#39;</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;IDP Full Page Transcription Flow Example (V32)&#39;</span><span class="p">,</span>
+        <span class="c1"># Flow identifiers are globally unique</span>
+        <span class="n">manifest</span><span class="o">=</span><span class="n">IDPManifest</span><span class="p">(</span><span class="n">flow_identifier</span><span class="o">=</span><span class="s1">&#39;IDP_FULL_PAGE_TRANSCRIPTION_V32_FLOW_EXAMPLE&#39;</span><span class="p">),</span>
+        <span class="n">triggers</span><span class="o">=</span><span class="n">triggers</span><span class="p">,</span>
+        <span class="c1"># It is important to include all blocks that are instantiated here in the blocks</span>
+        <span class="c1"># field and make sure they follow the order of the flow. For example, if machine</span>
+        <span class="c1"># classification depends on the output of case collation, then case_collation must</span>
+        <span class="c1"># come before machine_classification in this blocks array</span>
+        <span class="n">blocks</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">submission_bootstrap</span><span class="p">,</span>
+            <span class="n">image_correction</span><span class="p">,</span>
+            <span class="n">full_page_transcription</span><span class="p">,</span>
+            <span class="n">submission_complete</span><span class="p">,</span>
+            <span class="n">outputs</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="nb">input</span><span class="o">=</span><span class="n">get_idp_wf_inputs</span><span class="p">(</span><span class="n">idp_wf_config</span><span class="p">),</span>
+        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;IDP Full Page Transcription Flow Example (V32)&#39;</span><span class="p">,</span>
+        <span class="n">output</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_complete</span><span class="o">.</span><span class="n">output</span><span class="p">()},</span>
+    <span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">export_flow</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span><span class="n">entry_point_flow</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="idp-custom-supervision">
+<h2>IDP Custom Supervision<a class="headerlink" href="#idp-custom-supervision" title="Permalink to this headline"></a></h2>
+<p>This example sends all fields in the submission to Custom Supervision.</p>
+<p><a class="reference download internal" download="" href="../_downloads/f31ee5661d0b27225378adf5d7fe9e51/custom_supervision_v32.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">custom_supervision_v32.zip</span></code></a></p>
+<img alt="../_images/idp_fpt.png" src="../_images/idp_fpt.png" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span>
+
+<span class="kn">from</span> <span class="nn">flows_sdk.blocks</span> <span class="kn">import</span> <span class="n">CodeBlock</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.flows</span> <span class="kn">import</span> <span class="n">Flow</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.implementations.idp_v32.idp_blocks</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CaseCollationBlock</span><span class="p">,</span>
+    <span class="n">IDPOutputsBlock</span><span class="p">,</span>
+    <span class="n">IdpCustomSupervisionBlock</span><span class="p">,</span>
+    <span class="n">MachineClassificationBlock</span><span class="p">,</span>
+    <span class="n">MachineIdentificationBlock</span><span class="p">,</span>
+    <span class="n">MachineTranscriptionBlock</span><span class="p">,</span>
+    <span class="n">ManualClassificationBlock</span><span class="p">,</span>
+    <span class="n">ManualIdentificationBlock</span><span class="p">,</span>
+    <span class="n">ManualTranscriptionBlock</span><span class="p">,</span>
+    <span class="n">SubmissionBootstrapBlock</span><span class="p">,</span>
+    <span class="n">SubmissionCompleteBlock</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.implementations.idp_v32.idp_values</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">IDPManifest</span><span class="p">,</span>
+    <span class="n">IDPTriggers</span><span class="p">,</span>
+    <span class="n">get_idp_wf_config</span><span class="p">,</span>
+    <span class="n">get_idp_wf_inputs</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">flows_sdk.package_utils</span> <span class="kn">import</span> <span class="n">export_flow</span>
+
+
+<span class="k">def</span> <span class="nf">entry_point_flow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Flow</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">idp_workflow</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">idp_workflow</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Flow</span><span class="p">:</span>
+    <span class="n">idp_wf_config</span> <span class="o">=</span> <span class="n">get_idp_wf_config</span><span class="p">()</span>
+
+    <span class="c1"># The idp flow basically processes, modifies and propagates the submission object from</span>
+    <span class="c1"># block to block</span>
+    <span class="c1"># Each block&#39;s processing result is usually included in the submission object</span>
+
+    <span class="c1"># Submission bootstrap block initializes the submission object and prepares external images</span>
+    <span class="c1"># or other submission data if needed</span>
+    <span class="n">submission_bootstrap</span> <span class="o">=</span> <span class="n">SubmissionBootstrapBlock</span><span class="p">(</span><span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;submission_bootstrap&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Case collation block groups files, documents and pages (from the submission) into cases</span>
+    <span class="c1"># In this example, case collation block receives the submission object and the cases</span>
+    <span class="c1"># information from submission bootstrap block</span>
+    <span class="n">case_collation</span> <span class="o">=</span> <span class="n">CaseCollationBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_collation&#39;</span><span class="p">,</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">cases</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params.cases&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Machine classification block automatically matches documents to structured, semi-structured</span>
+    <span class="c1"># or additional layouts</span>
+    <span class="c1"># In this example, machine classification block receives the submission object from</span>
+    <span class="c1"># case collation block</span>
+    <span class="n">machine_classification</span> <span class="o">=</span> <span class="n">MachineClassificationBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_classification&#39;</span><span class="p">,</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">case_collation</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
+        <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
+        <span class="c1"># that users do not have to worry about</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Manual classification block allows keyers to manually match submissions to their layouts.</span>
+    <span class="c1"># Keyers may perform manual classification if machine classification cannot automatically</span>
+    <span class="c1"># match a submission to a layout with high confidence</span>
+    <span class="c1"># In this example, manual classification block receives the submission object from machine</span>
+    <span class="c1"># classification block</span>
+    <span class="n">manual_classification</span> <span class="o">=</span> <span class="n">ManualClassificationBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_classification&#39;</span><span class="p">,</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">machine_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
+        <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
+        <span class="c1"># that users do not have to worry about</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Machine identification automatically identify fields and tables in the submission</span>
+    <span class="c1"># In this example, machine identification block receives the submission object from manual</span>
+    <span class="c1"># classification</span>
+    <span class="n">machine_identification</span> <span class="o">=</span> <span class="n">MachineIdentificationBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_identification&#39;</span><span class="p">,</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">manual_classification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
+        <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
+        <span class="c1"># that users do not have to worry about</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Manual identification allows keyers to complete field identification or table identification</span>
+    <span class="c1"># tasks, where they draw bounding boxes around the contents of certain fields, table columns</span>
+    <span class="c1"># or table rows. This identification process ensures that the system will be able to</span>
+    <span class="c1"># transcribe the correct content in the upcoming transcription process</span>
+    <span class="c1"># In this example, manual identification block receives the submission object from machine</span>
+    <span class="c1"># identification</span>
+    <span class="n">manual_identification</span> <span class="o">=</span> <span class="n">ManualIdentificationBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_identification&#39;</span><span class="p">,</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">machine_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
+        <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
+        <span class="c1"># that users do not have to worry about</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Machine transcription automatically transcribes the content of your submission</span>
+    <span class="c1"># In this example, machine identification block receives the submission object from manual</span>
+    <span class="c1"># identification</span>
+    <span class="n">machine_transcription</span> <span class="o">=</span> <span class="n">MachineTranscriptionBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;machine_transcription&#39;</span><span class="p">,</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">manual_identification</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
+        <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
+        <span class="c1"># that users do not have to worry about</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Manual transcription lets your keyers manually enter the text found in fields or tables</span>
+    <span class="c1"># that could not be automatically transcribed</span>
+    <span class="c1"># In this example, manual transcription block receives the submission object from machine</span>
+    <span class="c1"># transcription block</span>
+    <span class="n">manual_transcription</span> <span class="o">=</span> <span class="n">ManualTranscriptionBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;manual_transcription&#39;</span><span class="p">,</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">machine_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">api_params</span><span class="o">=</span><span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;api_params&#39;</span><span class="p">),</span>
+        <span class="c1"># api_params is some submission processing settings obtained from submission bootstrap</span>
+        <span class="c1"># that users do not have to worry about</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Here we define a function for a custom code block that gets all fields from a submission</span>
+    <span class="c1"># to display them in custom supervision. It makes sure they appear only when an appropriate</span>
+    <span class="c1"># layout has been selected by using the dependencies settings.</span>
+    <span class="k">def</span> <span class="nf">_get_fields_for_custom_sv_fn</span><span class="p">(</span><span class="n">submission</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="n">template_fields</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">submission</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;documents&#39;</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;document_fields&#39;</span><span class="p">,</span> <span class="p">[]),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">field</span><span class="p">[</span><span class="s1">&#39;layout_field_uuid&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">field</span><span class="p">[</span><span class="s1">&#39;layout_field_uuid&#39;</span><span class="p">])</span>
+                <span class="n">template_fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">field</span><span class="p">[</span><span class="s1">&#39;field_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">field</span><span class="p">[</span><span class="s1">&#39;layout_field_uuid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;transcription&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;layout_field_id&#39;</span><span class="p">:</span> <span class="n">field</span><span class="p">[</span><span class="s1">&#39;layout_field_uuid&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;ui&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;hidden&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+                        <span class="s1">&#39;dependencies&#39;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s1">&#39;condition&#39;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;layoutId&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;const&#39;</span><span class="p">:</span> <span class="n">doc</span><span class="p">[</span><span class="s1">&#39;layout_uuid&#39;</span><span class="p">]}}</span>
+                                <span class="p">},</span>
+                                <span class="s1">&#39;override&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;ui&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;hidden&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}},</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                    <span class="p">}</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">template_fields</span>
+
+    <span class="c1"># Create our Custom Code block using our function from above.</span>
+    <span class="n">get_fields_for_custom_sv</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;get_fields_for_custom_sv&#39;</span><span class="p">,</span>
+        <span class="n">code</span><span class="o">=</span><span class="n">_get_fields_for_custom_sv_fn</span><span class="p">,</span>
+        <span class="n">code_input</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">manual_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)},</span>
+        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Get All Fields&#39;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Find all fields present in this submission to include in Custom Supervision&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Using the output of our Custom Code block, we can construct our three column template</span>
+    <span class="c1"># to define our Custom Supervision task.</span>
+    <span class="n">format_sv_template</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;format_sv_template&#39;</span><span class="p">,</span>
+        <span class="n">code</span><span class="o">=</span><span class="k">lambda</span> <span class="n">fields</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;three_column_template&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;thumbnail&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;group_by_document&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;group_by_case&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Transcribe Fields&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;All Identified Fields&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="n">fields</span><span class="p">,</span>
+                    <span class="p">},</span>
+                    <span class="p">{</span>
+                        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Decision and Case&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;Make Decision - Add Case&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;document_decision&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;decision&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Document Decision&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;relation&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;document&#39;</span><span class="p">},</span>
+                                <span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s1">&#39;oneOf&#39;</span><span class="p">:</span> <span class="p">[</span>
+                                        <span class="p">{</span><span class="s1">&#39;const&#39;</span><span class="p">:</span> <span class="s1">&#39;accept&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Accept Document&#39;</span><span class="p">},</span>
+                                        <span class="p">{</span><span class="s1">&#39;const&#39;</span><span class="p">:</span> <span class="s1">&#39;reject&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Reject Document&#39;</span><span class="p">},</span>
+                                    <span class="p">]</span>
+                                <span class="p">},</span>
+                            <span class="p">},</span>
+                            <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;assign_to_case&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;case_dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">},</span>
+                        <span class="p">],</span>
+                    <span class="p">},</span>
+                <span class="p">],</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="n">code_input</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="n">get_fields_for_custom_sv</span><span class="o">.</span><span class="n">output</span><span class="p">()</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Create our Custom Supervision task using the template we constructed via Custom Code blocks.</span>
+    <span class="c1"># This task will have all fields from the submission so that the user can edit them, as well</span>
+    <span class="c1"># as a document level decision (&quot;accept&quot; or &quot;reject&quot; the document). It will also have the</span>
+    <span class="c1"># option to add a document to a case.</span>
+    <span class="n">idp_custom_supervision</span> <span class="o">=</span> <span class="n">IdpCustomSupervisionBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;idp_custom_supervision&#39;</span><span class="p">,</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">manual_transcription</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">task_purpose</span><span class="o">=</span><span class="s1">&#39;example_custom_supervision&#39;</span><span class="p">,</span>
+        <span class="n">supervision_template</span><span class="o">=</span><span class="n">format_sv_template</span><span class="o">.</span><span class="n">output</span><span class="p">(),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Case collation block groups files, documents and pages (from the submission) into cases</span>
+    <span class="c1"># In this example, case collation block receives the submission object and the cases</span>
+    <span class="c1"># information from the custom supervision block. This block is required after Custom</span>
+    <span class="c1"># Supervision in order to propagate case ID changes to the IDP database.</span>
+    <span class="n">custom_supervision_collation</span> <span class="o">=</span> <span class="n">CaseCollationBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;custom_supervision_collation&#39;</span><span class="p">,</span>
+        <span class="n">submission</span><span class="o">=</span><span class="n">idp_custom_supervision</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">),</span>
+        <span class="n">cases</span><span class="o">=</span><span class="n">idp_custom_supervision</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;cases&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Submission complete block finalizes submission processing and updates reporting data</span>
+    <span class="c1"># Every flow needs a complete block because it initiates Quality Assurance tasks and</span>
+    <span class="c1"># changes the submission&#39;s status to &quot;Complete&quot;</span>
+    <span class="c1"># In this example, submission complete block receives the submission object from</span>
+    <span class="c1"># marked_as_complete custom code block</span>
+    <span class="n">submission_complete</span> <span class="o">=</span> <span class="n">SubmissionCompleteBlock</span><span class="p">(</span>
+        <span class="n">reference_name</span><span class="o">=</span><span class="s1">&#39;complete_submission&#39;</span><span class="p">,</span> <span class="n">submission</span><span class="o">=</span><span class="n">custom_supervision_collation</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Output block allows users to send data extracted by this idp flow to other systems</span>
+    <span class="c1"># for downstream processing</span>
+    <span class="c1"># In this example, no output block is instantiated (blocks=[])</span>
+    <span class="c1"># Setting up output blocks via UI and leaving this empty is recommended</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">IDPOutputsBlock</span><span class="p">(</span>
+        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_bootstrap</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;submission&#39;</span><span class="p">)},</span> <span class="n">blocks</span><span class="o">=</span><span class="p">[]</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Trigger block allows users to send data to idp flow via sources other than the User Interface</span>
+    <span class="c1"># In this example, no trigger block is instantiated (blocks=[])</span>
+    <span class="c1"># Setting up trigger blocks via UI and leaving this empty is recommended</span>
+    <span class="n">triggers</span> <span class="o">=</span> <span class="n">IDPTriggers</span><span class="p">(</span><span class="n">blocks</span><span class="o">=</span><span class="p">[])</span>
+
+    <span class="k">return</span> <span class="n">Flow</span><span class="p">(</span>
+        <span class="c1"># Flows should have a deterministic UUID ensuring cross-system consistency</span>
+        <span class="n">uuid</span><span class="o">=</span><span class="n">UUID</span><span class="p">(</span><span class="s1">&#39;1b2c9a46-1701-40f6-93ba-6bec910638cd&#39;</span><span class="p">),</span>
+        <span class="n">owner_email</span><span class="o">=</span><span class="s1">&#39;benjamin.brittain@hyperscience.com&#39;</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;IDP Custom Supervision Block Flow Example (V32)&#39;</span><span class="p">,</span>
+        <span class="c1"># Flow identifiers are globally unique</span>
+        <span class="n">manifest</span><span class="o">=</span><span class="n">IDPManifest</span><span class="p">(</span><span class="n">flow_identifier</span><span class="o">=</span><span class="s1">&#39;IDP_CUSTOM_SUPERVISION_V32_EXAMPLE&#39;</span><span class="p">),</span>
+        <span class="n">triggers</span><span class="o">=</span><span class="n">triggers</span><span class="p">,</span>
+        <span class="c1"># It is important to include all blocks that are instantiated here in the blocks</span>
+        <span class="c1"># field and make sure they follow the order of the flow. For example, if machine</span>
+        <span class="c1"># classification depends on the output of case collation, then case_collation must</span>
+        <span class="c1"># come before machine_classification in this blocks array</span>
+        <span class="n">blocks</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">submission_bootstrap</span><span class="p">,</span>
+            <span class="n">case_collation</span><span class="p">,</span>
+            <span class="n">machine_classification</span><span class="p">,</span>
+            <span class="n">manual_classification</span><span class="p">,</span>
+            <span class="n">machine_identification</span><span class="p">,</span>
+            <span class="n">manual_identification</span><span class="p">,</span>
+            <span class="n">machine_transcription</span><span class="p">,</span>
+            <span class="n">manual_transcription</span><span class="p">,</span>
+            <span class="n">get_fields_for_custom_sv</span><span class="p">,</span>
+            <span class="n">format_sv_template</span><span class="p">,</span>
+            <span class="n">idp_custom_supervision</span><span class="p">,</span>
+            <span class="n">custom_supervision_collation</span><span class="p">,</span>
+            <span class="n">submission_complete</span><span class="p">,</span>
+            <span class="n">outputs</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="nb">input</span><span class="o">=</span><span class="n">get_idp_wf_inputs</span><span class="p">(</span><span class="n">idp_wf_config</span><span class="p">),</span>
+        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;IDP Custom Supervision - All Fields (V32)&#39;</span><span class="p">,</span>
         <span class="n">output</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;submission&#39;</span><span class="p">:</span> <span class="n">submission_complete</span><span class="o">.</span><span class="n">output</span><span class="p">()},</span>
     <span class="p">)</span>
 

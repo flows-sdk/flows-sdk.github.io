@@ -14,6 +14,7 @@ Our documentation consists of the following sections:
 * :ref:`pages/intro:Introduction to Flows SDK`: Explanations of system architecture, `flows_sdk` library structure, and basic concepts.
 * :ref:`pages/tutorial:Tutorial`: A quickstart guide to deploying your first flow to the Hyperscience Platform.
 * :ref:`pages/examples:Examples`: A library of fully executable flow examples. These can be used as templates for developing your own flows.
+* :ref:`pages/custom_supervision:Custom Supervision`: A guide to configuring Custom Supervision templates.
 * :ref:`pages/faq:FAQ`: Answers to frequently asked quesitons.
 * :ref:`pages/source-docs:Source Documentation` & :ref:`pages/idp_32:IDP Library`: Definitions for all classes and functions in the `flows_sdk` library.
 
@@ -31,3 +32,4 @@ We encourage you to complete the :ref:`pages/tutorial:Tutorial` as the best way 
    pages/faq
    pages/source-docs
    pages/idp_32
+   pages/custom_supervision
