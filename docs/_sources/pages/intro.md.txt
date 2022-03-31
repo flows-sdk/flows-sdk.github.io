@@ -25,13 +25,13 @@ a link to this library, provided by your CX representative. Additional dependenc
 
 ## Library Structure
 
-The `flows_sdk` library contains everything you need to build on the Hyperscience Platform. As illustrated below, it contains the following top-level sublibraries: `flows`, `blocks`, and `implementations`. Documentation is split into [Source Documentation](source-docs.rst) and the [IDP Library](idp_32.md).
+The `flows_sdk` library contains everything you need to build on the Hyperscience Platform. As illustrated below, it contains the following top-level sublibraries: `flows`, `blocks`, and `implementations`. Documentation is split into [Source Documentation](source-docs.rst) and the [IDP Library](idp.md).
 
 ![](../media/images/library-structure.jpg)
 
 [Source Documentation](source-docs.rst) includes all of the underlying classes necessary for a flow to execute, such as `Flow`, `Block`, and `CodeBlock`. These classes are agnostic to the version of the Hyperscience Platform you are running.
 
-The [IDP Library](idp_32.md) includes the latest performant blocks for **intelligent document processing**. This library is specific to **Hyperscience Platform V32**. Additional IDP libraries will be released for subsequent versions of the Hyperscience Platform.
+The [IDP Library](idp.md) includes the latest performant blocks for **intelligent document processing**.
 
 ## Basic Concepts
 
@@ -65,11 +65,11 @@ Trigger Blocks initiate the execution of a flow. Some examples are: watching a f
 
 Output Blocks send information to external systems. Some of these blocks are generic (e.g., `HTTP_EXPORT`) while others are integrations into specific systems (e.g., `EXPORT_UIPATH`).
 
-Full definitions are in the Block Library for [Trigger Blocks](idp_32.md#trigger-blocks) and [Output Blocks](idp_32.md#output-blocks).
+Full definitions are in the Block Library for [Trigger Blocks](idp.md) and [Output Blocks](idp.md).
 
 ### Submission Object
 
-Many block subclasses available within the [Block Library](idp_32.md) use a Submission object, which is a dictionary of extracted document information with the following basic structure:
+Many block subclasses available within the [Block Library](idp.md) use a Submission object, which is a dictionary of extracted document information with the following basic structure:
 
 ```
    {
@@ -88,7 +88,7 @@ Many block subclasses available within the [Block Library](idp_32.md) use a Subm
    }
 ```
 
-As most blocks in the [Block Library](idp_32.md) require a Submission object for input, this paradigm enables you to easily pass the output of one block as the input to the next block:
+As most blocks in the [Block Library](idp.md) require a Submission object for input, this paradigm enables you to easily pass the output of one block as the input to the next block:
 
 ```
     # This example shows the output of MachineTranscriptionV3Block (i.e. machine_transcription)

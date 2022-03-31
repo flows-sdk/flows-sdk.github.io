@@ -1,10 +1,48 @@
 =============
 Examples
 =============
-
 This section contains examples of fully executable flows. We recommend using one of these examples as a template for building a flow to fit your exact business process.
 
 Most examples marked contain a release and/or sample documents necessary to execute the flow in your instance of the Hyperscience Platform. You can still build your own release and test with additional documents.
+
+V33
+--------
+.. list-table::
+   :widths: 25 40 10 10 20
+   :header-rows: 1
+
+   * - Name
+     - Description
+     - Release
+     - Sample Docs
+     - Download
+   * - :ref:`pages/examples:IDP Starter (V33)`
+     - Basic document processing flow. Package includes release and sample documents for processing Form W-9s.
+     - .. image:: ../media/images/checkmark.png
+         :class: checkmark
+     - .. image:: ../media/images/checkmark.png
+         :class: checkmark
+     - :download:`idp_starter_v33.zip <../../../samples/idp_flow_v33/idp-starter.zip>`
+
+IDP Starter (V33)
+#####################
+
+This example is a snapshot of our V33 Intelligent Document Processing (IDP) flow. It uses both Machine and Manual blocks to:
+
+1. Classify and collate pages
+2. Identify and transcribe text
+3. Additional manual transcription for any fields marked for review
+4. Output results to a downstream system
+
+:download:`Download idp_starter_v33.zip <../../../samples/idp_flow_v33/idp-starter.zip>`
+
+.. image:: ../media/images/tutorial/idp_example_flow_studio.png
+
+.. include:: ../../../samples/idp_flow_v33/flow.py
+   :literal:
+
+V32
+--------
 
 .. list-table::
    :widths: 25 40 10 10 20
@@ -18,32 +56,39 @@ Most examples marked contain a release and/or sample documents necessary to exec
    * - :ref:`pages/examples:Hello Flow`
      - A single Code block.
      -
-     - 
+     -
      - :download:`hello_flow.py <../../../samples/hello_flow/flow.py>`
-   * - :ref:`pages/examples:IDP Starter`
+   * - :ref:`pages/examples:IDP Starter (V32.0.9+)`
      - Basic document processing flow. Package includes release and sample documents for processing Form W-9s.
-     - .. image:: ../media/images/checkmark.png 
+     - .. image:: ../media/images/checkmark.png
          :class: checkmark
-     - .. image:: ../media/images/checkmark.png 
+     - .. image:: ../media/images/checkmark.png
          :class: checkmark
-     - :download:`idp_starter.zip <../../../samples/idp_flow/idp-starter.zip>`
+     - :download:`idp_starter_v32.zip <../../../samples/idp_flow_v32/idp-starter.zip>`
+   * - :ref:`pages/examples:IDP Starter (V32.0.0 to V32.0.8)`
+     - Basic document processing flow. Package includes release and sample documents for processing Form W-9s.
+     - .. image:: ../media/images/checkmark.png
+         :class: checkmark
+     - .. image:: ../media/images/checkmark.png
+         :class: checkmark
+     - :download:`idp-starter-32.0.0-to-32.0.8.zip <../../../samples/idp_flow_v32/idp-starter-32.0.0-to-32.0.8.zip>`
    * - :ref:`pages/examples:IDP w/ Code Block`
      - IDP Starter + a script to modify the extracted data.
-     - 
-     - 
+     -
+     -
      - :download:`idp_custom.py <../../../samples/custom_idp_flow/flow.py>`
    * - :ref:`pages/examples:Invoice Validation`
      - Validates invoice line items and the total invoice amount.
-     - .. image:: ../media/images/checkmark.png 
+     - .. image:: ../media/images/checkmark.png
          :class: checkmark
-     - .. image:: ../media/images/checkmark.png 
+     - .. image:: ../media/images/checkmark.png
          :class: checkmark
      - :download:`invoice_validation.zip <../../../samples/invoice_validation/invoice_validation_v32.zip>`
    * - :ref:`pages/examples:PDF Redaction`
      - Redaction of fields in a PDF by performing REGEX on fields and blacking out the corresponding bounding box.
-     - .. image:: ../media/images/checkmark.png 
+     - .. image:: ../media/images/checkmark.png
          :class: checkmark
-     - .. image:: ../media/images/checkmark.png 
+     - .. image:: ../media/images/checkmark.png
          :class: checkmark
      - :download:`pdf_redaction.zip <../../../samples/pdf_redaction/pdf_redaction_v32.zip>`
    * - :ref:`pages/examples:Full Page Transcription`
@@ -53,11 +98,12 @@ Most examples marked contain a release and/or sample documents necessary to exec
      - :download:`idp_fpt.py <../../../samples/idp_fpt_flow/flow.py>`
    * - :ref:`pages/examples:IDP Custom Supervision`
      - Sends all fields from the submission to custom supervision.
-     - .. image:: ../media/images/checkmark.png 
+     - .. image:: ../media/images/checkmark.png
          :class: checkmark
-     - .. image:: ../media/images/checkmark.png 
+     - .. image:: ../media/images/checkmark.png
          :class: checkmark
      - :download:`custom_supervision_v32.zip <../../../samples/custom_supervision/custom_supervision_v32.zip>`
+
 
 Hello Flow
 ###########
@@ -72,8 +118,8 @@ This example consists of a single Code block. It is the simplest possible execut
    :literal:
 
 
-IDP Starter
-###################
+IDP Starter (V32.0.9+)
+#######################
 
 This example is a snapshot of our V32 Intelligent Document Processing (IDP) flow. It uses both Machine and Manual blocks to:
 
@@ -82,18 +128,38 @@ This example is a snapshot of our V32 Intelligent Document Processing (IDP) flow
 3. Additional manual transcription for any fields marked for review 
 4. Output results to a downstream system
 
-:download:`Download idp_starter.zip <../../../samples/idp_flow/idp-starter.zip>`
+:download:`Download idp_starter_v32.zip <../../../samples/idp_flow_v32/idp-starter.zip>`
 
 .. image:: ../media/images/tutorial/idp_example_flow_studio.png
 
-.. include:: ../../../samples/idp_flow/flow.py
+.. include:: ../../../samples/idp_flow_v32/flow.py
+   :literal:
+
+IDP Starter (V32.0.0 to V32.0.8)
+#################################
+
+This flow uses an older version of the `FlexibleExtractionBlock` that was removed after platform
+version 32.0.8.
+This example is a snapshot of our V32 Intelligent Document Processing (IDP) flow.
+It uses both Machine and Manual blocks to:
+
+1. Classify and collate pages
+2. Identify and transcribe text
+3. Additional manual transcription for any fields marked for review
+4. Output results to a downstream system
+
+:download:`Download idp_starter_v32.zip <../../../samples/idp_flow_v32/idp-starter.zip>`
+
+.. image:: ../media/images/tutorial/idp_example_flow_studio.png
+
+.. include:: ../../../samples/idp_flow_v32/flow.py
    :literal:
 
 
 IDP w/ Code Block
 ###########################
 
-This example is identical to the :ref:`pages/examples:IDP Starter` example, however it includes an additional Code block to add "time completed" metadata to each document in the submission. This is an example of how Code blocks can arbitrarily modify extracted data before outputting to downstream systems.
+This example is identical to the :ref:`pages/examples:IDP Starter (V32.0.9+)` example, however it includes an additional Code block to add "time completed" metadata to each document in the submission. This is an example of how Code blocks can arbitrarily modify extracted data before outputting to downstream systems.
 
 :download:`Download idp_custom.py <../../../samples/custom_idp_flow/flow.py>`
 
@@ -152,18 +218,18 @@ This example sends all fields in the submission to Custom Supervision.
 
 
 Code Snippets
-###########################
+--------------
 .. note::
     While code snippets are great, the Hyperscience Platform provides easy tools to help you build your own solutions. Make sure to read our Testing & Debugging guide below before diving in.
 
 How do I iterate over multiple documents in a submission?
-*************************************************************
-Block subclasses provided in the :ref:`pages/idp_32:Processing Blocks` generally take a Submission object as a mandatory input parameter as well as output a modified copy of the Submission object. Each block provides a convenience method to access the Submission object:
+#################################################################################
+Block subclasses provided in the :ref:`pages/idp:Processing Blocks` generally take a Submission object as a mandatory input parameter as well as output a modified copy of the Submission object. Each block provides a convenience method to access the Submission object:
 
 .. code-block:: python
    
-   # This example shows the output of MachineTranscriptionV3Block (i.e. machine_transcription) being used as the input to a ManualTranscriptionV2Block
-   manual_transcription = ManualTranscriptionV2Block(
+   # This example shows the output of MachineTranscriptionBlock (i.e. machine_transcription) being used as the input to a ManualTranscriptionBlock
+   manual_transcription = ManualTranscriptionBlock(
      reference_name='manual_transcription',
      submission=machine_transcription.output('submission'),
      ...
@@ -208,7 +274,7 @@ And so iterating over multiple documents in a submission is as easy as:
 
 
 How do I compare fields across different documents?
-*************************************************************
+######################################################
 Let's assume we're trying to find the maximum value of the "income" field across multiple documents in the same submission. Once transcribed, we iterate over all the transcribed fields in the submission and compare each value to the previous maximum:
 
 .. code-block::

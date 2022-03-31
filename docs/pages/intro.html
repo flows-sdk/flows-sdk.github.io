@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction to Flows SDK &mdash; Flows SDK 0.7.0 documentation</title>
+  <title>Introduction to Flows SDK &mdash; Flows SDK 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
@@ -34,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> Flows SDK
           </a>
               <div class="version">
-                0.7.0
+                1.0.0
 
               </div>
 <div role="search">
@@ -65,8 +65,9 @@
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source-docs.html">Source Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="idp_32.html">IDP Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idp.html">IDP Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_supervision.html">Custom Supervision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">CHANGELOG</a></li>
 </ul>
 
         </div>
@@ -117,10 +118,10 @@ a link to this library, provided by your CX representative. Additional dependenc
 </section>
 <section id="library-structure">
 <h2>Library Structure<a class="headerlink" href="#library-structure" title="Permalink to this headline"></a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> library contains everything you need to build on the Hyperscience Platform. As illustrated below, it contains the following top-level sublibraries: <code class="docutils literal notranslate"><span class="pre">flows</span></code>, <code class="docutils literal notranslate"><span class="pre">blocks</span></code>, and <code class="docutils literal notranslate"><span class="pre">implementations</span></code>. Documentation is split into <a class="reference internal" href="source-docs.html"><span class="doc std std-doc">Source Documentation</span></a> and the <a class="reference internal" href="idp_32.html"><span class="doc std std-doc">IDP Library</span></a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">flows_sdk</span></code> library contains everything you need to build on the Hyperscience Platform. As illustrated below, it contains the following top-level sublibraries: <code class="docutils literal notranslate"><span class="pre">flows</span></code>, <code class="docutils literal notranslate"><span class="pre">blocks</span></code>, and <code class="docutils literal notranslate"><span class="pre">implementations</span></code>. Documentation is split into <a class="reference internal" href="source-docs.html"><span class="doc std std-doc">Source Documentation</span></a> and the <a class="reference internal" href="idp.html"><span class="doc std std-doc">IDP Library</span></a>.</p>
 <p><img alt="" src="../_images/library-structure.jpg" /></p>
 <p><a class="reference internal" href="source-docs.html"><span class="doc std std-doc">Source Documentation</span></a> includes all of the underlying classes necessary for a flow to execute, such as <code class="docutils literal notranslate"><span class="pre">Flow</span></code>, <code class="docutils literal notranslate"><span class="pre">Block</span></code>, and <code class="docutils literal notranslate"><span class="pre">CodeBlock</span></code>. These classes are agnostic to the version of the Hyperscience Platform you are running.</p>
-<p>The <a class="reference internal" href="idp_32.html"><span class="doc std std-doc">IDP Library</span></a> includes the latest performant blocks for <strong>intelligent document processing</strong>. This library is specific to <strong>Hyperscience Platform V32</strong>. Additional IDP libraries will be released for subsequent versions of the Hyperscience Platform.</p>
+<p>The <a class="reference internal" href="idp.html"><span class="doc std std-doc">IDP Library</span></a> includes the latest performant blocks for <strong>intelligent document processing</strong>.</p>
 </section>
 <section id="basic-concepts">
 <h2>Basic Concepts<a class="headerlink" href="#basic-concepts" title="Permalink to this headline"></a></h2>
@@ -148,11 +149,11 @@ a link to this library, provided by your CX representative. Additional dependenc
 <h3>Triggers &amp; Outputs<a class="headerlink" href="#triggers-outputs" title="Permalink to this headline"></a></h3>
 <p>Trigger Blocks initiate the execution of a flow. Some examples are: watching a folder for new files, checking an inbox, listening to a message queue, etc.</p>
 <p>Output Blocks send information to external systems. Some of these blocks are generic (e.g., <code class="docutils literal notranslate"><span class="pre">HTTP_EXPORT</span></code>) while others are integrations into specific systems (e.g., <code class="docutils literal notranslate"><span class="pre">EXPORT_UIPATH</span></code>).</p>
-<p>Full definitions are in the Block Library for <a class="reference internal" href="idp_32.html#trigger-blocks"><span class="std std-doc">Trigger Blocks</span></a> and <a class="reference internal" href="idp_32.html#output-blocks"><span class="std std-doc">Output Blocks</span></a>.</p>
+<p>Full definitions are in the Block Library for <a class="reference internal" href="idp.html"><span class="doc std std-doc">Trigger Blocks</span></a> and <a class="reference internal" href="idp.html"><span class="doc std std-doc">Output Blocks</span></a>.</p>
 </section>
 <section id="submission-object">
 <h3>Submission Object<a class="headerlink" href="#submission-object" title="Permalink to this headline"></a></h3>
-<p>Many block subclasses available within the <a class="reference internal" href="idp_32.html"><span class="doc std std-doc">Block Library</span></a> use a Submission object, which is a dictionary of extracted document information with the following basic structure:</p>
+<p>Many block subclasses available within the <a class="reference internal" href="idp.html"><span class="doc std std-doc">Block Library</span></a> use a Submission object, which is a dictionary of extracted document information with the following basic structure:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="p">{</span>
       <span class="s2">&quot;submission&quot;</span><span class="p">:</span> <span class="p">{</span>
          <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;12345&quot;</span><span class="p">,</span>
@@ -169,7 +170,7 @@ a link to this library, provided by your CX representative. Additional dependenc
    <span class="p">}</span>
 </pre></div>
 </div>
-<p>As most blocks in the <a class="reference internal" href="idp_32.html"><span class="doc std std-doc">Block Library</span></a> require a Submission object for input, this paradigm enables you to easily pass the output of one block as the input to the next block:</p>
+<p>As most blocks in the <a class="reference internal" href="idp.html"><span class="doc std std-doc">Block Library</span></a> require a Submission object for input, this paradigm enables you to easily pass the output of one block as the input to the next block:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># This example shows the output of MachineTranscriptionV3Block (i.e. machine_transcription)</span>
     <span class="c1"># being used as the input to a ManualTranscriptionV2Block   </span>
     
