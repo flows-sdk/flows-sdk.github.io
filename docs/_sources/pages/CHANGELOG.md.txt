@@ -1,0 +1,29 @@
+# CHANGELOG
+
+## 1.0.0
+
+- [feature] `reference_name` is now an optional property for all blocks.
+
+It's still a good idea to provide meaningful reference names when instantiating blocks,
+but if the property `reference_name` is not set, a unique one will be generated.
+
+before:
+```python
+submission_bootstrap = SubmissionBootstrapBlock(reference_name='submission_bootstrap')
+// {"reference_name": "submission_bootstrap" }
+```
+
+after:
+```python
+submission_bootstrap = SubmissionBootstrapBlock()
+// {"reference_name": "auto_submission_bootstrap__1" }
+```
+
+- [bugfix] Fixed a bug where IDP Starter V32 would not work on Hyperscience platforms after 32.0.9.
+There are now two separate examples - one for 32.0.0 to 32.0.8 and another one for 32.0.9+
+
+## 0.8.0
+
+- [feature] Introduces the `implementation.idp_v33` package that contains block definitions used by
+v33 of the Hyperscience platform
+- [example] Added an IDP Starter Example that uses v33 blocks

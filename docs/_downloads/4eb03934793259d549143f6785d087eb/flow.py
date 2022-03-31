@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from flows_sdk.flows import Flow
+from flows_sdk.flows import Flow, Manifest
 from flows_sdk.implementations.idp_v32.idp_blocks import (
     IDPFullPageTranscriptionBlock,
     IDPImageCorrectionBlock,
@@ -8,12 +8,7 @@ from flows_sdk.implementations.idp_v32.idp_blocks import (
     SubmissionBootstrapBlock,
     SubmissionCompleteBlock,
 )
-from flows_sdk.implementations.idp_v32.idp_values import (
-    IDPManifest,
-    IDPTriggers,
-    get_idp_wf_config,
-    get_idp_wf_inputs,
-)
+from flows_sdk.implementations.idp_v32.idp_values import IDPTriggers
 from flows_sdk.package_utils import export_flow
 
 
@@ -22,8 +17,6 @@ def entry_point_flow() -> Flow:
 
 
 def idp_fpt_workflow() -> Flow:
-    idp_wf_config = get_idp_wf_config()
-
     # The idp flow basically processes, modifies and propagates the submission object from
     # block to block
     # Each block's processing result is usually included in the submission object
@@ -33,8 +26,7 @@ def idp_fpt_workflow() -> Flow:
     submission_bootstrap = SubmissionBootstrapBlock(reference_name='submission_bootstrap')
 
     image_correction = IDPImageCorrectionBlock(
-        reference_name='image_correction',
-        submission=submission_bootstrap.output('submission'),
+        reference_name='image_correction', submission=submission_bootstrap.output('submission')
     )
 
     full_page_transcription = IDPFullPageTranscriptionBlock(
@@ -50,6 +42,15 @@ def idp_fpt_workflow() -> Flow:
         reference_name='complete_submission',
         payload=full_page_transcription.output('submission'),
         submission=full_page_transcription.output('submission'),
+        nlc_qa_sampling_ratio=0,
+        field_id_qa_enabled=False,
+        field_id_qa_sampling_ratio=0,
+        table_id_qa_enabled=False,
+        table_id_qa_sampling_ratio=0,
+        transcription_qa_enabled=False,
+        transcription_qa_sampling_ratio=0,
+        table_cell_transcription_qa_enabled=False,
+        table_cell_transcription_qa_sample_rate=0,
     )
 
     # Output block allows users to send data extracted by this idp flow to other systems
@@ -71,7 +72,7 @@ def idp_fpt_workflow() -> Flow:
         owner_email='harry.yu@hyperscience.com',
         title='IDP Full Page Transcription Flow Example (V32)',
         # Flow identifiers are globally unique
-        manifest=IDPManifest(flow_identifier='IDP_FULL_PAGE_TRANSCRIPTION_V32_FLOW_EXAMPLE'),
+        manifest=Manifest(identifier='IDP_FULL_PAGE_TRANSCRIPTION_V32_FLOW_EXAMPLE', input=[]),
         triggers=triggers,
         # It is important to include all blocks that are instantiated here in the blocks
         # field and make sure they follow the order of the flow. For example, if machine
@@ -84,7 +85,6 @@ def idp_fpt_workflow() -> Flow:
             submission_complete,
             outputs,
         ],
-        input=get_idp_wf_inputs(idp_wf_config),
         description='IDP Full Page Transcription Flow Example (V32)',
         output={'submission': submission_complete.output()},
     )

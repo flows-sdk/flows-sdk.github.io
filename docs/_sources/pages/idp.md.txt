@@ -1,0 +1,26 @@
+# IDP Library
+
+This IDP Library (`flows_sdk.implementations`) includes the latest performant blocks and functions for building **intelligent document processing (IDP)**.
+
+The IDP Library contains:
+- Processing Blocks, which are provided as convenient Python subclasses for plug-and-play use.
+- Trigger and Output Blocks, which require use of [base classes](flows_sdk.blocks.IOBlock).
+- Helper functions for ease of development.
+% Comment: need to add simple subclasses of Trigger and Output blocks
+
+```{eval-rst}
+
+.. note::
+   Most solutions will also require use of base classes, such as `Flow` or `CodeBlock`, found in the :ref:`pages/source-docs:Source Documentation`.
+
+```
+
+## V33
+```{include} idp_versions/idp_33.markdown
+```
+
+## V32
+```{include} idp_versions/idp_32.markdown
+```
+
+
